@@ -1,9 +1,9 @@
 const Footer = () => {
     return (
-      <footer className="bg-black text-white py-8">
-        <div className="max-w-screen-xl mx-auto px-4">
+      <footer className="bg-black text-white py-8 ">
+        <div className="flex justify-between flex-col mx-auto px-4 max-w-screen-2xl">
           {/* Footer Columns */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center sm:text-left">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 justify-between text-center sm:text-left">
             {/* Support Column */}
             <div>
               <h3 className="text-lg font-semibold mb-4">Support</h3>
@@ -37,11 +37,11 @@ const Footer = () => {
           </div>
   
           {/* Bottom Row */}
-          <div className="mt-8 border-t border-gray-700 pt-6 text-center sm:text-left">
+          <div className="mt-8 border-t border-gray-700 pt-6  max-w-screen-2xl flex justify-between  text-center sm:text-left">
             <p className="text-sm text-gray-400">
               Copyright © 2024 AZ Auction - All Rights Reserved.
             </p>
-            <p className="text-sm text-gray-400 mt-2">
+            <p className="text-sm text-gray-400 ">
               <a href="#" className="hover:underline">Certificate Check</a> | <a href="#" className="hover:underline">NY Elizabeth Membership</a>
             </p>
           </div>

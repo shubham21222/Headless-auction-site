@@ -1,9 +1,8 @@
 const AboutSection = () => {
     return (
         <>
-            {/* About Section with Image on the Left */}
             <section className="container-img1 w-full bg-white py-16">
-                <div className="flex flex-col lg:flex-row items-center max-w-screen-xl mx-auto px-4 lg:px-8 gap-8">
+                <div className="flex flex-col lg:flex-row items-center max-w-screen-2xl mx-auto px-4 lg:px-8 gap-8">
                     {/* Left Image */}
                     <div className="flex-1">
                         <div className="w-full h-0 pb-[100%] lg:pb-[60%] relative">
@@ -33,9 +32,8 @@ const AboutSection = () => {
                 </div>
             </section>
 
-            {/* About Section with Image on the Right */}
             <section className="container-img1 w-full bg-white py-16">
-                <div className="flex flex-col lg:flex-row-reverse items-center max-w-screen-xl mx-auto px-4 lg:px-8 gap-8">
+                <div className="flex flex-col lg:flex-row-reverse items-center max-w-screen-2xl mx-auto px-4 lg:px-8 gap-8">
                     {/* Right Image */}
                     <div className="flex-1">
                         <div className="w-full h-0 pb-[100%] lg:pb-[60%] relative">

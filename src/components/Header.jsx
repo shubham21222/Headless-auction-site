@@ -5,8 +5,8 @@ import Logo from "../assets/AZ_Logo.png"
 
 const Header = () => {
   return (
-    <header className="bg-white shadow-md">
-      <div className="container mx-auto flex items-center justify-between p-4">
+    <header className="bg-white shadow-md ">
+      <div className="container mx-auto flex items-center max-w-screen-2xl justify-between p-4">
         {/* Logo */}
         <div className="flex items-center space-x-2">
           <Image
