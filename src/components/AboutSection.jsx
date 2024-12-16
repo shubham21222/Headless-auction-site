@@ -1,8 +1,8 @@
 const AboutSection = () => {
     return (
         <>
-            <section className="container-img1 w-full bg-white py-16">
-                <div className="flex flex-col lg:flex-row items-center max-w-screen-2xl mx-auto px-4 lg:px-8 gap-8">
+            <section className="w-full bg-white py-16">
+                <div className="flex flex-col lg:flex-row items-center max-w-none mx-0 px-0 gap-8">
                     {/* Left Image */}
                     <div className="flex-1">
                         <div className="w-full h-0 pb-[100%] lg:pb-[60%] relative">
@@ -14,7 +14,7 @@ const AboutSection = () => {
                         </div>
                     </div>
                     {/* Right Content */}
-                    <div className="flex-1">
+                    <div className="flex-1 px-4 lg:px-8">
                         <h2 className="text-4xl font-bold mb-4 text-center lg:text-left">About AZ Auction</h2>
                         <div className="h-1 w-16 bg-yellow-500 mx-auto lg:mx-0 mb-6"></div>
                         <h3 className="text-2xl font-semibold mb-4 text-center lg:text-left">Est 1956</h3>
@@ -32,8 +32,8 @@ const AboutSection = () => {
                 </div>
             </section>
 
-            <section className="container-img1 w-full bg-white py-16">
-                <div className="flex flex-col lg:flex-row-reverse items-center max-w-screen-2xl mx-auto px-4 lg:px-8 gap-8">
+            <section className="w-full bg-white py-16">
+                <div className="flex flex-col lg:flex-row-reverse items-center max-w-none mx-0 px-0 gap-8">
                     {/* Right Image */}
                     <div className="flex-1">
                         <div className="w-full h-0 pb-[100%] lg:pb-[60%] relative">
@@ -42,11 +42,10 @@ const AboutSection = () => {
                                 alt="Street View"
                                 className="absolute inset-0 w-full h-full object-cover rounded-tl-full rounded-bl-full"
                             />
-
                         </div>
                     </div>
                     {/* Left Content */}
-                    <div className="flex-1">
+                    <div className="flex-1 px-4 lg:px-8">
                         <h2 className="text-4xl font-bold mb-4 text-center lg:text-left">About AZ Auction</h2>
                         <div className="h-1 w-16 bg-yellow-500 mx-auto lg:mx-0 mb-6"></div>
                         <h3 className="text-2xl font-semibold mb-4 text-center lg:text-left">Est 1956</h3>
