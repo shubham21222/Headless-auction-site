@@ -157,7 +157,7 @@ const Header = () => {
                   className="outline-none px-2 py-2 w-full"
                 />
                 <button onClick={toggleSearch} aria-label="Close Search">
-                  <CiClose className="h-6 w-6 text-gray-700" />
+                  <CiGlobe className="h-6 w-6 text-gray-700" />
                 </button>
               </div>
             </div>
