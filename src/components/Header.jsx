@@ -2,6 +2,8 @@
 import React from "react";
 import Image from "next/image";
 import Logo from "../assets/AZ_Logo.png"
+import { CiSearch } from "react-icons/ci";
+
 
 const Header = () => {
   return (
@@ -80,18 +82,7 @@ const Header = () => {
               className="outline-none px-2 py-1 w-40 md:w-64"
             />
             <button>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-gray-700"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M10 2a8 8 0 100 16 8 8 0 000-16zM7.707 7.707a1 1 0 010-1.414l3.586-3.586a1 1 0 111.414 1.414L9.121 7.707a1 1 0 01-1.414 0z"
-                  clipRule="evenodd"
-                />
-              </svg>
+            <CiSearch />
             </button>
           </div>
 
