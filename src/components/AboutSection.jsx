@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 const AboutSection = () => {
     return (
         <>
@@ -8,7 +6,7 @@ const AboutSection = () => {
                     {/* Left Image */}
                     <div className="flex-1">
                         <div className="w-full h-0 pb-[100%] lg:pb-[60%] relative">
-                            <Image
+                            <img
                                 src="https://beta.nyelizabeth.com/wp-content/uploads/2024/11/Rectangle-23-min.webp"
                                 alt="Street View"
                                 className="absolute inset-0 w-full h-full object-cover rounded-r-full"
@@ -39,7 +37,7 @@ const AboutSection = () => {
                     {/* Right Image */}
                     <div className="flex-1">
                         <div className="w-full h-0 pb-[100%] lg:pb-[60%] relative">
-                            <Image
+                            <img
                                 src="https://beta.nyelizabeth.com/wp-content/uploads/2024/11/Rectangle-23-1-min.webp"
                                 alt="Street View"
                                 className="absolute inset-0 w-full h-full object-cover rounded-tl-full rounded-bl-full"

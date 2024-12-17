@@ -2,12 +2,10 @@ import React from 'react';
 
 const NewsletterForm = () => {
   return (
-    <section className="bg-gray-100 py-16  mb-14 mx-[200px] flex justify-center items-center">
-      <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+    <section className="bg-gray-100 py-16 mb-14 flex justify-center items-center">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
         <div className="text-center mb-6">
-          <h2 className="text-4xl sm:text-5xl ">
-            Subscribe to NY Elizabeth{""}s Newsletter
-          </h2>
+          <h2 className="text-4xl sm:text-5xl">Subscribe to NY Elizabeth's Newsletter</h2>
         </div>
         <form className="space-y-4 pt-6">
           {/* Email Input */}
@@ -20,7 +18,7 @@ const NewsletterForm = () => {
           </div>
 
           {/* First Name and Last Name */}
-          <div className="grid grid-cols-1 pt-6 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <input
               type="text"
               placeholder="First Name"
@@ -34,10 +32,10 @@ const NewsletterForm = () => {
           </div>
 
           {/* Submit Button */}
-          <div className="text-center pt-6">
+          <div className=" text-center pt-6">
             <button
               type="submit"
-              className="btn w-full sm:w-full  bg-blue-500 hover:bg-blue-600 text-white font-medium px-8 py-3 rounded-md shadow-sm transition-colors duration-300"
+              className="btn w-full sm:w-auto bg-blue-500 hover:bg-blue-600 text-white font-medium px-8 py-3 rounded-md shadow-sm transition-colors duration-300"
             >
               Submit
             </button>
@@ -46,7 +44,8 @@ const NewsletterForm = () => {
 
         {/* Privacy Text */}
         <p className="text-gray-600 text-sm mt-6 text-center">
-          By subscribing you are agreeing to NY Elizabeth Privacy Policy. You can unsubscribe from NY Elizabeth emails at any time by clicking the {""}Manage your Subscriptions{""} link in any of your emails.
+          By subscribing you are agreeing to NY Elizabeth Privacy Policy. You can unsubscribe from NY Elizabeth emails at
+          any time by clicking the "Manage your Subscriptions" link in any of your emails.
         </p>
       </div>
     </section>
