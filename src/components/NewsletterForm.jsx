@@ -6,7 +6,7 @@ const NewsletterForm = () => {
       <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
         <div className="text-center mb-6">
           <h2 className="text-4xl sm:text-5xl ">
-            Subscribe to NY Elizabeth's Newsletter
+            Subscribe to NY Elizabeth{""}s Newsletter
           </h2>
         </div>
         <form className="space-y-4 pt-6">
@@ -46,7 +46,7 @@ const NewsletterForm = () => {
 
         {/* Privacy Text */}
         <p className="text-gray-600 text-sm mt-6 text-center">
-          By subscribing you are agreeing to NY Elizabeth Privacy Policy. You can unsubscribe from NY Elizabeth emails at any time by clicking the "Manage your Subscriptions" link in any of your emails.
+          By subscribing you are agreeing to NY Elizabeth Privacy Policy. You can unsubscribe from NY Elizabeth emails at any time by clicking the {""}Manage your Subscriptions{""} link in any of your emails.
         </p>
       </div>
     </section>
