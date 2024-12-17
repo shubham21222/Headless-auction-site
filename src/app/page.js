@@ -3,6 +3,7 @@ import CarouselComponent from "@/components/Carousel";
 import FeaturedPrices from "@/components/FeaturedPrices";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import NewsletterForm from "@/components/NewsletterForm";
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
       <div className="w-full">
         <AboutSection />
       </div>
+      <NewsletterForm/>
       <Footer />
     </>
   );

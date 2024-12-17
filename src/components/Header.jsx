@@ -136,10 +136,10 @@ const Header = () => {
                 
                 {/* Mobile Specific Buttons */}
                 <div className="space-x-2">
-                  <button className="bg-blue-800 text-white px-4 py-1 rounded-md">
+                  <button className="btn bg-blue-800 text-white px-4 py-1 rounded-md">
                     Login
                   </button>
-                  <button className="bg-blue-600 text-white px-4 py-1 rounded-md">
+                  <button className="btn bg-blue-600 text-white px-4 py-1 rounded-md">
                     Join
                   </button>
                 </div>
