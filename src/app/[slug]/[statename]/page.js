@@ -17,7 +17,6 @@ const StateCitiesPage = () => {
       try {
         setIsLoading(true);
         
-        // Normalize the state name from the URL
         const normalizedState = params.statename
           .replace(/%C4%AB/g, 'i')  // Replace ī
           .replace(/%E1%B8%A9/g, 'h')  // Replace ḩ

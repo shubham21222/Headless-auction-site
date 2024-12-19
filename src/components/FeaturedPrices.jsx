@@ -147,7 +147,7 @@ const FeaturedPrices = () => {
               ></p>
             </div>
             <div className="p-4 mt-auto">
-              <button className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">
+              <button className="btn w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">
                 Upcoming Auctions
               </button>
             </div>

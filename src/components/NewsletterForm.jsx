@@ -2,7 +2,7 @@ import React from 'react';
 
 const NewsletterForm = () => {
   return (
-    <section className="bg-gray-100 py-16 mb-14 flex justify-center items-center">
+    <section className="bg-gray-100 py-16 mb-14 flex justify-center items-center container mx-auto max-w-screen-2xl ">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
         <div className="text-center mb-6">
           <h2 className="text-4xl sm:text-5xl">Subscribe to NY Elizabeth{''}s Newsletter</h2>

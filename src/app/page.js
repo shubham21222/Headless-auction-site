@@ -6,6 +6,9 @@ import FeaturedPrices from "@/components/FeaturedPrices";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import NewsletterForm from "@/components/NewsletterForm";
+import PartnersSection from "@/components/PartnersSection";
+import StatsSection from "@/components/StatsSection";
+import TrendingBrands from "@/components/TrendingBrands";
 
 export default function Home() {
   return (
@@ -23,6 +26,9 @@ export default function Home() {
       <div className="w-full">
         <AboutSection />
       </div>
+      <StatsSection/>
+      <TrendingBrands/>
+      <PartnersSection/>
       <NewsletterForm/>
       <Footer />
     </>

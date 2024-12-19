@@ -15,6 +15,7 @@
     "framer-motion": "^11.15.0",
     "graphql": "^16.10.0",
     "next": "15.0.4",
+    "nuka-carousel": "^8.1.1",
     "react": "^19.0.0",
     "react-bootstrap": "^2.10.6",
     "react-dom": "^19.0.0",
