@@ -1,6 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import axios from 'axios';
 
 // WooCommerce API Configuration
@@ -30,14 +31,15 @@ const FeaturedPrices = () => {
   const [featuredItems, setFeaturedItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await WooCommerceAPI.get('/products', {
-          params: { 
+          params: {
             // featured: true, // Only fetch featured products
-            // per_page: 8 // Limit to 8 products
+            // per_page: 8, // Limit to 8 products
           },
         });
         setFeaturedItems(response.data);
@@ -52,6 +54,11 @@ const FeaturedPrices = () => {
 
     fetchProducts();
   }, []);
+
+  const handleViewProduct = (slug) => {
+    console.log(slug, "slug-------------------------------------");
+    router.push(`..//Products/${slug}`);
+  };
 
   // Skeleton Loading State
   if (loading) {
@@ -77,9 +84,14 @@ const FeaturedPrices = () => {
   if (error) {
     return (
       <div className="container mx-auto py-8 px-4 text-center">
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+        <div
+          className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+          role="alert"
+        >
           <strong className="font-bold">Oops! </strong>
-          <span className="block sm:inline">Unable to load featured prices. Please try again later.</span>
+          <span className="block sm:inline">
+            Unable to load featured prices. Please try again later.
+          </span>
         </div>
       </div>
     );
@@ -90,7 +102,9 @@ const FeaturedPrices = () => {
     return (
       <div className="container mx-auto py-8 px-4 text-center">
         <div className="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded relative">
-          <span className="block sm:inline">No featured items available at the moment.</span>
+          <span className="block sm:inline">
+            No featured items available at the moment.
+          </span>
         </div>
       </div>
     );
@@ -109,9 +123,10 @@ const FeaturedPrices = () => {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {featuredItems.map((item) => (
-          <div 
-            key={item.id} 
+          <div
+            key={item.id}
             className="flex flex-col border rounded-lg shadow hover:shadow-xl transition h-full group"
+            onClick={() => handleViewProduct(item.slug)}
           >
             <div className="w-full h-48 relative overflow-hidden rounded-t-lg">
               <Image

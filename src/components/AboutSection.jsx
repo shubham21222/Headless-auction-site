@@ -1,3 +1,7 @@
+'use client'
+import React from 'react';
+import Image from 'next/image';
+
 const AboutSection = () => {
     return (
         <>
@@ -6,10 +10,12 @@ const AboutSection = () => {
                     {/* Left Image */}
                     <div className="flex-1">
                         <div className="w-full h-0 pb-[100%] lg:pb-[60%] relative">
-                            <img
+                            <Image
                                 src="https://beta.nyelizabeth.com/wp-content/uploads/2024/11/Rectangle-23-min.webp"
                                 alt="Street View"
-                                className="absolute inset-0 w-full h-full object-cover rounded-r-full"
+                                fill
+                                sizes="(max-width: 768px) 100vw, 50vw"
+                                className="absolute inset-0 object-cover rounded-r-full"
                             />
                         </div>
                     </div>
@@ -37,10 +43,12 @@ const AboutSection = () => {
                     {/* Right Image */}
                     <div className="flex-1">
                         <div className="w-full h-0 pb-[100%] lg:pb-[60%] relative">
-                            <img
+                            <Image
                                 src="https://beta.nyelizabeth.com/wp-content/uploads/2024/11/Rectangle-23-1-min.webp"
                                 alt="Street View"
-                                className="absolute inset-0 w-full h-full object-cover rounded-tl-full rounded-bl-full"
+                                fill
+                                sizes="(max-width: 768px) 100vw, 50vw"
+                                className="absolute inset-0 object-cover rounded-tl-full rounded-bl-full"
                             />
                         </div>
                     </div>

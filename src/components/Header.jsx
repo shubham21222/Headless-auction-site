@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Image from "next/image";
 import Logo from "../assets/AZ_Logo.png";
 import { CiSearch, CiMenuBurger, CiGlobe } from "react-icons/ci";
+import Link from 'next/link';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -22,6 +23,7 @@ const Header = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
+            <Link href="/">
             <Image
               src="https://beta.nyelizabeth.com/wp-content/uploads/2024/05/Rectangle.svg"
               alt="NY Elizabeth"
@@ -29,6 +31,7 @@ const Header = () => {
               height={100}
               className="h-10 w-auto"
             />
+            </Link>
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -125,7 +128,7 @@ const Header = () => {
           {isMenuOpen && (
             <div className="fixed inset-0 bg-white z-50 md:hidden">
               <div className="flex flex-col items-center justify-center h-full space-y-6">
-                <a href="/auctions" className="text-gray-700 hover:text-blue-900">Auctions</a>
+                <Link href="/auctions"><a href="/auctions" className="text-gray-700 hover:text-blue-900">Auctions</a></Link>
                 <a href="/buy-now" className="text-gray-700 hover:text-blue-900">Buy Now</a>
                 <a href="/private-sales" className="text-gray-700 hover:text-blue-900">Private Sales</a>
                 <a href="/sell" className="text-gray-700 hover:text-blue-900">Sell</a>
