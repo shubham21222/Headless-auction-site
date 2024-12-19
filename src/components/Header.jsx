@@ -61,14 +61,14 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-6">
-            <a href="/auctions" className="text-gray-700 hover:text-blue-900">Auctions</a>
-            <a href="/buy-now" className="text-gray-700 hover:text-blue-900">Buy Now</a>
-            <a href="/private-sales" className="text-gray-700 hover:text-blue-900">Private Sales</a>
-            <a href="/sell" className="text-gray-700 hover:text-blue-900">Sell</a>
-            <a href="/exclusive-access" className="text-gray-700 hover:text-blue-900">Exclusive Access</a>
-            <a href="/about" className="text-gray-700 hover:text-blue-900">About</a>
-            <a href="/past-auctions" className="text-gray-700 hover:text-blue-900">Past Auctions</a>
-            <a href="/faq" className="text-gray-700 hover:text-blue-900">FAQ</a>
+            <Link href="/auctions" className="text-gray-700 hover:text-blue-900">Auctions</Link>
+            <Link href="/buy-now" className="text-gray-700 hover:text-blue-900">Buy Now</Link>
+            <Link href="/private-sales" className="text-gray-700 hover:text-blue-900">Private Sales</Link>
+            <Link href="/sell" className="text-gray-700 hover:text-blue-900">Sell</Link>
+            <Link href="/exclusive-access" className="text-gray-700 hover:text-blue-900">Exclusive Access</Link>
+            <Link href="/about" className="text-gray-700 hover:text-blue-900">About</Link>
+            <Link href="/past-auctions" className="text-gray-700 hover:text-blue-900">Past Auctions</Link>
+            <Link href="/faq" className="text-gray-700 hover:text-blue-900">FAQ</Link>
           </nav>
 
           {/* Right Section */}
@@ -128,14 +128,14 @@ const Header = () => {
           {isMenuOpen && (
             <div className="fixed inset-0 bg-white z-50 md:hidden">
               <div className="flex flex-col items-center justify-center h-full space-y-6">
-                <Link href="/auctions"><a href="/auctions" className="text-gray-700 hover:text-blue-900">Auctions</a></Link>
-                <a href="/buy-now" className="text-gray-700 hover:text-blue-900">Buy Now</a>
-                <a href="/private-sales" className="text-gray-700 hover:text-blue-900">Private Sales</a>
-                <a href="/sell" className="text-gray-700 hover:text-blue-900">Sell</a>
-                <a href="/exclusive-access" className="text-gray-700 hover:text-blue-900">Exclusive Access</a>
-                <a href="/about" className="text-gray-700 hover:text-blue-900">About</a>
-                <a href="/past-auctions" className="text-gray-700 hover:text-blue-900">Past Auctions</a>
-                <a href="/faq" className="text-gray-700 hover:text-blue-900">FAQ</a>
+                <Link href="/auctions" className="text-gray-700 hover:text-blue-900">Auctions</Link>
+                <Link href="/buy-now" className="text-gray-700 hover:text-blue-900">Buy Now</Link>
+                <Link href="/private-sales" className="text-gray-700 hover:text-blue-900">Private Sales</Link>
+                <Link href="/sell" className="text-gray-700 hover:text-blue-900">Sell</Link>
+                <Link href="/exclusive-access" className="text-gray-700 hover:text-blue-900">Exclusive Access</Link>
+                <Link href="/about" className="text-gray-700 hover:text-blue-900">About</Link>
+                <Link href="/past-auctions" className="text-gray-700 hover:text-blue-900">Past Auctions</Link>
+                <Link href="/faq" className="text-gray-700 hover:text-blue-900">FAQ</Link>
                 
                 {/* Mobile Specific Buttons */}
                 <div className="space-x-2">
