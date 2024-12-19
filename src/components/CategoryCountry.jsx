@@ -25,7 +25,11 @@ const CategoryCountry = () => {
           <Link
             key={country}
             href={`/Country/${country.toLowerCase().replace(/\s+/g, "-")}`}
-            className="text-blue-600 hover:underline"
+            className={`${
+              country.toLowerCase() == "united states auction"
+                ? "text-green-600 font-semibold"
+                : "text-blue-600 hover:underline"
+            }`}
           >
             {country}
           </Link>
