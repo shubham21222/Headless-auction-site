@@ -28,7 +28,7 @@ const Page = () => {
                         <div className="w-16 h-1 bg-yellow-500 mt-2"></div>
 
                         <p className="text-gray-600 text-lg md:text-xl">
-                            Explore local auctions to find incredible deals on antiques, collectibles, and more. With auctions happening near you, there's always something new to discover. From estate sales to car auctions, uncover hidden gems in your area today.
+                            Explore local auctions to find incredible deals on antiques, collectibles, and more. With auctions happening near you, there{''}s always something new to discover. From estate sales to car auctions, uncover hidden gems in your area today.
                         </p>
                         <p className="text-gray-600 text-lg md:text-xl">
                             Auctions provide a unique opportunity to bid on a wide variety of items, offering both excitement and value. Stay informed about the latest auctions and never miss a chance to grab a great deal near you!
