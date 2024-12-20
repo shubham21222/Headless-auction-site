@@ -38,12 +38,12 @@ export default function AuctionsNearMe() {
               Search for auctions near your location and join the bidding war for exciting items.
             </p>
           </section>
-          <section className="my-8  pb-[200px]">
+          {/* <section className="my-8  pb-[200px]">
             <h3 className="text-xl font-bold">Map of Auctions Near You</h3>
             <div className="h-64 mt-4 bg-gray-200 rounded-lg">
               <AuctionsMap/>
             </div>
-          </section>
+          </section> */}
         </main>
       </div>
     </>

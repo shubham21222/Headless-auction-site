@@ -1,4 +1,5 @@
 import AboutSection from "@/components/AboutSection";
+import AuctionNearmeBtn from "@/components/AuctionNearmeBtn";
 import AuctionsNearMe from "@/components/AuctionsNearMe";
 import CarouselComponent from "@/components/Carousel";
 import CategoryCountry from "@/components/CategoryCountry";
@@ -18,9 +19,10 @@ export default function Home() {
       <div className="w-full">
         <CarouselComponent />
       </div>
-      <AuctionsNearMe/>
+      <AuctionNearmeBtn/>
+      {/* <AuctionsNearMe/> */}
       <div>
-        <FeaturedPrices/>
+        {/* <FeaturedPrices/> */}
       </div>
       <CategoryCountry/>
       <CategoryList/>

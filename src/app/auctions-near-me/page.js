@@ -1,21 +1,20 @@
-"use client";
+'use client';
 
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
-import { useParams } from "next/navigation";
+import AboutSection from '@/components/AboutSection';
+import Footer from '@/components/Footer'
+import Header from '@/components/Header';
 import { motion } from 'framer-motion';
-import AuctionImg from "../../../assets/auctions.webp"
-import Image from "next/image";
+import React from 'react'
+import AuctionImg from "../../assets/auctions.webp"
+import Image from 'next/image';
+import CategoryCountry from '@/components/CategoryCountry';
+import CategoryList from '@/components/CategoryList';
 
-const CategoryPage = () => {
-  const params = useParams();
-  const { slug } = params;
-
-  return (  
-    <>
-    <Header/>
-
-    <div className="bg-gray-50 px-4 container mx-auto max-w-screen-2xl">
+const Page = () => {
+    return (
+        <>
+            <Header />
+            <div className="bg-gray-50 px-4 container mx-auto max-w-screen-2xl">
                 <section className="flex flex-col md:flex-row items-center justify-center gap-10 py-16 ">
                     <motion.div
                         className="w-full md:w-1/2 space-y-4"
@@ -54,18 +53,12 @@ const CategoryPage = () => {
                 </section>
             </div>
 
-    <div className="p-6 container mx-auto max-w-screen-2xl">
-      <h1 className="text-3xl font-bold mb-4 capitalize">
-        {slug.replace("-", " ")} Page
-      </h1>
-      <p>
-        This is the category page for <strong>{slug}</strong>. Fetch and display
-        category-specific content here.
-      </p>
-    </div>
-    <Footer/>
-    </>
-  );
-};
+            <AboutSection />
+            <CategoryCountry />
+            <CategoryList />
+            <Footer />
+        </>
+    )
+}
 
-export default CategoryPage;
+export default Page;
