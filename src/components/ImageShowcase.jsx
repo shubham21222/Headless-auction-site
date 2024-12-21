@@ -66,12 +66,12 @@ const ImageShowcase = () => {
             <div className="h-1 w-16 bg-yellow-500 mx-auto md:mx-0"></div>
 
             {/* Left Button */}
-            {/* <button
+            <button
                 onClick={scrollLeft}
                 className="absolute left-0 top-1/2 -translate-y-1/2 bg-gray-200 text-gray-700 rounded-full p-2 shadow-md z-10"
             >
                 ◀
-            </button> */}
+            </button>
 
             {/* Showcase Container */}
             <div
@@ -105,21 +105,21 @@ const ImageShowcase = () => {
                         <div className="p-4">
                             <h3 className="text-lg font-bold">{item.title}</h3>
                             {/* <p className="text-sm text-gray-500">{item.description}</p> */}
-                            <p className="text-red-600 font-semibold mt-2 cursor-pointer">
+                            {/* <p className="text-red-600 font-semibold mt-2 cursor-pointer">
                                 Bid Now ›
-                            </p>
+                            </p> */}
                         </div>
                     </div>
                 ))}
             </div>
 
             {/* Right Button */}
-            {/* <button
+            <button
                 onClick={scrollRight}
                 className="absolute right-0 top-1/2 -translate-y-1/2 bg-gray-200 text-gray-700 rounded-full p-2 shadow-md z-10"
             >
                 ▶
-            </button> */}
+            </button>
         </div>
     );
 };

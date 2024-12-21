@@ -23,7 +23,7 @@ export default function Home() {
       <AuctionNearmeBtn/>
       {/* <AuctionsNearMe/> */}
 
-    <ImageShowcase/>
+    {/* <ImageShowcase/> */}
 
       <div>
         {/* <FeaturedPrices/> */}
