@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useRef, useState } from "react";
+import Image from "next/image";
+import React, { useRef, useState,useEffect } from "react";
 
-// Sample data for each category
 const categories = [
     {
         title: "Top Paintings",
@@ -137,13 +137,23 @@ const categories = [
 const ShowcaseSection = ({ title, items }) => {
     const containerRef = useRef(null);
     const [mainImages, setMainImages] = useState(items.map((item) => item.mainImage));
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    const handleScroll = () => {
+        const scrollLeft = containerRef.current.scrollLeft;
+        const itemWidth = containerRef.current.firstChild.offsetWidth;
+        const newIndex = Math.round(scrollLeft / itemWidth);
+        setCurrentIndex(newIndex);
+    };
 
     const scrollLeft = () => {
-        containerRef.current.scrollBy({ left: -300, behavior: "smooth" });
+        const itemWidth = containerRef.current.firstChild.offsetWidth;
+        containerRef.current.scrollBy({ left: -itemWidth, behavior: "smooth" });
     };
 
     const scrollRight = () => {
-        containerRef.current.scrollBy({ left: 300, behavior: "smooth" });
+        const itemWidth = containerRef.current.firstChild.offsetWidth;
+        containerRef.current.scrollBy({ left: itemWidth, behavior: "smooth" });
     };
 
     const handleSubImageClick = (index, subImg) => {
@@ -152,63 +162,69 @@ const ShowcaseSection = ({ title, items }) => {
         setMainImages(updatedImages);
     };
 
+    useEffect(() => {
+        const ref = containerRef.current;
+        ref.addEventListener("scroll", handleScroll);
+        return () => ref.removeEventListener("scroll", handleScroll);
+    }, []);
+
     return (
         <div className="relative w-full container mx-auto max-w-screen-2xl px-4 my-8">
-            <h2 className="text-2xl font-semibold mb-4">{title}</h2>
-            <div className="h-1 w-16 bg-yellow-500 mx-auto md:mx-0"></div>
-
-            {/* Left Button */}
-            {/* <button
-                onClick={scrollLeft}
-                className="absolute left-0 top-1/2 -translate-y-1/2 bg-gray-200 text-gray-700 rounded-full p-2 shadow-md z-10"
-            >
-                ◀
-            </button> */}
+            <h2 className="text-2xl font-semibold mb-4 text-center">{title}</h2>
+            <div className="h-1 w-16 bg-yellow-500 mx-auto"></div>
 
             {/* Showcase Container */}
             <div
                 ref={containerRef}
-                className="flex gap-4  overflow-x-auto no-scrollbar scroll-smooth mt-8"
+                className="flex gap-4 overflow-x-auto no-scrollbar scroll-smooth mt-8 justify-center"
             >
                 {items.map((item, index) => (
                     <div
                         key={index}
-                        className="min-w-[300px] h-[300px] border rounded-lg shadow-xl   overflow-hidden"
+                        className="min-w-[90vw] md:min-w-[350px] h-[400px] border rounded-lg shadow-xl overflow-hidden flex flex-col items-center justify-center"
                     >
-                        {/* Main Image and Sub Images */}
-                        <div className="w-full h-[250px] shadow-xl relative bg-gray-100">
+                        {/* Main Image */}
+                        <div className="w-[300px] h-[300px] relative bg-gray-100">
                             <img
                                 src={mainImages[index]}
                                 alt={item.title}
-                                className="w-full h-full object-contain"
+                                className="object-contain w-full h-full"
                             />
-                            {/* <div className="absolute top-2 right-2 flex gap-2">
-                                {item.subImages.map((subImg, subIndex) => (
-                                    <img
-                                        key={subIndex}
-                                        src={subImg}
-                                        alt={`Sub-${subIndex}`}
-                                        className="w-10 h-10 border rounded-md object-cover cursor-pointer"
-                                        onClick={() => handleSubImageClick(index, subImg)}
-                                    />
-                                ))}
-                            </div> */}
                         </div>
-                        <div className="p-4">
-                            {/* <h3 className="text-lg font-bold">{item.title}</h3> */}
-                            {/* <p className="text-gray-700 font-semibold">{item.price}</p> */}
+                        <div className="p-4 text-center">
+                            <h3 className="text-lg font-bold">{item.title}</h3>
                         </div>
                     </div>
                 ))}
             </div>
 
-            {/* Right Button */}
-            {/* <button
-                onClick={scrollRight}
-                className="absolute right-0 top-1/2 -translate-y-1/2 bg-gray-200 text-gray-700 rounded-full p-2 shadow-md z-10"
-            >
-                ▶
-            </button> */}
+            {/* Navigation Buttons */}
+            {/* <div className="flex justify-between mt-4">
+                <button
+                    onClick={scrollLeft}
+                    className="p-2 bg-gray-300 rounded-full hover:bg-gray-400"
+                >
+                    &#8592;
+                </button>
+                <button
+                    onClick={scrollRight}
+                    className="p-2 bg-gray-300 rounded-full hover:bg-gray-400"
+                >
+                    &#8594;
+                </button>
+            </div> */}
+
+            {/* Dots Navigation */}
+            <div className="flex justify-center mt-4 gap-2">
+                {items.map((_, index) => (
+                    <span
+                        key={index}
+                        className={`w-3 h-3 rounded-full ${
+                            currentIndex === index ? "bg-yellow-500" : "bg-gray-300"
+                        }`}
+                    ></span>
+                ))}
+            </div>
         </div>
     );
 };
