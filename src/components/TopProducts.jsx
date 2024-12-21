@@ -134,25 +134,32 @@ const categories = [
     },
 ];
 
+
 const ShowcaseSection = ({ title, items }) => {
     const containerRef = useRef(null);
     const [mainImages, setMainImages] = useState(items.map((item) => item.mainImage));
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const handleScroll = () => {
+        if (!containerRef.current) return;
+        
         const scrollLeft = containerRef.current.scrollLeft;
-        const itemWidth = containerRef.current.firstChild.offsetWidth;
+        const itemWidth = containerRef.current.offsetWidth;
         const newIndex = Math.round(scrollLeft / itemWidth);
         setCurrentIndex(newIndex);
     };
 
     const scrollLeft = () => {
-        const itemWidth = containerRef.current.firstChild.offsetWidth;
+        if (!containerRef.current) return;
+        
+        const itemWidth = containerRef.current.offsetWidth;
         containerRef.current.scrollBy({ left: -itemWidth, behavior: "smooth" });
     };
 
     const scrollRight = () => {
-        const itemWidth = containerRef.current.firstChild.offsetWidth;
+        if (!containerRef.current) return;
+        
+        const itemWidth = containerRef.current.offsetWidth;
         containerRef.current.scrollBy({ left: itemWidth, behavior: "smooth" });
     };
 
@@ -163,56 +170,71 @@ const ShowcaseSection = ({ title, items }) => {
     };
 
     useEffect(() => {
-        const ref = containerRef.current;
-        ref.addEventListener("scroll", handleScroll);
-        return () => ref.removeEventListener("scroll", handleScroll);
+        const container = containerRef.current;
+        if (container) {
+            container.addEventListener('scroll', handleScroll);
+            container.scrollLeft = 0;
+        }
+        
+        return () => {
+            if (container) {
+                container.removeEventListener('scroll', handleScroll);
+            }
+        };
     }, []);
 
     return (
-        <div className="relative w-full container mx-auto max-w-screen-2xl px-4 my-8">
+        <div className="relative w-full max-w-screen-2xl px-4 my-8 mx-auto">
             <h2 className="text-2xl font-semibold mb-4 text-center">{title}</h2>
-            <div className="h-1 w-16 bg-yellow-500 mx-auto"></div>
+            <div className="h-1 w-16 bg-yellow-500 mx-auto mb-8"></div>
 
-            {/* Showcase Container */}
-            <div
-                ref={containerRef}
-                className="flex gap-4 overflow-x-auto no-scrollbar scroll-smooth mt-8 justify-center"
-            >
-                {items.map((item, index) => (
-                    <div
-                        key={index}
-                        className="min-w-[90vw] md:min-w-[350px] h-[400px] border rounded-lg shadow-xl overflow-hidden flex flex-col items-center justify-center"
-                    >
-                        {/* Main Image */}
-                        <div className="w-[300px] h-[300px] relative bg-gray-100">
-                            <img
-                                src={mainImages[index]}
-                                alt={item.title}
-                                className="object-contain w-full h-full"
-                            />
-                        </div>
-                        <div className="p-4 text-center">
-                            <h3 className="text-lg font-bold">{item.title}</h3>
-                        </div>
-                    </div>
-                ))}
-            </div>
-
-            {/* Navigation Buttons */}
-            {/* <div className="flex justify-between mt-4">
-                <button
-                    onClick={scrollLeft}
-                    className="p-2 bg-gray-300 rounded-full hover:bg-gray-400"
+            {/* Outer container for centering */}
+            <div className="relative flex justify-center w-full">
+                {/* Showcase Container */}
+                <div 
+                    ref={containerRef}
+                    className="w-full sm:max-w-[80%] overflow-x-auto no-scrollbar scroll-smooth mt-8"
                 >
-                    &#8592;
+                    <div className="flex snap-x snap-mandatory w-full">
+                        {items.map((item, index) => (
+                            <div
+                                key={index}
+                                className="w-full flex-shrink-0 snap-start flex justify-center items-center px-4"
+                            >
+                                <div className="w-full max-w-[350px] h-[400px] border rounded-lg shadow-xl overflow-hidden flex flex-col items-center justify-center">
+                                    {/* Main Image */}
+                                    <div className="w-[300px] h-[300px] relative bg-gray-100">
+                                        <img
+                                            src={mainImages[index]}
+                                            alt={item.title}
+                                            className="object-contain w-full h-full"
+                                        />
+                                    </div>
+                                    <div className="p-4 text-center">
+                                        <h3 className="text-lg font-bold">{item.title}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Navigation Buttons */}
+                {/* <button
+                    onClick={scrollLeft}
+                    className="absolute left-0 top-1/2 -translate-y-1/2 p-2 bg-gray-300 rounded-full hover:bg-gray-400 disabled:opacity-50 z-10"
+                    disabled={currentIndex === 0}
+                >
+                    ←
                 </button>
                 <button
                     onClick={scrollRight}
-                    className="p-2 bg-gray-300 rounded-full hover:bg-gray-400"
+                    className="absolute right-0 top-1/2 -translate-y-1/2 p-2 bg-gray-300 rounded-full hover:bg-gray-400 disabled:opacity-50 z-10"
+                    disabled={currentIndex === items.length - 1}
                 >
-                    &#8594;
-                </button>
-            </div> */}
+                    →
+                </button> */}
+            </div>
 
             {/* Dots Navigation */}
             <div className="flex justify-center mt-4 gap-2">
