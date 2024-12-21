@@ -11,6 +11,7 @@ import Image from 'next/image';
 import ImageShowcase from '@/components/ImageShowcase';
 import Link from 'next/link';
 import AuctionsMap from '@/components/AuctionsMap';
+import TopProducts from '@/components/TopProducts';
 
 const Page = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -144,6 +145,7 @@ const Page = () => {
 
                 </section>
             </div>
+            <TopProducts/>
             <ImageShowcase />
             <AboutSection />
             <CategoryCountry />
