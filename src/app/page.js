@@ -7,6 +7,7 @@ import CategoryList from "@/components/CategoryList";
 import FeaturedPrices from "@/components/FeaturedPrices";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import ImageShowcase from "@/components/ImageShowcase";
 import NewsletterForm from "@/components/NewsletterForm";
 import PartnersSection from "@/components/PartnersSection";
 import StatsSection from "@/components/StatsSection";
@@ -21,6 +22,9 @@ export default function Home() {
       </div>
       <AuctionNearmeBtn/>
       {/* <AuctionsNearMe/> */}
+
+    <ImageShowcase/>
+
       <div>
         {/* <FeaturedPrices/> */}
       </div>

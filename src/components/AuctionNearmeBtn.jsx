@@ -3,7 +3,7 @@ import React from 'react'
 
 const AuctionNearmeBtn = () => {
     return (
-        <Link href="auctions-near-me">
+        <Link href="find-auctions-near-me">
         <section className="py-10 px-4 container mx-auto max-w-screen-2xl cursor-pointer">
             <div className="text-start mb-6">
                 <h2 className="text-3xl font-bold">Auctions Near Me</h2>
