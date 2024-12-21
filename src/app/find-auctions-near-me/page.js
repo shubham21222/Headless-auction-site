@@ -10,8 +10,14 @@ import CategoryList from '@/components/CategoryList';
 import Image from 'next/image';
 import ImageShowcase from '@/components/ImageShowcase';
 import Link from 'next/link';
-import AuctionsMap from '@/components/AuctionsMap';
 import TopProducts from '@/components/TopProducts';
+import dynamic from 'next/dynamic';
+
+const AuctionsMap = dynamic(() => import('@/components/AuctionsMap'), {
+    ssr: false, // Optional: if the component is client-side only
+    loading: () => <p>Loading...</p>, // Optional: fallback content while loading
+  });
+  
 
 const Page = () => {
     const [currentIndex, setCurrentIndex] = useState(0);

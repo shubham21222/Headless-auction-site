@@ -1,17 +1,42 @@
-import AboutSection from "@/components/AboutSection";
-import AuctionNearmeBtn from "@/components/AuctionNearmeBtn";
-import AuctionsNearMe from "@/components/AuctionsNearMe";
-import CarouselComponent from "@/components/Carousel";
-import CategoryCountry from "@/components/CategoryCountry";
-import CategoryList from "@/components/CategoryList";
-import FeaturedPrices from "@/components/FeaturedPrices";
-import Footer from "@/components/Footer";
+import dynamic from 'next/dynamic';
 import Header from "@/components/Header";
-import ImageShowcase from "@/components/ImageShowcase";
-import NewsletterForm from "@/components/NewsletterForm";
-import PartnersSection from "@/components/PartnersSection";
+import CarouselComponent from "@/components/Carousel";
+import AuctionNearmeBtn from "@/components/AuctionNearmeBtn";
+import AboutSection from "@/components/AboutSection";
 import StatsSection from "@/components/StatsSection";
-import TrendingBrands from "@/components/TrendingBrands";
+import NewsletterForm from "@/components/NewsletterForm";
+import Footer from "@/components/Footer";
+import CategoryList from '@/components/CategoryList';
+
+// Lazy Load Components with Skeleton Loading
+const TrendingBrands = dynamic(() => import('@/components/TrendingBrands'), {
+  loading: () => (
+    <div className="space-y-4">
+      <div className="animate-pulse bg-gray-200 h-8 w-32 rounded"></div>
+      <div className="animate-pulse bg-gray-200 h-8 w-48 rounded mt-2"></div>
+    </div>
+  ),
+});
+
+const PartnersSection = dynamic(() => import('@/components/PartnersSection'), {
+  loading: () => (
+    <div className="space-y-4">
+      <div className="animate-pulse bg-gray-200 h-16 rounded"></div>
+      <div className="animate-pulse bg-gray-200 h-16 rounded"></div>
+    </div>
+  ),
+});
+
+const CategoryCountry = dynamic(() => import('@/components/CategoryCountry'), {
+  loading: () => (
+    <div className="space-y-2">
+      <div className="animate-pulse bg-gray-200 h-12 rounded"></div>
+      <div className="animate-pulse bg-gray-200 h-8 w-3/4 rounded"></div>
+    </div>
+  ),
+});
+
+
 
 export default function Home() {
   return (
@@ -20,23 +45,21 @@ export default function Home() {
       <div className="w-full">
         <CarouselComponent />
       </div>
-      <AuctionNearmeBtn/>
-      {/* <AuctionsNearMe/> */}
+      <AuctionNearmeBtn />
 
-    {/* <ImageShowcase/> */}
+      <CategoryCountry />
+      <CategoryList />
 
-      <div>
-        {/* <FeaturedPrices/> */}
-      </div>
-      <CategoryCountry/>
-      <CategoryList/>
       <div className="w-full">
         <AboutSection />
       </div>
-      <StatsSection/>
-      <TrendingBrands/>
-      <PartnersSection/>
-      <NewsletterForm/>
+
+
+      <StatsSection />
+      <TrendingBrands />
+      <PartnersSection />
+      
+      <NewsletterForm />
       <Footer />
     </>
   );

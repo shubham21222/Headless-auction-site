@@ -4,28 +4,24 @@ import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
-import banner1 from '../assets/banner-Image2_3_11zon.webp';
-import banner2 from '../assets/banner-img2_2_11zon.webp';
-import banner3 from '../assets/banner-img3_1_11zon.webp';
-
 const CarouselComponent = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const images = [
     {
       src: 'https://beta.nyelizabeth.com/wp-content/uploads/2024/11/banner-Image2_3_11zon.webp',
       title: "Discover Luxury Treasures",
-      subtitle: "Curated Auctions for Discerning Collectors"
+      subtitle: "Curated Auctions for Discerning Collectors",
     },
     {
       src: 'https://beta.nyelizabeth.com/wp-content/uploads/2024/11/banner-img2_2_11zon.webp',
       title: "Exclusive Online Auctions",
-      subtitle: "Rare Finds, Exceptional Quality"
+      subtitle: "Rare Finds, Exceptional Quality",
     },
     {
-      src:'https://beta.nyelizabeth.com/wp-content/uploads/2024/11/banner-img3_1_11zon.webp',
+      src: 'https://beta.nyelizabeth.com/wp-content/uploads/2024/11/banner-img3_1_11zon.webp',
       title: "Your Gateway to Luxury",
-      subtitle: "Connecting Collectors Worldwide"
-    }
+      subtitle: "Connecting Collectors Worldwide",
+    },
   ];
 
   const nextSlide = useCallback(() => {
@@ -42,30 +38,29 @@ const CarouselComponent = () => {
   }, [nextSlide]);
 
   return (
-    <div className="relative w-full h-[50vh] md:h-[70vh] lg:h-[90vh] overflow-hidden">
-      {/* Carousel Images with Framer Motion */}
+    <div className="relative w-full h-screen overflow-hidden">
+      {/* Carousel Images */}
       <AnimatePresence mode="wait">
         <motion.div
           key={currentIndex}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 1 }}
+          transition={{ duration: 0.5 }}
           className="absolute inset-0"
         >
           <Image
             src={images[currentIndex].src}
             alt={`Slide ${currentIndex + 1}`}
             fill
-            priority
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
-            className="object-cover brightness-75"
+            priority={currentIndex === 0}
+            className="object-cover"
           />
         </motion.div>
       </AnimatePresence>
 
       {/* Overlay Content */}
-      <div className="absolute inset-0 z-10 flex flex-col justify-center items-start px-4 md:px-16 text-white">
+       <div className="absolute inset-0 z-10 flex flex-col justify-center items-start px-4 md:px-16 text-white">
         <motion.div
           key={`content-${currentIndex}`}
           initial={{ opacity: 0, x: -50 }}
@@ -86,16 +81,16 @@ const CarouselComponent = () => {
       </div>
 
       {/* Navigation Arrows */}
-      <div className="absolute z-20 top-1/2 transform -translate-y-1/2 w-full flex justify-between px-4 md:px-8">
-        <button 
-          onClick={prevSlide} 
+      <div className="absolute top-1/2 transform -translate-y-1/2 w-full flex justify-between px-4 md:px-8">
+        <button
+          onClick={prevSlide}
           className="bg-black/50 text-white p-2 rounded-full hover:bg-black/75 transition-colors"
           aria-label="Previous Slide"
         >
           <FaChevronLeft className="h-6 w-6" />
         </button>
-        <button 
-          onClick={nextSlide} 
+        <button
+          onClick={nextSlide}
           className="bg-black/50 text-white p-2 rounded-full hover:bg-black/75 transition-colors"
           aria-label="Next Slide"
         >
@@ -104,7 +99,7 @@ const CarouselComponent = () => {
       </div>
 
       {/* Indicator Dots */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex space-x-2">
+      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20 flex space-x-2">
         {images.map((_, index) => (
           <button
             key={index}
