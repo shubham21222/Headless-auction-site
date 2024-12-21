@@ -136,121 +136,99 @@ const categories = [
 
 
 const ShowcaseSection = ({ title, items }) => {
-    const containerRef = useRef(null);
-    const [mainImages, setMainImages] = useState(items.map((item) => item.mainImage));
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [touchStart, setTouchStart] = useState(null);
+    const [touchEnd, setTouchEnd] = useState(null);
 
-    const handleScroll = () => {
-        if (!containerRef.current) return;
+    // Handle mobile swipe
+    const handleTouchStart = (e) => {
+        setTouchStart(e.touches[0].clientX);
+    };
+
+    const handleTouchMove = (e) => {
+        setTouchEnd(e.touches[0].clientX);
+    };
+
+    const handleTouchEnd = () => {
+        if (!touchStart || !touchEnd) return;
         
-        const scrollLeft = containerRef.current.scrollLeft;
-        const itemWidth = containerRef.current.offsetWidth;
-        const newIndex = Math.round(scrollLeft / itemWidth);
-        setCurrentIndex(newIndex);
-    };
+        const distance = touchStart - touchEnd;
+        const isLeftSwipe = distance > 50;
+        const isRightSwipe = distance < -50;
 
-    const scrollLeft = () => {
-        if (!containerRef.current) return;
-        
-        const itemWidth = containerRef.current.offsetWidth;
-        containerRef.current.scrollBy({ left: -itemWidth, behavior: "smooth" });
-    };
-
-    const scrollRight = () => {
-        if (!containerRef.current) return;
-        
-        const itemWidth = containerRef.current.offsetWidth;
-        containerRef.current.scrollBy({ left: itemWidth, behavior: "smooth" });
-    };
-
-    const handleSubImageClick = (index, subImg) => {
-        const updatedImages = [...mainImages];
-        updatedImages[index] = subImg;
-        setMainImages(updatedImages);
-    };
-
-    useEffect(() => {
-        const container = containerRef.current;
-        if (container) {
-            container.addEventListener('scroll', handleScroll);
-            container.scrollLeft = 0;
+        if (isLeftSwipe && currentIndex < items.length - 1) {
+            setCurrentIndex(curr => curr + 1);
         }
         
-        return () => {
-            if (container) {
-                container.removeEventListener('scroll', handleScroll);
-            }
-        };
-    }, []);
+        if (isRightSwipe && currentIndex > 0) {
+            setCurrentIndex(curr => curr - 1);
+        }
+
+        setTouchStart(null);
+        setTouchEnd(null);
+    };
 
     return (
         <div className="relative w-full max-w-screen-2xl px-4 my-8 mx-auto">
             <h2 className="text-2xl font-semibold mb-4 text-center">{title}</h2>
             <div className="h-1 w-16 bg-yellow-500 mx-auto mb-8"></div>
 
-            {/* Outer container for centering */}
-            <div className="relative flex justify-center w-full">
-                {/* Showcase Container */}
-                <div 
-                    ref={containerRef}
-                    className="w-full sm:max-w-[80%] overflow-x-auto no-scrollbar scroll-smooth mt-8"
-                >
-                    <div className="flex snap-x snap-mandatory w-full">
-                        {items.map((item, index) => (
-                            <div
-                                key={index}
-                                className="w-full flex-shrink-0 snap-start flex justify-center items-center px-4"
-                            >
-                                <div className="w-full max-w-[350px] h-[400px] border rounded-lg shadow-xl overflow-hidden flex flex-col items-center justify-center">
-                                    {/* Main Image */}
-                                    <div className="w-[300px] h-[300px] relative bg-gray-100">
-                                        <img
-                                            src={mainImages[index]}
-                                            alt={item.title}
-                                            className="object-contain w-full h-full"
-                                        />
-                                    </div>
-                                    <div className="p-4 text-center">
-                                        <h3 className="text-lg font-bold">{item.title}</h3>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
+            {/* Desktop View */}
+            <div className="hidden sm:flex justify-center gap-6 px-4">
+                {items.map((item, index) => (
+                    <div
+                        key={index}
+                        className="w-[350px] h-[400px] border rounded-lg shadow-xl overflow-hidden flex flex-col items-center justify-center"
+                    >
+                        <div className="w-[300px] h-[300px] relative bg-gray-100">
+                            <img
+                                src={item.mainImage}
+                                alt={item.title}
+                                className="object-contain w-full h-full"
+                            />
+                        </div>
+                        <div className="p-4 text-center">
+                            <h3 className="text-lg font-bold">{item.title}</h3>
+                        </div>
                     </div>
-                </div>
-
-                {/* Navigation Buttons */}
-                {/* <button
-                    onClick={scrollLeft}
-                    className="absolute left-0 top-1/2 -translate-y-1/2 p-2 bg-gray-300 rounded-full hover:bg-gray-400 disabled:opacity-50 z-10"
-                    disabled={currentIndex === 0}
-                >
-                    ←
-                </button>
-                <button
-                    onClick={scrollRight}
-                    className="absolute right-0 top-1/2 -translate-y-1/2 p-2 bg-gray-300 rounded-full hover:bg-gray-400 disabled:opacity-50 z-10"
-                    disabled={currentIndex === items.length - 1}
-                >
-                    →
-                </button> */}
+                ))}
             </div>
 
-            {/* Dots Navigation */}
-            <div className="flex justify-center mt-4 gap-2">
+            {/* Mobile View */}
+            <div 
+                className="sm:hidden w-full flex justify-center"
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+            >
+                <div className="w-full max-w-[350px] h-[400px] border rounded-lg shadow-xl overflow-hidden flex flex-col items-center justify-center">
+                    <div className="w-[300px] h-[300px] relative bg-gray-100">
+                        <img
+                            src={items[currentIndex].mainImage}
+                            alt={items[currentIndex].title}
+                            className="object-contain w-full h-full"
+                        />
+                    </div>
+                    <div className="p-4 text-center">
+                        <h3 className="text-lg font-bold">{items[currentIndex].title}</h3>
+                    </div>
+                </div>
+            </div>
+
+            {/* Mobile Dots Navigation */}
+            <div className="flex justify-center mt-4 gap-2 sm:hidden">
                 {items.map((_, index) => (
                     <span
                         key={index}
                         className={`w-3 h-3 rounded-full ${
                             currentIndex === index ? "bg-yellow-500" : "bg-gray-300"
                         }`}
-                    ></span>
+                    />
                 ))}
             </div>
         </div>
     );
 };
-
 const TopProducts = () => {
     return (
         <div>
