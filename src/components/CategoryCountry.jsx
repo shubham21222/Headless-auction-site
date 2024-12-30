@@ -3,10 +3,8 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import data from "../assets/Countries.json"; // Path to your JSON file
 
-// Import the map dynamically to avoid server-side rendering issues
 const Map = dynamic(() => import("../components/Map"), { ssr: false });
 
-// Extract unique country names
 const transformData = (data) => {
   const countries = new Set();
   data["Country , states, citites"].forEach((item) => {
@@ -17,7 +15,6 @@ const transformData = (data) => {
   return Array.from(countries);
 };
 
-// Hardcoded latitudes and longitudes for countries
 const countryCoordinates = {
   "Luxembourg auction": { lat: 49.8153, lng: 6.1296 },
   "Macao auction": { lat: 22.1987, lng: 113.5439 },
