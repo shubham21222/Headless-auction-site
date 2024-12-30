@@ -26,11 +26,11 @@ const stats = [
 
 const StatsSection = () => {
   return (
-    <section className="statsSection2 bg-gradient-to-r from-blue-900 to-blue-700 text-white py-20  mb-12  container mx-auto max-w-screen-2xl px-4">
+    <section className="statsSection2 bg-gradient-to-r from-blue-900 to-blue-700 text-white py-20  mb-12  mt-12 container mx-auto max-w-screen-2xl px-4">
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
         {stats.map((stat, index) => (
           <div key={index} className="flex flex-col items-center">
-            <div className="relative w-16 h-16 mb-4"> {/* Adjust w-16 and h-16 as needed */}
+            <div className="relative w-16 h-16 mb-4"> 
               <Image
                 src={stat.icon}
                 alt={stat.label}

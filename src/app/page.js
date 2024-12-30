@@ -49,8 +49,7 @@ export default function Home() {
       </div>
       {/* <AuctionNearmeBtn /> */}
 
-      <CategoryList />
-      <CategoryCountry />
+     
 
       <CommunitySection/>
       
@@ -58,6 +57,9 @@ export default function Home() {
       <div className="w-full">
         <AboutSection />
       </div>
+
+      <CategoryList />
+      <CategoryCountry />
 
 
       <StatsSection />
