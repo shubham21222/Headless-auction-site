@@ -42,6 +42,7 @@ export default function AuctionSection() {
             <Image
               src="/api/placeholder/600/400"
               alt="Featured auction item"
+              layout="responsive"
               width={600}
               height={400}
               className="w-full h-auto object-cover"
