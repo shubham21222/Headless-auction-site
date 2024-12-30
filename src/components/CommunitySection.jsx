@@ -43,7 +43,7 @@ export default function AuctionSection() {
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
               <div className="text-white">
                 <p className="text-sm font-semibold">Featured Auction</p>
-                <h3 className="text-xl font-bold">Vintage Collector's Edition</h3>
+                <h3 className="text-xl font-bold">Vintage Collector{''}s Edition</h3>
                 {/* <p className="text-amber-400 font-bold">Current Bid: $5,280</p> */}
               </div>
             </div>
