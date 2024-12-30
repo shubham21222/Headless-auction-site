@@ -43,11 +43,11 @@ const TrendingBrands = () => {
           </div>
         ))}
       </div>
-      <div className="text-center mt-6">
+      {/* <div className="text-center mt-6">
         <button className="btn bg-blue-700 text-white px-6 py-2 rounded hover:bg-blue-800">
           View All
         </button>
-      </div>
+      </div> */}
     </section>
   );
 };

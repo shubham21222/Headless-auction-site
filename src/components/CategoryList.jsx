@@ -34,7 +34,7 @@ const CategoryList = () => {
           <Link
             key={category.slug}
             href={`/category/${category.slug}`}
-            className="text-blue-600 hover:underline"
+            className=" bg-gray-900 hover:bg-gray-800 text-white font-semibold rounded-full transition-colors duration-300 shadow-xl hover:shadow-xl hover:underline max-w-52 w-full py-3 rounded-full  text-white block text-center mb-2"
           >
             {category.name}
           </Link>

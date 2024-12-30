@@ -6,16 +6,16 @@ import { useParams } from "next/navigation";
 import { motion } from 'framer-motion';
 import AuctionImg from "../../../assets/auctions.webp"
 import Image from "next/image";
+import Header2 from "@/components/Header2";
 
 const CategoryPage = () => {
-  const params = useParams();
-  const { slug } = params;
+    const params = useParams();
+    const { slug } = params;
 
-  return (  
-    <>
-    <Header/>
-
-    <div className="bg-gray-50 px-4 container mx-auto max-w-screen-2xl">
+    return (
+        <>
+            <Header2 />
+            <div className="bg-gray-50 px-4 container mt-8 mx-auto max-w-screen-2xl">
                 <section className="flex flex-col md:flex-row items-center justify-center gap-10 py-16 ">
                     <motion.div
                         className="w-full md:w-1/2 space-y-4"
@@ -54,18 +54,18 @@ const CategoryPage = () => {
                 </section>
             </div>
 
-    <div className="p-6 container mx-auto max-w-screen-2xl">
-      <h1 className="text-3xl font-bold mb-4 capitalize">
-        {slug.replace("-", " ")} Page
-      </h1>
-      <p>
-        This is the category page for <strong>{slug}</strong>. Fetch and display
-        category-specific content here.
-      </p>
-    </div>
-    <Footer/>
-    </>
-  );
+            <div className="p-6 container mx-auto max-w-screen-2xl">
+                <h1 className="text-3xl font-bold mb-4 capitalize">
+                    {slug.replace("-", " ")} Page
+                </h1>
+                <p>
+                    This is the category page for <strong>{slug}</strong>. Fetch and display
+                    category-specific content here.
+                </p>
+            </div>
+            <Footer />
+        </>
+    );
 };
 
 export default CategoryPage;

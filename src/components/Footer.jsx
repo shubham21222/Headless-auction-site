@@ -3,7 +3,7 @@ import { FaInstagram, FaLinkedin, FaYoutube } from 'react-icons/fa';
 
 const Footer = () => {
   return (
-    <footer className="bg-black text-white py-8">
+    <footer className="statsSection2 text-white py-8">
       <div className="container mx-auto px-4 max-w-screen-2xl">
         {/* Footer Columns - Now full width on mobile, centered */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
@@ -17,7 +17,7 @@ const Footer = () => {
             </ul>
           </div>
           
-          {/* More Column */}
+          
           <div>
             <h3 className="text-lg font-semibold mb-4">More...</h3>
             <ul className="space-y-2">

@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Link from "next/link";
+import Header2 from "@/components/Header2";
 
 const StateCitiesPage = () => {
   const params = useParams();
@@ -82,8 +83,8 @@ const StateCitiesPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
-      <main className="container mx-auto px-4 py-8">
+      <Header2 />
+      <main className="container mx-auto px-4 py-8 mt-[80px]">
         {/* Breadcrumb */}
         <nav className="flex items-center space-x-2 text-sm text-gray-500 mb-6">
           <Link href="/" className="hover:text-gray-700">

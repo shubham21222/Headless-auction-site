@@ -12,6 +12,7 @@ import ImageShowcase from '@/components/ImageShowcase';
 import Link from 'next/link';
 import TopProducts from '@/components/TopProducts';
 import dynamic from 'next/dynamic';
+import Header2 from '@/components/Header2';
 
 const AuctionsMap = dynamic(() => import('@/components/AuctionsMap'), {
     ssr: false, // Optional: if the component is client-side only
@@ -62,8 +63,8 @@ const Page = () => {
 
     return (
         <>
-            <Header />
-            <div className="bg-gray-50 px-4 container mx-auto max-w-screen-2xl">
+            <Header2 />
+            <div className="bg-gray-50 px-7  container mx-auto pt-6  max-w-screen-2xl">
                 <section className="flex flex-col md:flex-row items-center justify-center gap-10 py-16">
                     <motion.div
                         className="w-full md:w-1/2 space-y-4"
@@ -152,10 +153,11 @@ const Page = () => {
                 </section>
             </div>
             <TopProducts/>
-            <ImageShowcase />
+            {/* <ImageShowcase /> */}
             <AboutSection />
-            <CategoryCountry />
             <CategoryList />
+            <CategoryCountry />
+            
             <Footer />
         </>
     );

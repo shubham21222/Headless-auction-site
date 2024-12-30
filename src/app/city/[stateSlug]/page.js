@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Link from "next/link";
+import Header2 from "@/components/Header2";
 
 const CityPage = () => {
   const params = useParams();
@@ -53,8 +54,8 @@ const CityPage = () => {
 
   return (
     <>
-      <Header />
-      <section className="p-6 container mx-auto max-w-screen-2xl">
+      <Header2 />
+      <section className="p-6 container mx-auto pt-[100px] max-w-screen-2xl">
         {/* Breadcrumb */}
         <nav className="text-sm text-gray-500 mb-4">
           <Link href="/" className="hover:underline">

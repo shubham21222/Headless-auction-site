@@ -10,6 +10,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { motion } from 'framer-motion';
 import AuctionImg from "../../../assets/auctions.webp"
+import Header2 from "@/components/Header2";
 
 
 // WooCommerce API Configuration
@@ -86,8 +87,8 @@ const CountryStatesPage = () => {
 
   return (
     <>
-      <Header />
-      <section className="p-6 container mx-auto max-w-screen-2xl">
+      <Header2 />
+      <section className="p-6 container mx-auto mt-[80px] max-w-screen-2xl">
         {/* Breadcrumb */}
         <nav className="text-sm text-gray-500 mb-4">
           <Link href="/" className="hover:underline">

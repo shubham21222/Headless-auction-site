@@ -7,6 +7,8 @@ import StatsSection from "@/components/StatsSection";
 import NewsletterForm from "@/components/NewsletterForm";
 import Footer from "@/components/Footer";
 import CategoryList from '@/components/CategoryList';
+import MidSection from '@/components/MidSection';
+import CommunitySection from '@/components/CommunitySection';
 
 // Lazy Load Components with Skeleton Loading
 const TrendingBrands = dynamic(() => import('@/components/TrendingBrands'), {
@@ -45,11 +47,14 @@ export default function Home() {
       <div className="w-full">
         <CarouselComponent />
       </div>
-      <AuctionNearmeBtn />
+      {/* <AuctionNearmeBtn /> */}
 
-      <CategoryCountry />
       <CategoryList />
+      <CategoryCountry />
 
+      <CommunitySection/>
+      
+      {/* <MidSection/> */}
       <div className="w-full">
         <AboutSection />
       </div>

@@ -35,7 +35,7 @@ const NewsletterForm = () => {
           <div className=" text-center pt-6">
             <button
               type="submit"
-              className="btn w-full sm:w-auto bg-blue-500 hover:bg-blue-600 text-white font-medium px-8 py-3 rounded-md shadow-sm transition-colors duration-300"
+              className=" w-full sm:w-auto  bg-gray-900 hover:bg-gray-800 text-white font-semibold rounded-full text-white font-medium px-8 py-3 rounded-md shadow-sm transition-colors duration-300"
             >
               Submit
             </button>

@@ -28,7 +28,7 @@ const PartnersSection = () => {
         {/* Section Title */}
         
         {/* Carousel */}
-        <div className="partner bg-gradient-to-r from-blue-800 to-blue-500 rounded-lg p-6 overflow-hidden">
+        <div className="statsSection2 bg-gradient-to-r from-blue-800 to-blue-500 rounded-lg p-6 overflow-hidden">
         <div className="text-start mb-8">
           <h2 className="text-3xl font-bold text-white">Our Partners</h2>
           <div className="w-16 h-1 bg-yellow-500  mt-2"></div>
