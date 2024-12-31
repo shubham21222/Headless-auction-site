@@ -21,11 +21,17 @@ const Header2 = () => {
 
   return (
     <header
-      className={`fixed top-4 left-0 z-[9999] right-0 transition-all duration-300 w-full max-w-screen-xl mx-auto ${isScrolled
-          ? "bg-white/30 backdrop-blur text-black shadow-lg rounded-full"
-          : "bg-transparent text-white"
-        }`}
-      style={{ padding: isScrolled ? "18px" : "20px" }}
+    className={`fixed top-4 left-0 z-[9999] right-0 transition-all duration-300 w-full max-w-screen-xl mx-auto ${
+      isScrolled
+        ? "bg-white/5 shadow-lg rounded-full text-black border border-white/18"
+        : "bg-transparent text-white"
+    }`}
+    style={{
+      padding: isScrolled ? "18px" : "20px",
+      boxShadow: isScrolled ? "0 8px 32px 0 rgba(31, 38, 135, 0.37)" : "none",
+      backdropFilter: isScrolled ? "blur(20px)" : "none",
+      WebkitBackdropFilter: isScrolled ? "blur(20px)" : "none",
+    }}
     >
       <div className="container mx-auto px-6">
         <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">

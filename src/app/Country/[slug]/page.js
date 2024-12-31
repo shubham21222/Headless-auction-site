@@ -12,7 +12,7 @@ import { motion } from 'framer-motion';
 import AuctionImg from "../../../assets/auctions.webp"
 import Header2 from "@/components/Header2";
 import coordinates from "@/data/coordinates";
-import { MapContainer, TileLayer } from "react-leaflet";
+import { MapContainer, Popup, TileLayer } from "react-leaflet";
 import { Marker } from "leaflet";
 
 

@@ -90,7 +90,7 @@ const Page = () => {
 
     return (
         <>
-            <Header2 />
+            <Header />
             <HeroSection />
             <TopProducts />
             <AboutSection />

@@ -14,7 +14,7 @@ const AuctionInfoSection = () => {
             Are you searching for unique collectibles, rare antiques, or
             one-of-a-kind treasures? Look no further! Our auction platform
             brings together buyers and sellers from around the world to offer
-            an exclusive collection of items that you won’t find anywhere else.
+            an exclusive collection of items that you won{''}t find anywhere else.
             Start your journey to uncover exceptional deals and hidden gems
             today.
           </p>
@@ -22,7 +22,7 @@ const AuctionInfoSection = () => {
             Why Choose Our Auction Platform?
           </h2>
           <p className="text-lg leading-relaxed">
-            Whether you're a seasoned collector or a first-time bidder, our
+            Whether you{''}re a seasoned collector or a first-time bidder, our
             platform offers a seamless experience with secure transactions,
             real-time bidding, and a diverse selection of categories. Explore
             success stories from our community and join thousands of satisfied
