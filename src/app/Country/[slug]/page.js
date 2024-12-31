@@ -12,10 +12,18 @@ import { motion } from 'framer-motion';
 import AuctionImg from "../../../assets/auctions.webp"
 import Header2 from "@/components/Header2";
 import coordinates from "@/data/coordinates";
-import { MapContainer, Popup, TileLayer } from "react-leaflet";
-import { Marker } from "leaflet";
+import { MapContainer, Popup, TileLayer, Marker } from "react-leaflet"; // Fixed Marker import
+import "leaflet/dist/leaflet.css"; // Added Leaflet CSS
+import { Icon } from 'leaflet'; // Added for custom marker icon
+import { FaHome } from "react-icons/fa";
 
 
+const defaultIcon = new L.Icon({
+  iconUrl: require("leaflet/dist/images/marker-icon.png"),
+  shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
+  iconSize: [25, 41], // Size of the icon
+  iconAnchor: [12, 41], // Anchor point of the icon
+});
 // WooCommerce API Configuration
 const WooCommerceAPI = axios.create({
   baseURL: "https://auction.nyelizabeth.com/wp-json/wc/v3",
@@ -34,7 +42,30 @@ const CountryStatesPage = () => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const countryCoordinates = coordinates[country] || { lat: 0, lng: 0 }; // Default to (0,0) if not found
+  const findCoordinates = (searchCountry) => {
+    // Normalize the search term for better matching
+    const cleanSearchTerm = searchCountry
+      .replace(/-auction/i, '') // Remove '-auction' suffix
+      .replace(/-/g, ' ') // Replace dashes with spaces
+      .trim()
+      .toLowerCase();
+
+    // Search for coordinates regardless of case and spacing
+    const coordinatesEntry = Object.entries(coordinates).find(([key]) => {
+      const cleanKey = key
+        .replace(/-auction/i, '') // Remove '-auction' suffix
+        .replace(/-/g, ' ') // Replace dashes with spaces
+        .trim()
+        .toLowerCase();
+      return cleanKey === cleanSearchTerm;
+    });
+
+    // Return found coordinates or fallback to a default location
+    return coordinatesEntry ? coordinatesEntry[1] : { lat: 0, lng: 0 };
+  };
+
+
+  const countryCoordinates = findCoordinates(country);
 
 
   useEffect(() => {
@@ -93,13 +124,20 @@ const CountryStatesPage = () => {
   return (
     <>
       <Header2 />
-      <section className="p-6 container mx-auto mt-[80px] max-w-screen-2xl">
+      <section className="p-6 container mx-auto mt-[80px] max-w-screen-2xl px-4">
         {/* Breadcrumb */}
-        <nav className="text-sm text-gray-500 mb-4">
-          <Link href="/" className="hover:underline">
-            Home
-          </Link>{" "}
-          / <span className="capitalize text-gray-700">{country}</span>
+        <nav className="text-sm text-gray-500 mb-4 flex items-center space-x-2">
+          <Link
+            href="/"
+            className="hover:text-blue-600 transition duration-200 flex items-center space-x-1"
+          >
+            <FaHome className="w-4 h-4" />
+            <span>Home</span>
+          </Link>
+          <span className="text-gray-400">/</span>
+          <span className="capitalize text-gray-700 font-semibold">
+            {country.replace(/-/g, " ")}
+          </span>
         </nav>
 
         <div className="bg-gray-50 px-4 container mx-auto max-w-screen-2xl">
@@ -132,24 +170,27 @@ const CountryStatesPage = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
             >
-               {countryCoordinates.lat != 0 && countryCoordinates.lng != 0 ? (
+              <div className="h-[400px] w-full relative">
                 <MapContainer
                   center={[countryCoordinates.lat, countryCoordinates.lng]}
                   zoom={5}
-                  style={{ height: "400px", width: "100%" }}
+                  style={{ height: "100%", width: "100%" }}
                   className="rounded-lg shadow-lg"
                 >
                   <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                   />
-                  <Marker position={[countryCoordinates.lat, countryCoordinates.lng]}>
-                    <Popup>{country.replace("-", " ")}</Popup>
+                  <Marker
+                    position={[countryCoordinates.lat, countryCoordinates.lng]}
+                    icon={defaultIcon}
+                  >
+                    <Popup>
+                      {country.replace(/-auction/i, '').replace(/-/g, ' ')}
+                    </Popup>
                   </Marker>
                 </MapContainer>
-              ) : (
-                <p className="text-center text-gray-500">Map data not available for {country}</p>
-              )}
+              </div>
             </motion.div>
           </section>
         </div>
@@ -164,7 +205,7 @@ const CountryStatesPage = () => {
                 key={index}
                 href={`/${params.slug}/${state.toLowerCase().replace(/\s+/g, "-")}`}
               >
-                <div className="bg-blue-100 p-3 rounded-lg shadow-md hover:bg-blue-200 transition-colors cursor-pointer">
+                <div className="bg-gray-900 hover:bg-gray-800 font-semibold text-white p-3 rounded-lg shadow-md  transition-colors cursor-pointer">
                   {state}
                 </div>
               </Link>
