@@ -6,6 +6,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Link from "next/link";
 import Header2 from "@/components/Header2";
+import { FaHome } from "react-icons/fa";
+import { HiChevronRight } from "react-icons/hi";
 
 const StateCitiesPage = () => {
   const params = useParams();
@@ -86,20 +88,28 @@ const StateCitiesPage = () => {
       <Header2 />
       <main className="container mx-auto px-4 py-8 mt-[80px]">
         {/* Breadcrumb */}
-        <nav className="flex items-center space-x-2 text-sm text-gray-500 mb-6">
-          <Link href="/" className="hover:text-gray-700">
-            Home
-          </Link>
-          <span>/</span>
-          <Link 
-            href={`/${params.slug}`} 
-            className="hover:text-gray-700 capitalize"
-          >
-            {displayCountry}
-          </Link>
-          <span>/</span>
-          <span className="text-gray-700 capitalize">{displayState}</span>
-        </nav>
+        <nav className="flex items-center text-sm text-gray-500 mb-6">
+  {/* Home Link */}
+  <Link href="/" className="flex items-center hover:text-blue-600 transition duration-200 space-x-1">
+    <FaHome className="w-4 h-4" />
+    <span>Home</span>
+  </Link>
+  <HiChevronRight className="text-gray-400 mx-2" />
+
+  {/* Country Link */}
+  <Link 
+    href={`/${params.slug}`} 
+    className="hover:text-blue-600 transition duration-200 capitalize"
+  >
+    {displayCountry}
+  </Link>
+  <HiChevronRight className="text-gray-400 mx-2" />
+
+  {/* Current State */}
+  <span className="text-gray-700 font-semibold capitalize">
+    {displayState}
+  </span>
+</nav>
 
         {/* Page Header */}
         <div className="mb-8">
@@ -120,8 +130,8 @@ const StateCitiesPage = () => {
                 key={index}
                 href={`/${params.slug}/${params.statename}/${encodeURIComponent(city.toLowerCase().replace(/\s+/g, "-"))}`}
               >
-                <div className="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 border border-gray-100">
-                  <h3 className="text-gray-800 capitalize">{city}</h3>
+                <div className="text-white bg-gray-900 hover:bg-gray-800 font-semibold p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 border border-gray-100">
+                  <h3 className="text-white capitalize">{city}</h3>
                 </div>
               </Link>
             ))}
