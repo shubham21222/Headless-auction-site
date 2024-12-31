@@ -51,7 +51,7 @@ const Header2 = () => {
       }}
     >
       <div className="container mx-auto px-6">
-        <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
+        <div className="flex flex-col md:flex-row items-center justify-between space-y-1 md:space-y-0">
           <div className="flex items-center w-full md:w-auto justify-center md:justify-start relative">
             <Link href="/" className="flex-grow-0">
               <Image
