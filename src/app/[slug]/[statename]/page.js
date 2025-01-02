@@ -8,6 +8,8 @@ import Link from "next/link";
 import Header2 from "@/components/Header2";
 import { FaHome } from "react-icons/fa";
 import { HiChevronRight } from "react-icons/hi";
+import DynamicAboutSection from "@/components/DynamicAboutSection";
+import AuctionSectionWithCountry from "@/components/AuctionSectionWithCountry";
 
 const StateCitiesPage = () => {
   const params = useParams();
@@ -19,7 +21,7 @@ const StateCitiesPage = () => {
     const fetchCities = async () => {
       try {
         setIsLoading(true);
-        
+
         const normalizedState = params.statename
           .replace(/%C4%AB/g, 'i')  // Replace ī
           .replace(/%E1%B8%A9/g, 'h')  // Replace ḩ
@@ -89,27 +91,31 @@ const StateCitiesPage = () => {
       <main className="container mx-auto px-4 py-8 mt-[80px]">
         {/* Breadcrumb */}
         <nav className="flex items-center text-sm text-gray-500 mb-6">
-  {/* Home Link */}
-  <Link href="/" className="flex items-center hover:text-blue-600 transition duration-200 space-x-1">
-    <FaHome className="w-4 h-4" />
-    <span>Home</span>
-  </Link>
-  <HiChevronRight className="text-gray-400 mx-2" />
+          {/* Home Link */}
+          <Link href="/" className="flex items-center hover:text-blue-600 transition duration-200 space-x-1">
+            <FaHome className="w-4 h-4" />
+            <span>Home</span>
+          </Link>
+          <HiChevronRight className="text-gray-400 mx-2" />
 
-  {/* Country Link */}
-  <Link 
-    href={`/${params.slug}`} 
-    className="hover:text-blue-600 transition duration-200 capitalize"
-  >
-    {displayCountry}
-  </Link>
-  <HiChevronRight className="text-gray-400 mx-2" />
+          {/* Country Link */}
+          <Link
+            href={`/Country/${params.slug}`}
+            className="hover:text-blue-600 transition duration-200 capitalize"
+          >
+            {displayCountry}
+          </Link>
+          <HiChevronRight className="text-gray-400 mx-2" />
 
-  {/* Current State */}
-  <span className="text-gray-700 font-semibold capitalize">
-    {displayState}
-  </span>
-</nav>
+          {/* Current State */}
+          <span className="text-gray-700 font-semibold capitalize">
+            {displayState}
+          </span>
+        </nav>
+
+        <AuctionSectionWithCountry country={displayState} />
+
+        <DynamicAboutSection country={displayState} />
 
         {/* Page Header */}
         <div className="mb-8">

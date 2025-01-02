@@ -16,6 +16,7 @@ import { MapContainer, Popup, TileLayer, Marker } from "react-leaflet"; // Fixed
 import "leaflet/dist/leaflet.css"; // Added Leaflet CSS
 import { Icon } from 'leaflet'; // Added for custom marker icon
 import { FaHome } from "react-icons/fa";
+import DynamicAboutSection from "@/components/DynamicAboutSection";
 
 
 const defaultIcon = new L.Icon({
@@ -139,6 +140,9 @@ const CountryStatesPage = () => {
             {country.replace(/-/g, " ")}
           </span>
         </nav>
+
+        <DynamicAboutSection country={country} />
+
 
         <div className="bg-gray-50 px-4 container mx-auto max-w-screen-2xl">
           <section className="flex flex-col md:flex-row items-center justify-center gap-10 py-16 ">
