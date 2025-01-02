@@ -58,8 +58,6 @@ export default function Home() {
       </div>
 
       <CategoryList />
-      
-
 
       <StatsSection />
       <TrendingBrands />

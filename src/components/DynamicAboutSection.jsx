@@ -18,24 +18,22 @@ const DynamicAboutSection = ({ country }) => {
     // Dynamic content based on the country
     const countryContent = {
         default: {
-            section1: {
-                title: `About NY Elizabeth in ${formattedCountry}`,
-                subTitle: `Your Destination for Online Auctions in ${formattedCountry}`,
-                description1: `NY Elizabeth proudly serves auction enthusiasts in ${formattedCountry}. With a history rooted in excellence since 1956, we bring a global network of collectors and sellers to your fingertips.`,
-                description2: `From fine art to luxury goods, explore a vast array of items in ${formattedCountry}. Download our app today to bid live and join a vibrant auction community.`,
-                image:
-                    "https://beta.nyelizabeth.com/wp-content/uploads/2024/11/Rectangle-23-min.webp",
-            },
-            section2: {
-                title: `Discover Unmatched Auctions in ${formattedCountry}`,
-                subTitle: `Elevating Your Auction Experience`,
-                description1: `In ${formattedCountry}, NY Elizabeth offers unparalleled access to rare and valuable collectibles. With cutting-edge technology and expert curation, we ensure a seamless and rewarding auction experience for buyers and sellers.`,
-                description2: `Explore the world of art, luxury, and history with NY Elizabeth. Join today and be part of a vibrant global community reshaping the future of auctions.`,
-                image:
-                    "https://beta.nyelizabeth.com/wp-content/uploads/2024/11/Rectangle-23-1-min.webp",
-            },
+          section1: {
+            title: `Luxury Auctions & Fine Art Sales in ${formattedCountry}`,
+            subTitle: `Leading Local & International Auction House in ${formattedCountry}`,
+            description1: `Discover exclusive auctions and estate sales in ${formattedCountry} with NY Elizabeth, your trusted auction house since 1956. We specialize in fine art, antiques, jewelry, and luxury collectibles, connecting local sellers with global buyers.`,
+            description2: `Experience seamless bidding and expert appraisals in ${formattedCountry}. Our mobile app brings real-time auctions to your fingertips, featuring authenticated items and competitive pricing.`,
+            image: "https://beta.nyelizabeth.com/wp-content/uploads/2024/11/Rectangle-23-min.webp",
+          },
+          section2: {
+            title: `Exclusive Auctions & Rare Collectibles in ${formattedCountry}`,
+            subTitle: `Professional Appraisals & Valuations`,
+            description1: `Join ${formattedCountry}'s most trusted auction marketplace. Our expert appraisers and auctioneers ensure transparent valuations and authentic listings, specializing in estate liquidations, fine art, and luxury collectibles.`,
+            description2: `Connect with verified buyers and sellers in ${formattedCountry}'s premier auction community. From rare antiquities to modern luxury items, discover unique pieces backed by our authentication guarantee.`,
+            image: "https://beta.nyelizabeth.com/wp-content/uploads/2024/11/Rectangle-23-1-min.webp",
+          },
         },
-    };
+      };
 
     const content = countryContent[country] || countryContent.default;
 

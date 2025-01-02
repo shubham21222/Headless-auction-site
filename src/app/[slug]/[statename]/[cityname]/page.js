@@ -12,10 +12,18 @@ import Link from "next/link";
 export default function CityPage() {
   const { slug, statename, cityname } = useParams();
 
-  // Format the parameters for better readability
-  const formattedCityName = cityname.replace(/-/g, " ");
-  const formattedStateName = statename.replace(/-/g, " ");
-  const formattedCountryName = slug.replace(/-/g, " ");
+  const decodeCityName = (name) => {
+    return decodeURIComponent(name)
+      .replace(/-/g, ' ')
+      .replace(/'/g, "'")
+      .replace(/'/g, "'");
+  };
+  
+  // Update the formatting:
+  const formattedCityName = decodeCityName(cityname);
+  const formattedStateName = decodeCityName(statename);
+  const formattedCountryName = decodeCityName(slug);
+
 
   return (
     <>

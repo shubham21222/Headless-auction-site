@@ -1,7 +1,8 @@
 'use client';
 
 import Image from "next/image";
-import React, { useRef, useState,useEffect } from "react";
+import Link from "next/link";
+import React, { useRef, useState, useEffect } from "react";
 
 const categories = [
     {
@@ -151,7 +152,7 @@ const ShowcaseSection = ({ title, items }) => {
 
     const handleTouchEnd = () => {
         if (!touchStart || !touchEnd) return;
-        
+
         const distance = touchStart - touchEnd;
         const isLeftSwipe = distance > 50;
         const isRightSwipe = distance < -50;
@@ -159,7 +160,7 @@ const ShowcaseSection = ({ title, items }) => {
         if (isLeftSwipe && currentIndex < items.length - 1) {
             setCurrentIndex(curr => curr + 1);
         }
-        
+
         if (isRightSwipe && currentIndex > 0) {
             setCurrentIndex(curr => curr - 1);
         }
@@ -178,8 +179,9 @@ const ShowcaseSection = ({ title, items }) => {
                 {items.map((item, index) => (
                     <div
                         key={index}
-                        className="w-[350px] h-[400px] border rounded-lg shadow-xl overflow-hidden flex flex-col items-center justify-center"
+                        className="w-[350px] h-[400px] border rounded-lg shadow-xl overflow-hidden flex flex-col items-center justify-center group relative"
                     >
+                        {/* Image Container */}
                         <div className="w-[300px] h-[300px] relative bg-gray-100">
                             <img
                                 src={item.mainImage}
@@ -187,21 +189,34 @@ const ShowcaseSection = ({ title, items }) => {
                                 className="object-contain w-full h-full"
                             />
                         </div>
+
+                        {/* Title */}
                         <div className="p-4 text-center">
                             <h3 className="text-lg font-bold">{item.title}</h3>
                         </div>
+
+                        {/* Hover Button */}
+                        <Link href="https://www.liveauctioneers.com/auctioneer/6177/ny-elizabeth/">
+                            <button
+                                className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center text-white text-lg font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                            >
+                                Explore Auction
+                            </button>
+                        </Link>
                     </div>
                 ))}
             </div>
 
+
             {/* Mobile View */}
-            <div 
+            <div
                 className="sm:hidden w-full flex justify-center"
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
                 onTouchEnd={handleTouchEnd}
             >
-                <div className="w-full max-w-[350px] h-[400px] border rounded-lg shadow-xl overflow-hidden flex flex-col items-center justify-center">
+                <div className="relative w-full max-w-[350px] h-[400px] border rounded-lg shadow-xl overflow-hidden flex flex-col items-center justify-center group">
+                    {/* Image Container */}
                     <div className="w-[300px] h-[300px] relative bg-gray-100">
                         <img
                             src={items[currentIndex].mainImage}
@@ -209,20 +224,31 @@ const ShowcaseSection = ({ title, items }) => {
                             className="object-contain w-full h-full"
                         />
                     </div>
+
+                    {/* Title */}
                     <div className="p-4 text-center">
                         <h3 className="text-lg font-bold">{items[currentIndex].title}</h3>
                     </div>
+
+                    {/* Button Overlay */}
+                    <Link href="https://www.liveauctioneers.com/auctioneer/6177/ny-elizabeth/">
+                    <button
+                        className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center text-white text-lg font-semibold opacity-0 group-hover:opacity-100 touch-opacity-100 transition-opacity duration-300"
+                    >
+                        Explore Auction
+                    </button>
+                    </Link>
                 </div>
             </div>
+
 
             {/* Mobile Dots Navigation */}
             <div className="flex justify-center mt-4 gap-2 sm:hidden">
                 {items.map((_, index) => (
                     <span
                         key={index}
-                        className={`w-3 h-3 rounded-full ${
-                            currentIndex === index ? "bg-yellow-500" : "bg-gray-300"
-                        }`}
+                        className={`w-3 h-3 rounded-full ${currentIndex === index ? "bg-yellow-500" : "bg-gray-300"
+                            }`}
                     />
                 ))}
             </div>
