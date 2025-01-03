@@ -10,12 +10,16 @@ import { FaHome } from "react-icons/fa";
 import { HiChevronRight } from "react-icons/hi";
 import DynamicAboutSection from "@/components/DynamicAboutSection";
 import AuctionSectionWithCountry from "@/components/AuctionSectionWithCountry";
+import AuctionSection2 from "@/components/AboutSection2";
+import AuctionSection3 from "@/components/AuctionSection3";
 
 const StateCitiesPage = () => {
   const params = useParams();
   const [cities, setCities] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  
 
   useEffect(() => {
     const fetchCities = async () => {
@@ -59,8 +63,10 @@ const StateCitiesPage = () => {
 
   // Format display strings - keep special characters for display
   const displayCountry = params.slug.replace(/-/g, " ").replace(" auction", "");
-  const displayState = params.statename.replace(/-/g, " ").replace(" auctions", "");
-
+  const displayState = decodeURIComponent(params.statename)
+  .replace(/-/g, " ")
+  .replace(" auctions", "");
+  
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50">
@@ -113,9 +119,13 @@ const StateCitiesPage = () => {
           </span>
         </nav>
 
-        <AuctionSectionWithCountry country={displayState} />
+            {/* <AuctionSectionWithCountry country={displayState} /> */}
+        
+        <AuctionSection2  country={displayState}/>
 
         <DynamicAboutSection country={displayState} />
+        <AuctionSection3  country={displayState} />
+
 
         {/* Page Header */}
         <div className="mb-8">

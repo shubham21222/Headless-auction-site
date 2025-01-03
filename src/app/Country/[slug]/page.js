@@ -17,6 +17,9 @@ import "leaflet/dist/leaflet.css"; // Added Leaflet CSS
 import { Icon } from 'leaflet'; // Added for custom marker icon
 import { FaHome } from "react-icons/fa";
 import DynamicAboutSection from "@/components/DynamicAboutSection";
+import AboutSection from "@/components/AboutSection";
+import AuctionSection2 from "@/components/AboutSection2";
+import AuctionSection3 from "@/components/AuctionSection3";
 
 
 const defaultIcon = new L.Icon({
@@ -142,7 +145,8 @@ const CountryStatesPage = () => {
         </nav>
 
         <DynamicAboutSection country={country} />
-
+        <AuctionSection2 country={country} /> 
+        <AuctionSection3  country={country} />
 
         <div className="bg-gray-50 px-4 container mx-auto max-w-screen-2xl">
           <section className="flex flex-col md:flex-row items-center justify-center gap-10 py-16 ">

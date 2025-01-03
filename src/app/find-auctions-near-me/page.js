@@ -13,6 +13,8 @@ import TopProducts from '@/components/TopProducts';
 import dynamic from 'next/dynamic';
 import Header2 from '@/components/Header2';
 import AuctionInfoSection from '@/components/AuctionInfoSection';
+import AuctionSection2 from '@/components/AboutSection2';
+import AuctionSection3 from '@/components/AuctionSection3';
 
 const AuctionsMap = dynamic(() => import('@/components/AuctionsMap'), {
     ssr: false,
@@ -88,6 +90,8 @@ const Page = () => {
         <>
             <Header />
             <HeroSection location={location} />
+            <AuctionSection2  country={location}/>
+            <AuctionSection3  country={location} />
             <TopProducts />
             <AboutSection />
             <AuctionInfoSection />
