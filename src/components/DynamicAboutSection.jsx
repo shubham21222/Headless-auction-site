@@ -2,6 +2,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 
 const DynamicAboutSection = ({ country }) => {
     const fadeInUp = {
@@ -86,9 +87,11 @@ const DynamicAboutSection = ({ country }) => {
                                 <p className="text-lg text-gray-600 leading-relaxed">
                                     {content.section1.description2}
                                 </p>
+                                <Link href="https://www.liveauctioneers.com/auctioneer/6177/ny-elizabeth/">
                                 <button className="mt-6 px-8 py-3 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-full transition-colors duration-300 shadow-lg hover:shadow-xl">
-                                    Download Our App
+                                Buy Now
                                 </button>
+                                </Link>
                             </div>
                         </motion.div>
                     </div>
