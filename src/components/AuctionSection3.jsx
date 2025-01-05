@@ -216,10 +216,10 @@ const AuctionSection3 = ({ country }) => {
               key={i}
               variants={fadeInUp}
               whileHover={{ scale: 1.02 }}
-              className="bg-gradient-to-br from-gray-100 to-gray-200 p-6 rounded-lg"
+              className="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-lg"
             >
-              <h3 className="text-xl font-semibold mb-2">{category.title}</h3>
-              <p className="text-gray-600">{category.description}</p>
+              <h3 className="text-xl font-semibold mb-2 text-white">{category.title}</h3>
+              <p className="text-gray-300">{category.description}</p>
             </motion.div>
           ))}
         </motion.div>
@@ -239,42 +239,43 @@ const AuctionSection3 = ({ country }) => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.6 }}
+        className="flex flex-col items-center"
       >
         <motion.h2
           variants={fadeInUp}
-          className="text-2xl md:text-3xl font-bold mb-6"
+          className="text-2xl md:text-3xl font-bold mb-6 text-center"
         >
           How to Participate in Auctions in {country}
         </motion.h2>
 
         <motion.div
           variants={stagger}
-          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6"
+          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 justify-center"
         >
           {steps.map((step, i) => (
             <motion.div
               key={i}
               variants={fadeInUp}
               whileHover={{ scale: 1.05 }}
-              className="bg-gradient-to-br from-gray-100 to-gray-200 p-6 rounded-lg"
+              className="bg-gradient-to-br from-gray-100 to-gray-200 p-6 rounded-lg flex flex-col items-center"
             >
               <div className="text-3xl font-bold text-gray-900 mb-3">{i + 1}</div>
               <div className="mb-4">
                 <Image
                   src={step.image}
                   alt={step.title}
-                  width={200}
-                  height={200}
-                  className="rounded-md mx-auto"
+                  width={250} // Ensuring consistent size for all images
+                  height={250} // Ensuring consistent size for all images
+                  className="rounded-md"
                 />
               </div>
-              <h3 className="text-lg font-semibold mb-2">{step.title}</h3>
-              <p className="text-gray-600">{step.description}</p>
+              <h3 className="text-lg font-semibold mb-2 text-center">{step.title}</h3>
+              <p className="text-gray-600 text-center">{step.description}</p>
             </motion.div>
           ))}
         </motion.div>
-
       </motion.div>
+
     </div>
   );
 };

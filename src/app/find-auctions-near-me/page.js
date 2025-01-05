@@ -93,7 +93,7 @@ const Page = () => {
             <AuctionSection2  country={location}/>
             <AuctionSection3  country={location} />
             <AuctionInfoSection />
-            <CategoryList />
+            {/* <CategoryList /> */}
             <TopProducts />
             {/* <AboutSection /> */}
            

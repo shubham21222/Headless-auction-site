@@ -42,6 +42,7 @@ const CountryStatesPage = () => {
   const params = useParams();
   const country = params.slug.toLowerCase().replace("-", " ");
   const router = useRouter();
+  const rawCountry = country.replace("-auction","")
 
   const [states, setStates] = useState([]);
   const [products, setProducts] = useState([]);
@@ -50,8 +51,7 @@ const CountryStatesPage = () => {
   const findCoordinates = (searchCountry) => {
     // Normalize the search term for better matching
     const cleanSearchTerm = searchCountry
-      .replace(/-auction/i, '') // Remove '-auction' suffix
-      .replace(/-/g, ' ') // Replace dashes with spaces
+    .replace(/-auctions$/, '')  // Remove trailing -auctions  
       .trim()
       .toLowerCase();
 
@@ -126,6 +126,10 @@ const CountryStatesPage = () => {
     );
   }
 
+  const displayState = decodeURIComponent(country)
+  .replace(/-/g, " ")
+  .replace(" auction", "");
+
   return (
     <>
       <Header2 />
@@ -146,8 +150,8 @@ const CountryStatesPage = () => {
         </nav>
 
         <DynamicAboutSection country={country} />
-        <AuctionSection2 country={country} /> 
-        <AuctionSection3  country={country} />
+        <AuctionSection2 country={displayState} /> 
+        <AuctionSection3  country={displayState} />
 
         <div className="bg-gray-50 px-4 container mx-auto max-w-screen-2xl">
           <section className="flex flex-col md:flex-row items-center justify-center gap-10 py-16 ">

@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { Timer, Award, Shield, TrendingUp } from 'lucide-react';
 import axios from 'axios';
 
-const AuctionSection2 =({country}) => {
+const AuctionSection2 = ({ country }) => {
   const [heroImage, setHeroImage] = useState(null); // State to hold the fetched image
   const [loading, setLoading] = useState(true); // Loading state for the image
   const [error, setError] = useState(null);
@@ -61,7 +61,7 @@ const AuctionSection2 =({country}) => {
     init();
   }, []);
 
-    const formattedCountry = country.charAt(0).toUpperCase() + country.slice(1).toLowerCase();
+  const formattedCountry = country.charAt(0).toUpperCase() + country.slice(1).toLowerCase();
 
 
   return (
@@ -100,27 +100,27 @@ const AuctionSection2 =({country}) => {
         {/* Featured Auction Showcase */}
         <div className="space-y-4 sm:space-y-6">
           <div className="relative rounded-xl overflow-hidden shadow-2xl transform hover:scale-[1.02] transition-transform duration-300">
-             {loading ? (
-                          // Skeleton Loader
-                          <div className="w-full h-64 bg-gray-200 animate-pulse"></div>
-                        ) : heroImage ? (
-                          <Image
-                            src={heroImage.source_url}
-                            alt={heroImage.alt_text || 'Featured auction item'}
-                            layout="responsive"
-                            width={600}
-                            height={400}
-                            className="w-full h-auto object-cover"
-                          />
-                        ) : (
-                          <div className="w-full h-64 bg-gray-200 flex items-center justify-center">
-                            {error ? (
-                              <p className="text-red-500">{error}</p>
-                            ) : (
-                              <p>No Image Available</p>
-                            )}
-                          </div>
-                        )}
+            {loading ? (
+              // Skeleton Loader
+              <div className="w-full h-64 bg-gray-200 animate-pulse"></div>
+            ) : heroImage ? (
+              <Image
+                src={heroImage.source_url}
+                alt={heroImage.alt_text || 'Featured auction item'}
+                layout="responsive"
+                width={600}
+                height={400}
+                className="w-full h-auto object-cover"
+              />
+            ) : (
+              <div className="w-full h-64 bg-gray-200 flex items-center justify-center">
+                {error ? (
+                  <p className="text-red-500">{error}</p>
+                ) : (
+                  <p>No Image Available</p>
+                )}
+              </div>
+            )}
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 sm:p-6">
               <div className="text-white">
                 <p className="text-xs sm:text-sm font-semibold">Featured Auction</p>
