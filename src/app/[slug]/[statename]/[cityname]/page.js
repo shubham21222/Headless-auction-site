@@ -10,6 +10,7 @@ import { HiChevronRight } from "react-icons/hi";
 import Link from "next/link";
 import AuctionSection2 from "@/components/AboutSection2";
 import AuctionSection3 from "@/components/AuctionSection3";
+import CategoryCountry from "@/components/CategoryCountry";
 
 export default function CityPage() {
   const { slug, statename, cityname } = useParams();
@@ -21,8 +22,8 @@ export default function CityPage() {
       .replace(/\b(?:auction|auctions)\b/i, '') // Removes "auction" or "auctions"
       .trim();
   };
-    
-  
+
+
   // const displaycity = decodeURIComponent(params.statename)
   // .replace(/-/g, " ")
   // .replace(" auctions", "");
@@ -78,10 +79,10 @@ export default function CityPage() {
             </nav>
 
             {/* About Section */}
-            <AuctionSection2  country={formattedCityName}/>
+            <AuctionSection2 country={formattedCityName} />
 
             <DynamicAboutSection country={formattedCityName} />
-            <AuctionSection3  country={formattedCityName} />
+            <AuctionSection3 country={formattedCityName} />
 
 
             <main className="container mx-auto px-4 py-8 mt-6">
@@ -104,6 +105,8 @@ export default function CityPage() {
           </div>
         </div>
       </main>
+      <CategoryCountry />
+
       <Footer />
 
     </>

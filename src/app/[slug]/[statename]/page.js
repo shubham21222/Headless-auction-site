@@ -12,6 +12,7 @@ import DynamicAboutSection from "@/components/DynamicAboutSection";
 import AuctionSectionWithCountry from "@/components/AuctionSectionWithCountry";
 import AuctionSection2 from "@/components/AboutSection2";
 import AuctionSection3 from "@/components/AuctionSection3";
+import CategoryCountry from "@/components/CategoryCountry";
 
 const StateCitiesPage = () => {
   const params = useParams();
@@ -160,6 +161,8 @@ const StateCitiesPage = () => {
           </div>
         )}
       </main>
+      <CategoryCountry />
+
       <Footer />
     </div>
   );

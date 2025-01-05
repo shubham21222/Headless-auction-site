@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
 const fadeInUp = {
@@ -16,6 +16,13 @@ const stagger = {
 };
 
 const AuctionSection3 = ({ country }) => {
+
+  const [showAll, setShowAll] = useState(false);
+
+  const handleViewAll = () => {
+    setShowAll(true);
+  };
+
   const features = [
     {
       title: "Incredible Savings",
@@ -38,21 +45,102 @@ const AuctionSection3 = ({ country }) => {
   const categories = [
     {
       title: "Car Auctions",
-      description: `Find pre-owned, salvaged, and vintage vehicles at unbeatable prices in ${country}.`
+      description: `Find pre-owned, salvaged, and vintage vehicles at unbeatable prices in ${country}. Discover exciting deals on automobiles with unmatched value in ${country}.`
     },
     {
       title: "Property Auctions",
-      description: `Explore real estate opportunities, including foreclosures, commercial properties, and land in ${country}.`
+      description: `Explore real estate opportunities, including foreclosures, commercial properties, and land in ${country}. Unlock your next investment in ${country}.`
     },
     {
       title: "Electronics Auctions",
-      description: `Bid on the latest gadgets, including smartphones, laptops, and gaming consoles in ${country}.`
+      description: `Bid on the latest gadgets, including smartphones, laptops, and gaming consoles in ${country}. Stay ahead in technology in ${country}.`
     },
     {
       title: "Art & Antiques",
-      description: `Acquire rare artworks, furniture, and collectibles with historical significance in ${country}.`
+      description: `Acquire rare artworks, furniture, and collectibles with historical significance in ${country}. Bring home a piece of history in ${country}.`
+    },
+    {
+      title: "Antique Auctions",
+      description: `Discover timeless treasures, from vintage decor to rare collectibles, at antique auctions. Start your collection in ${country}.`
+    },
+    {
+      title: "Automobile Auctions",
+      description: `From luxury cars to utility vehicles, automobile auctions offer the best deals in ${country}. Experience the thrill of bidding in ${country}.`
+    },
+    {
+      title: "Coin & Currency",
+      description: `Find rare coins and historical currency to enhance your collection. Invest in valuable numismatics in ${country}.`
+    },
+    {
+      title: "Commercial Auctions",
+      description: `Explore opportunities to acquire office supplies, machinery, and commercial equipment. Grow your business in ${country}.`
+    },
+    {
+      title: "Doll Auctions",
+      description: `Bid on collectible dolls, vintage pieces, and rare finds for enthusiasts of all ages. Add charm to your collection in ${country}.`
+    },
+    {
+      title: "Ephemera Auctions",
+      description: `Discover a wide range of historical documents, photographs, and paper collectibles that tell unique stories in ${country}.`
+    },
+    {
+      title: "Farm Auctions",
+      description: `Find agricultural equipment, tools, and livestock at farm auctions in ${country}. Revolutionize your farm in ${country}.`
+    },
+    {
+      title: "Guns & Weaponry",
+      description: `Explore a collection of historical firearms, hunting gear, and military artifacts available at auctions. Secure your piece of history in ${country}.`
+    },
+    {
+      title: "Heavy Equipment",
+      description: `Bid on industrial machinery, construction tools, and heavy-duty equipment at unbeatable prices. Strengthen your operations in ${country}.`
+    },
+    {
+      title: "Hummel Auctions",
+      description: `Collect exquisite Hummel figurines that captivate collectors worldwide. Add artistic charm in ${country}.`
+    },
+    {
+      title: "Jewelry Auctions",
+      description: `From dazzling diamonds to elegant timepieces, jewelry auctions offer timeless elegance. Enhance your style in ${country}.`
+    },
+    {
+      title: "Liquidation Auctions",
+      description: `Acquire surplus stock, office furniture, and more from liquidation sales. Unlock great deals in ${country}.`
+    },
+    {
+      title: "Militaria Auctions",
+      description: `Own military memorabilia, vintage uniforms, and war collectibles that tell heroic tales in ${country}.`
+    },
+    {
+      title: "Real Estate Auctions",
+      description: `Secure properties ranging from urban apartments to sprawling estates. Invest wisely in ${country}.`
+    },
+    {
+      title: "Restaurant Equipment",
+      description: `Equip your kitchen with high-quality tools, furniture, and appliances from restaurant auctions. Upgrade your space in ${country}.`
+    },
+    {
+      title: "Sports Memorabilia",
+      description: `Discover jerseys, signed gear, and rare memorabilia from your favorite sports. Celebrate your passion in ${country}.`
+    },
+    {
+      title: "Storage Unit Auctions",
+      description: `Unlock hidden treasures with storage unit auctions. Explore unexpected finds in ${country}.`
+    },
+    {
+      title: "Toy Auctions",
+      description: `From vintage toys to modern collectibles, toy auctions delight enthusiasts of all ages. Play into nostalgia in ${country}.`
+    },
+    {
+      title: "Train Auctions",
+      description: `Bid on model trains, railway memorabilia, and vintage locomotives. Build your dream railway collection in ${country}.`
+    },
+    {
+      title: "Vintage Clothing",
+      description: `Rediscover fashion from bygone eras with vintage clothing auctions. Elevate your wardrobe in ${country}.`
     }
   ];
+  
 
   const steps = [
     {
@@ -120,21 +208,31 @@ const AuctionSection3 = ({ country }) => {
         </motion.h2>
         
         <motion.div 
-          variants={stagger}
-          className="grid sm:grid-cols-2 gap-4 md:gap-6"
-        >
-          {categories.map((category, i) => (
-            <motion.div
-              key={i}
-              variants={fadeInUp}
-              whileHover={{ scale: 1.02 }}
-              className="bg-gradient-to-br from-gray-100 to-gray-200 p-6 rounded-lg"
-            >
-              <h3 className="text-xl font-semibold mb-2">{category.title}</h3>
-              <p className="text-gray-600">{category.description}</p>
-            </motion.div>
-          ))}
-        </motion.div>
+        variants={stagger}
+        className="grid sm:grid-cols-2 gap-4 md:gap-6"
+      >
+        {(showAll ? categories : categories.slice(0, 4)).map((category, i) => (
+          <motion.div
+            key={i}
+            variants={fadeInUp}
+            whileHover={{ scale: 1.02 }}
+            className="bg-gradient-to-br from-gray-100 to-gray-200 p-6 rounded-lg"
+          >
+            <h3 className="text-xl font-semibold mb-2">{category.title}</h3>
+            <p className="text-gray-600">{category.description}</p>
+          </motion.div>
+        ))}
+      </motion.div>
+      {!showAll && (
+        <div className="text-center mt-6">
+          <button
+            onClick={handleViewAll}
+            className="bg-gray-900 hover:bg-gray-800 text-white font-semibold rounded-full transition-colors duration-300 shadow-xl hover:shadow-xl px-4 py-2 rounded-lg"
+          >
+            View All
+          </button>
+        </div>
+      )}
       </motion.div>
 
       <motion.div
