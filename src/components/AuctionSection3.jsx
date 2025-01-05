@@ -216,7 +216,7 @@ const AuctionSection3 = ({ country }) => {
               key={i}
               variants={fadeInUp}
               whileHover={{ scale: 1.02 }}
-              className="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-lg"
+              className="bg-gradient-to-r from-gray-900 to-black  p-6 rounded-lg"
             >
               <h3 className="text-xl font-semibold mb-2 text-white">{category.title}</h3>
               <p className="text-gray-300">{category.description}</p>
