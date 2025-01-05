@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 import { FaInstagram, FaLinkedin, FaYoutube } from 'react-icons/fa';
 
@@ -12,12 +13,14 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Support</h3>
             <ul className="space-y-2">
               <li><a href="#" className="hover:underline">Contact Us</a></li>
-              <li><a href="#" className="hover:underline">FAQ</a></li>
+              <Link href="/FAQs">
+                <li><a href="#" className="hover:underline">FAQ</a></li>
+              </Link>
               <li><a href="#" className="hover:underline">Site Map</a></li>
             </ul>
           </div>
-          
-          
+
+
           <div>
             <h3 className="text-lg font-semibold mb-4">More...</h3>
             <ul className="space-y-2">
@@ -27,7 +30,7 @@ const Footer = () => {
               <li><a href="#" className="hover:underline">Do Not Sell My Personal Information</a></li>
             </ul>
           </div>
-          
+
           {/* Follow Us Column */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
@@ -44,7 +47,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        
+
         {/* Bottom Row - Stacked on mobile */}
         <div className="mt-8 border-t border-gray-700 pt-6 flex flex-col items-center text-center space-y-2">
           <p className="text-sm text-gray-400">

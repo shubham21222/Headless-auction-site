@@ -1,8 +1,66 @@
-import React from 'react';
-import Image from "next/image";
-import { Timer, Award, Shield, TrendingUp } from "lucide-react";
+'use client';
+
+import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
+import { Timer, Award, Shield, TrendingUp } from 'lucide-react';
+import axios from 'axios';
 
 export default function AuctionSection() {
+  const [heroImage, setHeroImage] = useState(null); // State to hold the fetched image
+  const [loading, setLoading] = useState(true); // Loading state for the image
+  const [error, setError] = useState(null);
+
+  const username = 'auctionnyelizabeth';
+  const password = '^s)mBdEeOY$ESrr%)A';
+  const wpURL = 'https://auction.nyelizabeth.com';
+
+  // Function to fetch the JWT token
+  const fetchToken = async () => {
+    const response = await axios.post(`${wpURL}/wp-json/jwt-auth/v1/token`, {
+      username,
+      password,
+    });
+    return response.data.token;
+  };
+
+  // Function to fetch images with the "Hero Section" category
+  const fetchHeroImage = async (token) => {
+    try {
+      const response = await axios.get(`${wpURL}/wp-json/wp/v2/media`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        params: {
+          categories: 'Hero Section', // Adjust this to match the category slug or ID
+          per_page: 1, // Fetch only one image
+        },
+      });
+
+      if (response.data.length > 0) {
+        setHeroImage(response.data[0]); // Set the first image as the hero image
+      } else {
+        throw new Error('No images found for the Hero Section category');
+      }
+    } catch (err) {
+      setError(err.message || 'Error fetching hero image');
+    } finally {
+      setLoading(false); // Set loading to false once the fetch is complete
+    }
+  };
+
+  useEffect(() => {
+    const init = async () => {
+      try {
+        const token = await fetchToken();
+        await fetchHeroImage(token);
+      } catch (err) {
+        setError(err.message);
+      }
+    };
+
+    init();
+  }, []);
+
   return (
     <div className="bg-gradient-to-b container mx-auto max-w-screen-2xl from-gray-50 to-white text-gray-900 py-16 px-4 sm:px-8 md:px-20 lg:px-32">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
@@ -39,18 +97,33 @@ export default function AuctionSection() {
         {/* Featured Auction Showcase */}
         <div className="space-y-4 sm:space-y-6">
           <div className="relative rounded-xl overflow-hidden shadow-2xl transform hover:scale-[1.02] transition-transform duration-300">
-            <Image
-              src="https://p1.liveauctioneers.com/6177/355085/194037711_1_x.jpg?height=310&quality=70&version=1733782984"
-              alt="Featured auction item"
-              layout="responsive"
-              width={600}
-              height={400}
-              className="w-full h-auto object-cover"
-            />
+            {loading ? (
+              // Skeleton Loader
+              <div className="w-full h-64 bg-gray-200 animate-pulse"></div>
+            ) : heroImage ? (
+              <Image
+                src={heroImage.source_url}
+                alt={heroImage.alt_text || 'Featured auction item'}
+                layout="responsive"
+                width={600}
+                height={400}
+                className="w-full h-auto object-cover"
+              />
+            ) : (
+              <div className="w-full h-64 bg-gray-200 flex items-center justify-center">
+                {error ? (
+                  <p className="text-red-500">{error}</p>
+                ) : (
+                  <p>No Image Available</p>
+                )}
+              </div>
+            )}
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 sm:p-6">
               <div className="text-white">
                 <p className="text-xs sm:text-sm font-semibold">Featured Auction</p>
-                <h3 className="text-lg sm:text-xl font-bold">Vintage Collector{''}s Edition</h3>
+                <h3 className="text-lg sm:text-xl font-bold">
+      {heroImage ? heroImage.title.rendered : 'Vintage Collector\'s Edition'}
+    </h3>
               </div>
             </div>
           </div>

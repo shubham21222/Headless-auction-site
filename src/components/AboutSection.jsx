@@ -1,15 +1,73 @@
-'use client'
-import React from 'react';
+'use client';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import axios from 'axios';
 
 const AboutSection = () => {
+    const [sectionOneImage, setSectionOneImage] = useState('');
+    const [sectionTwoImage, setSectionTwoImage] = useState('');
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
     const fadeInUp = {
         initial: { opacity: 0, y: 20 },
         whileInView: { opacity: 1, y: 0 },
-        transition: { duration: 0.8 }
+        transition: { duration: 0.8 },
     };
+
+    useEffect(() => {
+        const fetchImages = async () => {
+            try {
+                const wpURL = 'https://auction.nyelizabeth.com';
+                const username = 'auctionnyelizabeth';
+                const password = '^s)mBdEeOY$ESrr%)A';
+
+                // Authenticate to get JWT token
+                const tokenResponse = await axios.post(`${wpURL}/wp-json/jwt-auth/v1/token`, {
+                    username,
+                    password,
+                });
+                const token = tokenResponse.data.token;
+
+                // Fetch media for specific categories
+                const [section1Response, section2Response] = await Promise.all([
+                    axios.get(`${wpURL}/wp-json/wp/v2/media`, {
+                        headers: { Authorization: `Bearer ${token}` },
+                        params: {
+                            search: 'Section 1 – Landing Page',
+                            per_page: 1,
+                        },
+                    }),
+                    axios.get(`${wpURL}/wp-json/wp/v2/media`, {
+                        headers: { Authorization: `Bearer ${token}` },
+                        params: {
+                            search: 'Section 2 – Landing Page',
+                            per_page: 1,
+                        },
+                    }),
+                ]);
+
+                if (section1Response.data.length > 0) {
+                    setSectionOneImage(section1Response.data[0].source_url);
+                }
+                if (section2Response.data.length > 0) {
+                    setSectionTwoImage(section2Response.data[0].source_url);
+                }
+            } catch (err) {
+                console.error('Error fetching images:', err);
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchImages();
+    }, []);
+
+    const defaultSection1Image = 'https://beta.nyelizabeth.com/wp-content/uploads/2024/11/Rectangle-23-min.webp';
+    const defaultSection2Image = 'https://beta.nyelizabeth.com/wp-content/uploads/2024/11/Rectangle-23-1-min.webp';
 
     return (
         <div className="bg-gradient-to-b from-white to-gray-50">
@@ -36,9 +94,9 @@ const AboutSection = () => {
                                     
                                     {/* Main image */}
                                     <div className="relative w-full h-full overflow-hidden rounded-tr-[80px] rounded-bl-[80px] shadow-2xl">
-                                        <Image
-                                            src="https://beta.nyelizabeth.com/wp-content/uploads/2024/11/Rectangle-23-min.webp"
-                                            alt="Street View"
+                                    <Image
+                                            src="https://auction.nyelizabeth.com/wp-content/uploads/2025/01/194542321_1_x.webp"
+                                            alt="Section 1 Landing Page"
                                             fill
                                             sizes="(max-width: 768px) 100vw, 50vw"
                                             className="object-cover group-hover:scale-110 transition-transform duration-700"
@@ -108,7 +166,7 @@ const AboutSection = () => {
                                     {/* Main image */}
                                     <div className="relative w-full h-full overflow-hidden rounded-tl-[80px] rounded-br-[80px] shadow-2xl">
                                         <Image
-                                            src="https://beta.nyelizabeth.com/wp-content/uploads/2024/11/Rectangle-23-1-min.webp"
+                                            src="https://auction.nyelizabeth.com/wp-content/uploads/2024/12/10756617.jpeg"
                                             alt="Street View"
                                             fill
                                             sizes="(max-width: 768px) 100vw, 50vw"

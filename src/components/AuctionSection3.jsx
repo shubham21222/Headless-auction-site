@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 const fadeInUp = {
   initial: { y: 50, opacity: 0 },
@@ -140,48 +141,47 @@ const AuctionSection3 = ({ country }) => {
       description: `Rediscover fashion from bygone eras with vintage clothing auctions. Elevate your wardrobe in ${country}.`
     }
   ];
-  
+
 
   const steps = [
     {
       title: "Register on Our Platform",
-      description: `Sign up for free and explore the wide range of auctions in ${country}.`
+      description: `Sign up for free and explore the wide range of auctions in ${country}.`,
+      image: "/assets/image1.jpeg",
     },
     {
       title: "Browse Auctions",
-      description: `Use advanced filters to find auctions by category, location, or price range in ${country}.`
+      description: `Use advanced filters to find auctions by category, location, or price range in ${country}.`,
+      image: "/assets/image2.jpeg",
     },
     {
       title: "Place Your Bid",
-      description: `Submit your bids in real-time or set auto-bids to stay competitive in ${country}.`
+      description: `Submit your bids in real-time or set auto-bids to stay competitive in ${country}.`,
+      image: "/assets/image3.jpeg",
     },
-    {
-      title: "Win and Claim Your Items",
-      description: `Complete the transaction securely and enjoy your newly acquired treasures from ${country}.`
-    }
   ];
 
   return (
     <div className="max-w-7xl mx-auto p-4 md:p-6">
-      <motion.div 
+      <motion.div
         variants={stagger}
         initial="initial"
         animate="animate"
         className="bg-gradient-to-r from-gray-900 to-black rounded-lg p-4 md:p-8 text-white mb-8"
       >
-        <motion.h1 
+        <motion.h1
           variants={fadeInUp}
           className="text-3xl md:text-4xl font-bold mb-6"
         >
           Discover Amazing Auctions in {country}
         </motion.h1>
-        
-        <motion.div 
+
+        <motion.div
           variants={stagger}
           className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6"
         >
           {features.map((feature, i) => (
-            <motion.div 
+            <motion.div
               key={i}
               variants={fadeInUp}
               whileHover={{ scale: 1.05 }}
@@ -200,39 +200,39 @@ const AuctionSection3 = ({ country }) => {
         transition={{ delay: 0.4 }}
         className="mb-8"
       >
-        <motion.h2 
+        <motion.h2
           variants={fadeInUp}
           className="text-2xl md:text-3xl font-bold mb-6"
         >
           Popular Auction Categories in {country}
         </motion.h2>
-        
-        <motion.div 
-        variants={stagger}
-        className="grid sm:grid-cols-2 gap-4 md:gap-6"
-      >
-        {(showAll ? categories : categories.slice(0, 4)).map((category, i) => (
-          <motion.div
-            key={i}
-            variants={fadeInUp}
-            whileHover={{ scale: 1.02 }}
-            className="bg-gradient-to-br from-gray-100 to-gray-200 p-6 rounded-lg"
-          >
-            <h3 className="text-xl font-semibold mb-2">{category.title}</h3>
-            <p className="text-gray-600">{category.description}</p>
-          </motion.div>
-        ))}
-      </motion.div>
-      {!showAll && (
-        <div className="text-center mt-6">
-          <button
-            onClick={handleViewAll}
-            className="bg-gray-900 hover:bg-gray-800 text-white font-semibold rounded-full transition-colors duration-300 shadow-xl hover:shadow-xl px-4 py-2 rounded-lg"
-          >
-            View All
-          </button>
-        </div>
-      )}
+
+        <motion.div
+          variants={stagger}
+          className="grid sm:grid-cols-2 gap-4 md:gap-6"
+        >
+          {(showAll ? categories : categories.slice(0, 4)).map((category, i) => (
+            <motion.div
+              key={i}
+              variants={fadeInUp}
+              whileHover={{ scale: 1.02 }}
+              className="bg-gradient-to-br from-gray-100 to-gray-200 p-6 rounded-lg"
+            >
+              <h3 className="text-xl font-semibold mb-2">{category.title}</h3>
+              <p className="text-gray-600">{category.description}</p>
+            </motion.div>
+          ))}
+        </motion.div>
+        {!showAll && (
+          <div className="text-center mt-6">
+            <button
+              onClick={handleViewAll}
+              className="bg-gray-900 hover:bg-gray-800 text-white font-semibold rounded-full transition-colors duration-300 shadow-xl hover:shadow-xl px-4 py-2 rounded-lg"
+            >
+              View All
+            </button>
+          </div>
+        )}
       </motion.div>
 
       <motion.div
@@ -240,14 +240,14 @@ const AuctionSection3 = ({ country }) => {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.6 }}
       >
-        <motion.h2 
+        <motion.h2
           variants={fadeInUp}
           className="text-2xl md:text-3xl font-bold mb-6"
         >
           How to Participate in Auctions in {country}
         </motion.h2>
-        
-        <motion.div 
+
+        <motion.div
           variants={stagger}
           className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6"
         >
@@ -259,11 +259,21 @@ const AuctionSection3 = ({ country }) => {
               className="bg-gradient-to-br from-gray-100 to-gray-200 p-6 rounded-lg"
             >
               <div className="text-3xl font-bold text-gray-900 mb-3">{i + 1}</div>
+              <div className="mb-4">
+                <Image
+                  src={step.image}
+                  alt={step.title}
+                  width={200}
+                  height={200}
+                  className="rounded-md mx-auto"
+                />
+              </div>
               <h3 className="text-lg font-semibold mb-2">{step.title}</h3>
               <p className="text-gray-600">{step.description}</p>
             </motion.div>
           ))}
         </motion.div>
+
       </motion.div>
     </div>
   );

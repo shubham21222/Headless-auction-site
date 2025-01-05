@@ -24,14 +24,14 @@ const DynamicAboutSection = ({ country }) => {
             subTitle: `Leading Local & International Auction House in ${formattedCountry}`,
             description1: `Discover exclusive auctions and estate sales in ${formattedCountry} with NY Elizabeth, your trusted auction house since 1956. We specialize in fine art, antiques, jewelry, and luxury collectibles, connecting local sellers with global buyers.`,
             description2: `Experience seamless bidding and expert appraisals in ${formattedCountry}. Our mobile app brings real-time auctions to your fingertips, featuring authenticated items and competitive pricing.`,
-            image: "https://beta.nyelizabeth.com/wp-content/uploads/2024/11/Rectangle-23-min.webp",
+            image: "https://auction.nyelizabeth.com/wp-content/uploads/2025/01/194542321_1_x.webp",
           },
           section2: {
             title: `Exclusive Auctions & Rare Collectibles in ${formattedCountry}`,
             subTitle: `Professional Appraisals & Valuations`,
             description1: `Join ${formattedCountry}'s most trusted auction marketplace. Our expert appraisers and auctioneers ensure transparent valuations and authentic listings, specializing in estate liquidations, fine art, and luxury collectibles.`,
             description2: `Connect with verified buyers and sellers in ${formattedCountry}'s premier auction community. From rare antiquities to modern luxury items, discover unique pieces backed by our authentication guarantee.`,
-            image: "https://beta.nyelizabeth.com/wp-content/uploads/2024/11/Rectangle-23-1-min.webp",
+            image: "https://auction.nyelizabeth.com/wp-content/uploads/2024/12/10756617.jpeg",
           },
         },
       };

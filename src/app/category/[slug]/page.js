@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
 import Footer from "@/components/Footer";
-import Header from "@/components/Header";
+import Header2 from "@/components/Header2";
 import { useParams } from "next/navigation";
 import { motion } from 'framer-motion';
-import AuctionImg from "../../../assets/auctions.webp"
+import AuctionImg from "../../../assets/auctions.webp";
 import Image from "next/image";
-import Header2 from "@/components/Header2";
+import FetchImages from "@/components/FetchImages"; // Adjust the path as needed
 
 const CategoryPage = () => {
     const params = useParams();
@@ -16,7 +16,7 @@ const CategoryPage = () => {
         <>
             <Header2 />
             <div className="bg-gray-50 px-4 container mt-8 mx-auto max-w-screen-2xl">
-                <section className="flex flex-col md:flex-row items-center justify-center gap-10 py-16 ">
+                <section className="flex flex-col md:flex-row items-center justify-center gap-10 py-16">
                     <motion.div
                         className="w-full md:w-1/2 space-y-4"
                         initial={{ opacity: 0, x: -50 }}
@@ -60,8 +60,11 @@ const CategoryPage = () => {
                 </h1>
                 <p>
                     This is the category page for <strong>{slug}</strong>. Fetch and display
-                    category-specific content here.
+                    category-specific content below.
                 </p>
+
+                {/* Fetch and display images for the current category */}
+                <FetchImages slug={slug} />
             </div>
             <Footer />
         </>

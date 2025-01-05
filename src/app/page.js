@@ -11,6 +11,7 @@ import MidSection from '@/components/MidSection';
 import CommunitySection from '@/components/CommunitySection';
 import PaintingsGallery from '@/components/PaintingsGallery';
 import PaintingsCategory from '@/components/PaintingsGallery';
+import FetchImages from '@/components/FetchImages';
 
 // Lazy Load Components with Skeleton Loading
 const TrendingBrands = dynamic(() => import('@/components/TrendingBrands'), {
@@ -51,6 +52,7 @@ export default function Home() {
       </div>
 
       <CommunitySection/>
+      {/* <FetchImages/> */}
       
 
       <div className="w-full">
