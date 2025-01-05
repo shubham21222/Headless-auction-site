@@ -89,7 +89,7 @@ const DynamicAboutSection = ({ country }) => {
                                 </p>
                                 <Link href="https://www.liveauctioneers.com/auctioneer/6177/ny-elizabeth/">
                                 <button className="mt-6 px-8 py-3 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-full transition-colors duration-300 shadow-lg hover:shadow-xl">
-                                Buy Now
+                                View Auctions
                                 </button>
                                 </Link>
                             </div>
@@ -144,14 +144,7 @@ const DynamicAboutSection = ({ country }) => {
                                 <p className="text-lg text-gray-600 leading-relaxed">
                                     {content.section2.description2}
                                 </p>
-                                <div className="flex gap-4 mt-6">
-                                    <button className="px-8 py-3 bg-gray-900 hover:bg-gray-800 text-white font-semibold rounded-full transition-colors duration-300 shadow-lg hover:shadow-xl">
-                                        Explore Gallery
-                                    </button>
-                                    <button className="px-8 py-3 border-2 border-gray-900 text-gray-900 font-semibold rounded-full hover:bg-gray-100 transition-colors duration-300 rounded-full">
-                                        Learn More
-                                    </button>
-                                </div>
+                                
                             </div>
                         </motion.div>
                     </div>
