@@ -21,6 +21,7 @@ import AboutSection from "@/components/AboutSection";
 import AuctionSection2 from "@/components/AboutSection2";
 import AuctionSection3 from "@/components/AuctionSection3";
 import CategoryCountry from "@/components/CategoryCountry";
+import CountryMap from "@/components/CountryMap";
 
 
 const defaultIcon = new L.Icon({
@@ -85,15 +86,7 @@ const CountryStatesPage = () => {
         setStates(statesData);
 
         // Fetch products if United States
-        if (country == "united states-auction") {
-          try {
-            const productsResponse = await WooCommerceAPI.get("/products");
-            console.log("Products API Response:", productsResponse.data); // Debug log
-            setProducts(productsResponse.data);
-          } catch (error) {
-            console.error("Error fetching products:", error.message);
-          }
-        }
+       
       } catch (err) {
         console.error("Error fetching states or products:", err.message);
         setError(err.message);
@@ -164,25 +157,7 @@ const CountryStatesPage = () => {
               transition={{ duration: 0.8 }}
             >
               <div className="h-[400px] w-full relative">
-                <MapContainer
-                  center={[countryCoordinates.lat, countryCoordinates.lng]}
-                  zoom={5}
-                  style={{ height: "100%", width: "100%" }}
-                  className="rounded-lg shadow-lg"
-                >
-                  <TileLayer
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                  />
-                  <Marker
-                    position={[countryCoordinates.lat, countryCoordinates.lng]}
-                    icon={defaultIcon}
-                  >
-                    <Popup>
-                      {country.replace(/-auction/i, '').replace(/-/g, ' ')}
-                    </Popup>
-                  </Marker>
-                </MapContainer>
+              <CountryMap countryName={country} />
               </div>
             </motion.div>
           </section>
