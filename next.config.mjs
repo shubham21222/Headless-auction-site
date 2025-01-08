@@ -11,7 +11,7 @@ const nextConfig = {
     ];
   },
   images: {
-    domains: ['www.auctionzip.com', 'auction.nyelizabeth.com', 'beta.nyelizabeth.com', 'images.liveauctioneers.com', 'p1.liveauctioneers.com'], // Add other domains if needed
+    domains: ['www.auctionzip.com', 'img1.wsimg.com' ,'auction.nyelizabeth.com', 'beta.nyelizabeth.com', 'images.liveauctioneers.com', 'p1.liveauctioneers.com'], // Add other domains if needed
   },
   async rewrites() {
     return [

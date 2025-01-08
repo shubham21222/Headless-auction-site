@@ -55,7 +55,7 @@ const Header2 = () => {
           <div className="flex items-center w-full md:w-auto justify-center md:justify-start relative">
             <Link href="/" className="flex-grow-0">
               <Image
-                src="https://beta.nyelizabeth.com/wp-content/uploads/2024/05/Rectangle.svg"
+                src="https://img1.wsimg.com/isteam/ip/05b280c7-f839-4e4d-9316-4bf01d28f2df/logo/b9e8f767-116c-4444-aab2-66386e072ec2.png/:/rs=w:110,h:80,cg:true,m/cr=w:110,h:80/qt=q:95"
                 alt="NY Elizabeth"
                 width={100}
                 height={100}

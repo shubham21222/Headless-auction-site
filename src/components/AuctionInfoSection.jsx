@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 
 const AuctionInfoSection = () => {
   return (
@@ -30,15 +29,25 @@ const AuctionInfoSection = () => {
           </p>
         </div>
 
-        {/* Image Content */}
+        {/* Video Content */}
         <div className="flex-1">
-          <div className="relative w-full h-80 lg:h-full rounded-lg overflow-hidden">
-            <Image
-              src="https://beta.nyelizabeth.com/wp-content/uploads/2024/10/producta7cab4ac4ac8c0c451f13006552fa6f7.webp"
-              alt="Auction Event"
-              fill
-              className="rounded-lg object-cover"
-            />
+          <div className="relative w-full h-80  rounded-lg overflow-hidden">
+            <div
+              className="relative w-full h-full bg-cover bg-center rounded-lg"
+              style={{
+                backgroundImage:
+                  "url('https://i.ytimg.com/vi_webp/7Gu00wsXRKg/maxresdefault.webp')",
+              }}
+            >
+              <iframe
+                className="absolute top-0 left-0 w-full h-full rounded-lg"
+                src="https://www.youtube.com/embed/7Gu00wsXRKg?rel=0&autoplay=0"
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
           </div>
         </div>
       </div>
