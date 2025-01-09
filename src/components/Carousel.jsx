@@ -46,39 +46,40 @@ const CarouselComponent = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.3 }}
           className="absolute inset-0"
         >
           <Image
             src={images[currentIndex].src}
             alt={`Slide ${currentIndex + 1}`}
             fill
-            priority={currentIndex === 0}
+            priority
             className="object-cover"
           />
         </motion.div>
       </AnimatePresence>
 
       {/* Overlay Content */}
-       <div className="absolute inset-0 z-10 flex flex-col justify-center items-start px-4 md:px-16 text-white">
-        <motion.div
-          key={`content-${currentIndex}`}
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: 50 }}
-          transition={{ duration: 0.8 }}
-        >
-          <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold leading-tight mb-4">
-            {images[currentIndex].title}
-          </h1>
-          <p className="text-base md:text-xl lg:text-2xl mb-6 max-w-xl">
+      <div className="absolute inset-0 z-10 flex flex-col justify-center items-start px-4 md:px-16 text-white">
+    <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold leading-tight mb-4">
+        {images[currentIndex].title}
+    </h1>
+    <motion.div
+        key={`content-${currentIndex}`}
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: 20 }}
+        transition={{ duration: 0.4 }}
+    >
+        <p className="text-base md:text-xl lg:text-2xl mb-6 max-w-xl">
             {images[currentIndex].subtitle}
-          </p>
-          <button className="bg-white text-black px-6 py-3 rounded-full hover:bg-gray-200 transition-colors">
+        </p>
+        <button className="bg-white text-black px-6 py-3 rounded-full hover:bg-gray-200 transition-colors">
             Explore Auctions
-          </button>
-        </motion.div>
-      </div>
+        </button>
+    </motion.div>
+</div>
+
 
       {/* Navigation Arrows */}
       <div className="absolute top-1/2 transform -translate-y-1/2 w-full flex justify-between px-4 md:px-8">

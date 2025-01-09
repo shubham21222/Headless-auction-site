@@ -15,6 +15,7 @@ import AuctionSection3 from "@/components/AuctionSection3";
 import CategoryCountry from "@/components/CategoryCountry";
 import CountryMap from "@/components/CountryMap";
 import CountryMap2 from "@/components/CountryMap2";
+import CountryMapCities from "@/components/CountryMap2";
 
 const StateCitiesPage = () => {
   const params = useParams();
@@ -129,7 +130,7 @@ const StateCitiesPage = () => {
         <DynamicAboutSection country={displayState} />
         <AuctionSection3  country={displayState} />
 
-        <CountryMap2 countryName={displayCountry} stateName={displayState}/>
+        <CountryMapCities countryName={displayCountry} stateName={displayState}/>
         
         {/* Page Header */}
         <div className="mb-8">

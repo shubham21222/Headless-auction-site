@@ -46,6 +46,8 @@ const PartnersSection = () => {
                   className="object-contain"
                   height={40}
                   width={146}
+                  style={{ width: '146px', height: '40px' }}
+
                 />
               </div>
             ))}

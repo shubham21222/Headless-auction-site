@@ -47,6 +47,8 @@ export default function Home() {
   return (
     <>
       <Header />
+      <div suppressHydrationWarning>
+
       <div className="w-full">
         <CarouselComponent />
       </div>
@@ -68,6 +70,7 @@ export default function Home() {
       
       <NewsletterForm />
       <Footer />
+      </div>
     </>
   );
 }

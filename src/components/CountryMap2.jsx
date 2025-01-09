@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
-import { Icon } from 'leaflet';
+import { Icon } from "leaflet";
 import "leaflet/dist/leaflet.css";
-import countryConfigs from "@/data/countryConfigs";
+import structuredCountries from "../../public/structured_countries.json";
 
 const defaultIcon = new Icon({
     iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png",
@@ -15,150 +15,101 @@ const defaultIcon = new Icon({
 const ChangeMapView = ({ center, zoom }) => {
     const map = useMap();
     useEffect(() => {
+        console.log("ChangeMapView - Updating map view:", { center, zoom });
         map.setView(center, zoom);
     }, [center, zoom, map]);
     return null;
 };
 
-const CountryMap2 = ({ countryName, stateName = null }) => {
+const CountryMapCities = ({ countryName, stateName }) => {
+    console.log("CountryMapCities - Component initialized with:", { countryName, stateName });
+
     const [locations, setLocations] = useState([]);
     const [mapCenter, setMapCenter] = useState(null);
     const [mapZoom, setMapZoom] = useState(6);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const formatCountryKey = (name) => {
-        let formatted = name.toLowerCase()
-            .replace(/-/g, '_')
-            .replace(/ /g, '_');
-        
-        if (!formatted.endsWith('_auction')) {
-            formatted += '_auction';
+    const formatCountryKey = (name) => `${name.toLowerCase()} auction`;
+    const formatStateKey = (name) => `${name.toLowerCase()} auctions`;
+
+    const getCitiesFromStructuredData = (countryKey, stateKey) => {
+        console.log("getCitiesFromStructuredData - Fetching cities for:", { countryKey, stateKey });
+        const country = structuredCountries.find((c) => Object.keys(c)[0] === countryKey);
+
+        if (!country) {
+            console.warn("getCitiesFromStructuredData - Country not found:", countryKey);
+            return [];
         }
-        
-        return formatted;
+
+        const states = country[countryKey];
+        if (!states || states.length === 0) {
+            console.warn("getCitiesFromStructuredData - No states found for country:", countryKey);
+            return [];
+        }
+
+        const state = states.find((s) => Object.keys(s)[0] === stateKey);
+        if (!state) {
+            console.warn("getCitiesFromStructuredData - State not found:", stateKey);
+            return [];
+        }
+
+        const cities = state[stateKey];
+        console.log("getCitiesFromStructuredData - Cities found:", cities);
+        return cities;
     };
 
     useEffect(() => {
         const fetchLocations = async () => {
+            setIsLoading(true);
             try {
-                const formattedCountryKey = formatCountryKey(countryName);
-                const config = countryConfigs[formattedCountryKey];
+                const countryKey = formatCountryKey(countryName);
+                const stateKey = formatStateKey(stateName);
 
-                if (!config) {
-                    throw new Error(`Country configuration not found for ${countryName}`);
+                console.log("fetchLocations - Formatted keys:", { countryKey, stateKey });
+
+                const cities = getCitiesFromStructuredData(countryKey, stateKey);
+                if (!cities.length) {
+                    throw new Error("No cities found in the JSON for the specified state.");
                 }
 
-                const headers = new Headers();
-                headers.append("X-CSCAPI-KEY", "ZzIzSTA5TEJnWUVFakFRY3lhT0FubVE4ZmNzdDNNY0ZlcTBCM1ppTg==");
-                
-                const requestOptions = {
-                    method: 'GET',
-                    headers: headers,
-                    redirect: 'follow'
-                };
-
-                // Set map center and zoom immediately
-                setMapCenter(config.center);
-                setMapZoom(config.zoom);
-
-                if (stateName) {
-                    // Existing state-level logic
-                    const statesResponse = await fetch(
-                        `https://api.countrystatecity.in/v1/countries/${config.code}/states`,
-                        requestOptions
-                    );
-
-                    if (!statesResponse.ok) throw new Error('Failed to fetch states');
-                    const statesData = await statesResponse.json();
-
-                    const formattedStateName = stateName.toLowerCase()
-                        .replace(/-auctions$/, '')
-                        .replace(/-/g, ' ');
-
-                    const state = statesData.find(s => 
-                        s.name.toLowerCase() === formattedStateName ||
-                        s.name.toLowerCase().includes(formattedStateName)
-                    );
-
-                    if (state) {
-                        const citiesResponse = await fetch(
-                            `https://api.countrystatecity.in/v1/countries/${config.code}/states/${state.iso2}/cities`,
-                            requestOptions
+                for (const city of cities) {
+                    console.log("fetchLocations - Geocoding city:", city);
+                    try {
+                        const response = await fetch(
+                            `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(city)},${encodeURIComponent(
+                                stateName
+                            )},${encodeURIComponent(countryName)}&format=json&limit=1`,
+                            { headers: { "User-Agent": "CountryMapComponent/1.0" } }
                         );
 
-                        if (!citiesResponse.ok) throw new Error('Failed to fetch cities');
-                        const citiesData = await citiesResponse.json();
+                        if (response.ok) {
+                            const data = await response.json();
+                            if (data.length > 0) {
+                                const newLocation = {
+                                    name: city,
+                                    coordinates: { lat: parseFloat(data[0].lat), lng: parseFloat(data[0].lon) },
+                                };
 
-                        const cityLocations = citiesData
-                            .filter(city => city.latitude && city.longitude)
-                            .map(city => ({
-                                name: city.name,
-                                coordinates: {
-                                    lat: parseFloat(city.latitude),
-                                    lng: parseFloat(city.longitude)
-                                }
-                            }));
+                                setLocations((prevLocations) => {
+                                    if (prevLocations.length === 0) {
+                                        setMapCenter(newLocation.coordinates);
+                                    }
+                                    return [...prevLocations, newLocation];
+                                });
 
-                        if (cityLocations.length > 0) {
-                            const center = cityLocations.reduce(
-                                (acc, city) => ({
-                                    lat: acc.lat + city.coordinates.lat / cityLocations.length,
-                                    lng: acc.lng + city.coordinates.lng / cityLocations.length
-                                }),
-                                { lat: 0, lng: 0 }
-                            );
-
-                            setLocations(cityLocations);
-                            setMapCenter(center);
-                            setMapZoom(9);
-                        }
-                    }
-                } else {
-                    // New country-level view with city fetching
-                    const statesResponse = await fetch(
-                        `https://api.countrystatecity.in/v1/countries/${config.code}/states`,
-                        requestOptions
-                    );
-
-                    if (!statesResponse.ok) throw new Error('Failed to fetch states');
-                    const statesData = await statesResponse.json();
-
-                    // Get cities from first 3 states to ensure we have some markers
-                    const allCities = [];
-                    for (const state of statesData.slice(0, 3)) {
-                        try {
-                            const citiesResponse = await fetch(
-                                `https://api.countrystatecity.in/v1/countries/${config.code}/states/${state.iso2}/cities`,
-                                requestOptions
-                            );
-
-                            if (citiesResponse.ok) {
-                                const citiesData = await citiesResponse.json();
-                                allCities.push(...citiesData);
+                                setMapZoom(8); // Adjust zoom when the first city is added
                             }
-                        } catch (error) {
-                            console.error(`Error fetching cities for state ${state.name}:`, error);
                         }
+                    } catch (error) {
+                        console.error(`fetchLocations - Error fetching data for city: ${city}`, error);
                     }
-
-                    const cityLocations = allCities
-                        .filter(city => city.latitude && city.longitude)
-                        .slice(0, 15) // Limit to 15 cities for better performance
-                        .map(city => ({
-                            name: city.name,
-                            coordinates: {
-                                lat: parseFloat(city.latitude),
-                                lng: parseFloat(city.longitude)
-                            }
-                        }));
-
-                    setLocations(cityLocations);
                 }
+
+                setIsLoading(false);
             } catch (err) {
-                console.error('Error:', err);
+                console.error("fetchLocations - Error:", err.message);
                 setError(err.message);
-            } finally {
                 setIsLoading(false);
             }
         };
@@ -166,31 +117,20 @@ const CountryMap2 = ({ countryName, stateName = null }) => {
         fetchLocations();
     }, [countryName, stateName]);
 
-    if (isLoading) return <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-blue-500" />;
+    if (isLoading && locations.length === 0) return <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-blue-500" />;
     if (error) return <div className="text-red-500">{error}</div>;
     if (!mapCenter) return null;
 
     return (
-        <div className="h-[400px] w-full">
-            <MapContainer
-                center={[mapCenter.lat, mapCenter.lng]}
-                zoom={mapZoom}
-                className="h-full w-full rounded-lg shadow-lg"
-            >
-                <ChangeMapView
-                    center={[mapCenter.lat, mapCenter.lng]}
-                    zoom={mapZoom}
-                />
+        <div className="h-[400px] w-full pb-10">
+            <MapContainer center={[mapCenter.lat, mapCenter.lng]} zoom={mapZoom} className="h-full w-full rounded-lg shadow-lg">
+                <ChangeMapView center={[mapCenter.lat, mapCenter.lng]} zoom={mapZoom} />
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 />
                 {locations.map((location, index) => (
-                    <Marker
-                        key={index}
-                        position={[location.coordinates.lat, location.coordinates.lng]}
-                        icon={defaultIcon}
-                    >
+                    <Marker key={index} position={[location.coordinates.lat, location.coordinates.lng]} icon={defaultIcon}>
                         <Popup>
                             <div className="font-semibold">{location.name}</div>
                         </Popup>
@@ -201,4 +141,4 @@ const CountryMap2 = ({ countryName, stateName = null }) => {
     );
 };
 
-export default CountryMap2;
+export default CountryMapCities;

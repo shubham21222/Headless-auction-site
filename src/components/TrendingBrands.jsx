@@ -39,6 +39,10 @@ const TrendingBrands = () => {
               width={150}
               height={100}
               className="object-contain"
+              style={{
+                height:'auto',
+                
+              }}
             />
           </div>
         ))}

@@ -261,13 +261,15 @@ const AuctionSection3 = ({ country }) => {
             >
               <div className="text-3xl font-bold text-gray-900 mb-3">{i + 1}</div>
               <div className="mb-4">
-                <Image
-                  src={step.image}
-                  alt={step.title}
-                  width={250} // Ensuring consistent size for all images
-                  height={250} // Ensuring consistent size for all images
-                  className="rounded-md"
-                />
+              <Image
+  src={step.image}
+  alt={step.title}
+  width={250}
+  height={250}
+  className="rounded-md"
+  style={{ width: '250px', height: '250px' }}
+/>
+
               </div>
               <h3 className="text-lg font-semibold mb-2 text-center">{step.title}</h3>
               <p className="text-gray-600 text-center">{step.description}</p>
