@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import { Icon } from 'leaflet';
 import "leaflet/dist/leaflet.css";
 import countryConfigs from "@/data/countryConfigs";
-
+import statesData from "../../public/states.json";
 
 const defaultIcon = new Icon({
     iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png",
@@ -16,107 +16,94 @@ const defaultIcon = new Icon({
 const ChangeMapView = ({ center, zoom }) => {
     const map = useMap();
     useEffect(() => {
+        console.log("Changing map view:", { center, zoom });
         map.setView(center, zoom);
     }, [center, zoom, map]);
     return null;
 };
 
-const CountryMap = ({ countryName, stateName = null }) => {
+const CountryMap = ({ countryName }) => {
     const [locations, setLocations] = useState([]);
     const [mapCenter, setMapCenter] = useState(null);
     const [mapZoom, setMapZoom] = useState(6);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const formatCountryKey = (name) => {
-        return name.toLowerCase()
-            .replace(/-/g, ' ')
-            .replace(/ /g, '_');
+    const formatCountryConfigKey = (name) => {
+        const formattedKey = name
+            .toLowerCase()
+            .replace(/[\s-]/g, '_');
+        
+        console.log("Formatted country key for countryConfigs:", formattedKey);
+        return formattedKey;
     };
 
-    const countryKey = formatCountryKey(countryName);
-    const countryConfig = countryConfigs[countryKey];
+    const formatStatesKey = (name) => {
+        const formattedKey = name
+            .toLowerCase()
+            .replace(/[_-]/g, ' ');
+        console.log("Formatted country key for statesData:", formattedKey);
+        return formattedKey;
+    };
+
+    const countryConfigKey = formatCountryConfigKey(countryName);
+    const statesDataKey = formatStatesKey(countryName);
+
+    const countryConfig = countryConfigs[countryConfigKey];
+    console.log("Country configuration:", countryConfig);
 
     useEffect(() => {
         const fetchLocations = async () => {
             if (!countryConfig) {
+                console.error("Country configuration not found.");
                 setError("Country configuration not found");
                 setIsLoading(false);
                 return;
             }
-
+    
             try {
+                console.log("Fetching data for country:", countryConfigKey);
+    
                 const headers = new Headers();
                 headers.append("X-CSCAPI-KEY", "ZzIzSTA5TEJnWUVFakFRY3lhT0FubVE4ZmNzdDNNY0ZlcTBCM1ppTg==");
-
-                if (stateName) {
-                    // Fetch cities for specific state
-                    const statesResponse = await fetch(
-                        `https://api.countrystatecity.in/v1/countries/${countryConfig.code}/states`,
-                        { headers }
+    
+                const statesDataKey = formatStatesKey(countryName);
+                const countryStates = statesData.find((item) => item[statesDataKey]);
+                if (!countryStates) {
+                    console.error(`No states found for ${statesDataKey} in statesData.`);
+                    throw new Error("No states found for this country in the JSON file.");
+                }
+    
+                const stateNames = countryStates[statesDataKey];
+                console.log("States found in JSON:", stateNames);
+    
+                const statesResponse = await fetch(
+                    `https://api.countrystatecity.in/v1/countries/${countryConfig.code}/states`,
+                    { headers }
+                );
+                const apiStates = statesResponse.ok ? await statesResponse.json() : [];
+                console.log("API States:", apiStates);
+    
+                let stateLocations = [];
+                if (apiStates.length > 0) {
+                    const matchedStates = apiStates.filter((apiState) =>
+                        stateNames.some((stateName) => stateName.toLowerCase() === apiState.name.toLowerCase())
                     );
-
-                    if (!statesResponse.ok) throw new Error('Failed to fetch states');
-                    const statesData = await statesResponse.json();
-
-                    const state = statesData.find(s =>
-                        s.name.toLowerCase() === stateName.toLowerCase().replace(/-/g, ' ')
-                    );
-
-                    if (state) {
-                        const citiesResponse = await fetch(
-                            `https://api.countrystatecity.in/v1/countries/${countryConfig.code}/states/${state.iso2}/cities`,
-                            { headers }
-                        );
-
-                        if (!citiesResponse.ok) throw new Error('Failed to fetch cities');
-                        const citiesData = await citiesResponse.json();
-                        console.log('====================================');
-                        console.log(state,"state");
-                        console.log('====================================');
-
-                        const cityLocations = citiesData
-                            .filter(city => city.latitude && city.longitude)
-                            .map(city => ({
-                                name: city.name,
-                                coordinates: {
-                                    lat: parseFloat(city.latitude),
-                                    lng: parseFloat(city.longitude)
-                                }
-                            }));
-
-                        setLocations(cityLocations);
-
-                        if (cityLocations.length > 0) {
-                            // Center map on first city
-                            setMapCenter(cityLocations[0].coordinates);
-                            setMapZoom(8);
-                        }
-                    }
-                } else {
-                    // Original state fetching logic
-                    const statesResponse = await fetch(
-                        `https://api.countrystatecity.in/v1/countries/${countryConfig.code}/states`,
-                        { headers }
-                    );
-
-                    if (!statesResponse.ok) throw new Error('Failed to fetch states');
-                    const statesData = await statesResponse.json();
-
-                    const stateLocations = await Promise.all(
-                        statesData.map(async (state) => {
+                    console.log("Matched States:", matchedStates);
+    
+                    stateLocations = await Promise.all(
+                        matchedStates.map(async (state) => {
                             const citiesResponse = await fetch(
                                 `https://api.countrystatecity.in/v1/countries/${countryConfig.code}/states/${state.iso2}/cities`,
                                 { headers }
                             );
-
-                            if (!citiesResponse.ok) return null;                
-                            console.log('====================================');
-                        console.log(state,"state");
-                        console.log('====================================');
+    
+                            if (!citiesResponse.ok) return null;
+    
                             const citiesData = await citiesResponse.json();
-
-                            if (citiesData?.length) {
+                            console.log(`Cities data for ${state.name}:`, citiesData);
+    
+                            if (citiesData.length) {
                                 const coords = citiesData.reduce((acc, city) => {
                                     if (city.latitude && city.longitude) {
                                         acc.latSum += parseFloat(city.latitude);
@@ -125,33 +112,93 @@ const CountryMap = ({ countryName, stateName = null }) => {
                                     }
                                     return acc;
                                 }, { latSum: 0, lngSum: 0, count: 0 });
-
-                                return coords.count > 0 ? {
-                                    name: state.name,
-                                    coordinates: {
-                                        lat: coords.latSum / coords.count,
-                                        lng: coords.lngSum / coords.count
-                                    }
-                                } : null;
+    
+                                return coords.count > 0
+                                    ? {
+                                          name: state.name,
+                                          coordinates: {
+                                              lat: coords.latSum / coords.count,
+                                              lng: coords.lngSum / coords.count,
+                                          },
+                                      }
+                                    : null;
                             }
                             return null;
                         })
                     );
+                } 
+                
+                if (!apiStates.length || stateLocations.filter(loc => loc !== null).length === 0) {
+                    // First fallback: Try Nominatim API
+                    console.warn("CountryStateCity API failed. Falling back to Nominatim API.");
+                    
+                    const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+                    
+                    stateLocations = [];
+                    for (const stateName of stateNames) {
+                        try {
+                            const response = await fetch(
+                                `https://nominatim.openstreetmap.org/search?` +
+                                `q=${encodeURIComponent(stateName)},${encodeURIComponent(countryName)}` +
+                                `&format=json&limit=1&addressdetails=1`,
+                                {
+                                    headers: {
+                                        'User-Agent': 'CountryMapComponent/1.0'
+                                    }
+                                }
+                            );
 
-                    setLocations(stateLocations.filter(loc => loc !== null));
-                    setMapCenter(countryConfig.center);
-                    setMapZoom(countryConfig.zoom);
+                            if (!response.ok) {
+                                console.error(`Failed to fetch data for state: ${stateName}`);
+                                continue;
+                            }
+
+                            const data = await response.json();
+                            
+                            if (data.length > 0) {
+                                stateLocations.push({
+                                    name: stateName,
+                                    coordinates: {
+                                        lat: parseFloat(data[0].lat),
+                                        lng: parseFloat(data[0].lon)
+                                    }
+                                });
+                            }
+
+                            await delay(1000);
+                        } catch (error) {
+                            console.error(`Error fetching location for ${stateName}:`, error);
+                        }
+                    }
                 }
+
+                // Second fallback: If no states were found with either API, use country center
+                if (stateLocations.filter(loc => loc !== null).length === 0) {
+                    console.warn("Both APIs failed to find states. Falling back to country center point.");
+                    stateLocations = [{
+                        name: countryName,
+                        coordinates: {
+                            lat: countryConfig.center.lat,
+                            lng: countryConfig.center.lng
+                        }
+                    }];
+                    // Adjust zoom level for country view
+                    setMapZoom(4);
+                }
+    
+                setLocations(stateLocations.filter((loc) => loc !== null));
+                setMapCenter(countryConfig.center);
             } catch (err) {
+                console.error("Error during data fetch:", err.message);
                 setError(err.message);
             } finally {
                 setIsLoading(false);
             }
         };
-
+    
         fetchLocations();
-    }, [countryConfig, stateName]);
-
+    }, [countryConfigKey]);
+    
     if (isLoading) return <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-blue-500" />;
     if (error) return <div className="text-red-500">{error}</div>;
     if (!mapCenter) return null;
