@@ -103,12 +103,19 @@ export default function AuctionSection() {
             ) : heroImage ? (
               <Image
                 src={heroImage.source_url}
-                alt={heroImage.alt_text || 'Featured auction item'}
-                layout="responsive"
+                alt={heroImage.alt_text || "Featured auction item"}
                 width={600}
                 height={400}
                 className="w-full h-auto object-cover"
+                style={{
+                  width: "100%", // Make the image responsive
+                  height: "auto", // Maintain the aspect ratio
+                }}
+                sizes="(max-width: 768px) 100vw, 
+         (max-width: 1200px) 50vw, 
+         33vw"
               />
+
             ) : (
               <div className="w-full h-64 bg-gray-200 flex items-center justify-center">
                 {error ? (
@@ -122,8 +129,8 @@ export default function AuctionSection() {
               <div className="text-white">
                 <p className="text-xs sm:text-sm font-semibold">Featured Auction</p>
                 <h3 className="text-lg sm:text-xl font-bold">
-      {heroImage ? heroImage.title.rendered : 'Vintage Collector\'s Edition'}
-    </h3>
+                  {heroImage ? heroImage.title.rendered : 'Vintage Collector\'s Edition'}
+                </h3>
               </div>
             </div>
           </div>

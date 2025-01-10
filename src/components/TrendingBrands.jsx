@@ -22,7 +22,7 @@ const brands = [
 
 const TrendingBrands = () => {
   return (
-    <section className="py-10 px-4 container mx-auto max-w-screen-2xl ">
+    <section className="py-10 px-4 container mx-auto max-w-screen-2xl">
       <div className="text-start mb-6">
         <h2 className="text-3xl font-bold">Trending Brands</h2>
         <div className="w-16 h-1 bg-yellow-500 mt-2"></div>
@@ -40,18 +40,13 @@ const TrendingBrands = () => {
               height={100}
               className="object-contain"
               style={{
-                height:'auto',
-                
+                width: "auto", // Ensures the image keeps its aspect ratio
+                height: "auto",
               }}
             />
           </div>
         ))}
       </div>
-      {/* <div className="text-center mt-6">
-        <button className="btn bg-blue-700 text-white px-6 py-2 rounded hover:bg-blue-800">
-          View All
-        </button>
-      </div> */}
     </section>
   );
 };

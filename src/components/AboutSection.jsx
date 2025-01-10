@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import Link from 'next/link';
 import axios from 'axios';
+import Link from 'next/link';
 
 const AboutSection = () => {
     const [sectionOneImage, setSectionOneImage] = useState('');
@@ -31,33 +31,39 @@ const AboutSection = () => {
                 });
                 const token = tokenResponse.data.token;
 
-                // Fetch media for specific categories
-                const [section1Response, section2Response] = await Promise.all([
-                    axios.get(`${wpURL}/wp-json/wp/v2/media`, {
-                        headers: { Authorization: `Bearer ${token}` },
-                        params: {
-                            search: 'Section 1 – Landing Page',
-                            per_page: 1,
-                        },
-                    }),
-                    axios.get(`${wpURL}/wp-json/wp/v2/media`, {
-                        headers: { Authorization: `Bearer ${token}` },
-                        params: {
-                            search: 'Section 2 – Landing Page',
-                            per_page: 1,
-                        },
-                    }),
+                // Function to fetch image by category ID
+                const fetchImageByCategory = async (categoryID) => {
+                    try {
+                        const response = await axios.get(`${wpURL}/wp-json/wp/v2/media`, {
+                            headers: { Authorization: `Bearer ${token}` },
+                            params: {
+                                media_category: categoryID, // Use the media category ID
+                                per_page: 1, // Fetch only one image
+                            },
+                        });
+
+                        if (response.data.length > 0) {
+                            return response.data[0].source_url; // Return the image URL
+                        } else {
+                            throw new Error(`No images found for category ID: ${categoryID}`);
+                        }
+                    } catch (err) {
+                        console.error(`Error fetching image for category ID ${categoryID}:`, err);
+                        throw err;
+                    }
+                };
+
+                // Fetch images for specific categories
+                const [section1Image, section2Image] = await Promise.all([
+                    fetchImageByCategory(32897), // Numeric ID for Section 1
+                    fetchImageByCategory(32898), // Numeric ID for Section 2
                 ]);
 
-                if (section1Response.data.length > 0) {
-                    setSectionOneImage(section1Response.data[0].source_url);
-                }
-                if (section2Response.data.length > 0) {
-                    setSectionTwoImage(section2Response.data[0].source_url);
-                }
+                setSectionOneImage(section1Image);
+                setSectionTwoImage(section2Image);
             } catch (err) {
                 console.error('Error fetching images:', err);
-                setError(err.message);
+                setError(err.message || 'An error occurred');
             } finally {
                 setLoading(false);
             }
@@ -69,6 +75,7 @@ const AboutSection = () => {
     const defaultSection1Image = 'https://beta.nyelizabeth.com/wp-content/uploads/2024/11/Rectangle-23-min.webp';
     const defaultSection2Image = 'https://beta.nyelizabeth.com/wp-content/uploads/2024/11/Rectangle-23-1-min.webp';
 
+
     return (
         <div className="bg-gradient-to-b from-white to-gray-50">
             {/* First Section */}
@@ -76,7 +83,7 @@ const AboutSection = () => {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex flex-col lg:flex-row items-center gap-12">
                         {/* Left Image with creative styling */}
-                        <motion.div 
+                        <motion.div
                             className="flex-1 w-full"
                             initial={{ opacity: 0, x: -50 }}
                             whileInView={{ opacity: 1, x: 0 }}
@@ -86,17 +93,17 @@ const AboutSection = () => {
                                 {/* Decorative elements */}
                                 <div className="absolute top-8 right-8 w-4/5 h-4/5 bg-yellow-500/20 rounded-tr-[100px] rounded-bl-[100px]" />
                                 <div className="absolute -top-4 -left-4 w-24 h-24 bg-yellow-500/30 rounded-full" />
-                                
+
                                 {/* Main image container */}
                                 <div className="absolute inset-0 w-[90%] h-[90%] group">
                                     {/* Border frame */}
                                     <div className="absolute inset-0 border-8 border-white shadow-2xl rounded-tr-[80px] rounded-bl-[80px] z-10" />
-                                    
+
                                     {/* Main image */}
                                     <div className="relative w-full h-full overflow-hidden rounded-tr-[80px] rounded-bl-[80px] shadow-2xl">
-                                    <Image
-                                            src="https://auction.nyelizabeth.com/wp-content/uploads/2025/01/194542321_1_x.webp"
-                                            alt="Section 1 Landing Page"
+                                        <Image
+                                            src={sectionOneImage || defaultSection1Image }
+                                            alt={sectionOneImage ? `Image for Section 1 Landing Page: ${sectionOneImage.split('/').pop().replace(/-/g, ' ').replace(/\.[^/.]+$/, '')}` : 'Section 1 Landing Page'}
                                             fill
                                             sizes="(max-width: 768px) 100vw, 50vw"
                                             className="object-cover group-hover:scale-110 transition-transform duration-700"
@@ -109,7 +116,7 @@ const AboutSection = () => {
                         </motion.div>
 
                         {/* Right Content */}
-                        <motion.div 
+                        <motion.div
                             className="flex-1 lg:pl-12"
                             {...fadeInUp}
                         >
@@ -130,9 +137,9 @@ const AboutSection = () => {
                                     live.
                                 </p>
                                 <Link href="https://www.liveauctioneers.com/auctioneer/6177/ny-elizabeth/">
-                                <button className="mt-6 px-8 py-3 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-full transition-colors duration-300 shadow-lg hover:shadow-xl">
-                                   View Auctions
-                                </button>
+                                    <button className="mt-6 px-8 py-3 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-full transition-colors duration-300 shadow-lg hover:shadow-xl">
+                                        View Auctions
+                                    </button>
                                 </Link>
                             </div>
                         </motion.div>
@@ -145,7 +152,7 @@ const AboutSection = () => {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex flex-col lg:flex-row-reverse items-center gap-12">
                         {/* Right Image with creative styling */}
-                        <motion.div 
+                        <motion.div
                             className="flex-1 w-full"
                             initial={{ opacity: 0, x: 50 }}
                             whileInView={{ opacity: 1, x: 0 }}
@@ -157,17 +164,17 @@ const AboutSection = () => {
                                     <div className="absolute top-4 left-4 w-32 h-32 border-8 border-yellow-500/20 rounded-tl-[40px]" />
                                     <div className="absolute bottom-4 right-4 w-32 h-32 border-8 border-yellow-500/20 rounded-br-[40px]" />
                                 </div>
-                                
+
                                 {/* Main image container */}
                                 <div className="absolute inset-0 w-[90%] h-[90%] ml-auto group">
                                     {/* Floating accent */}
                                     <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-gray-900/10 rounded-full blur-lg z-0" />
-                                    
+
                                     {/* Main image */}
                                     <div className="relative w-full h-full overflow-hidden rounded-tl-[80px] rounded-br-[80px] shadow-2xl">
                                         <Image
-                                            src="https://auction.nyelizabeth.com/wp-content/uploads/2024/12/10756617.jpeg"
-                                            alt="Street View"
+                                            src={sectionTwoImage || defaultSection2Image}
+                                            alt={sectionTwoImage ? `Image for Section 1 Landing Page: ${sectionTwoImage.split('/').pop().replace(/-/g, ' ').replace(/\.[^/.]+$/, '')}` : 'Section 1 Landing Page'}
                                             fill
                                             sizes="(max-width: 768px) 100vw, 50vw"
                                             className="object-cover group-hover:scale-110 transition-transform duration-700"
@@ -180,7 +187,7 @@ const AboutSection = () => {
                         </motion.div>
 
                         {/* Left Content */}
-                        <motion.div 
+                        <motion.div
                             className="flex-1 lg:pr-12"
                             {...fadeInUp}
                         >
@@ -200,7 +207,7 @@ const AboutSection = () => {
                                     your mobile phone. Download our app from the bottom of the page and register to bid
                                     live.
                                 </p>
-                               
+
                             </div>
                         </motion.div>
                     </div>
