@@ -304,7 +304,7 @@ const AuctionSection = ({ slug }) => {
 
                     <p className="text-xl text-gray-600 max-w-3xl mx-auto">
                         Looking for the best {formatKeyword(slug)} in {location.city}? Discover premium collections
-                        of {formatKeyword(slug)}, from unique pieces to incredible bargains. Whether you're a collector or
+                        of {formatKeyword(slug)}, from unique pieces to incredible bargains. Whether you{""}re a collector or
                         a first-time bidder, {location.city} offers top-notch {formatKeyword(slug)}  with unbeatable deals.
                     </p>
                 </motion.div>

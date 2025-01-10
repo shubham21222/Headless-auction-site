@@ -11,7 +11,7 @@ const categories = [
   { name: "Guns & Weaponry", slug: "guns-weaponry" },
   { name: "Heavy Equipment", slug: "heavy-equipment" },
   { name: "Hummel Auctions", slug: "hummel-auctions" },
-  { name: "Jewelry Auctions", slug: "jewelry-auctions" },
+  { name: "Jewelry", slug: "jewelry-auctions" },
   { name: "Liquidation Auctions", slug: "liquidation-auctions" },
   { name: "Militaria Auctions", slug: "militaria-auctions" },
   { name: "Real Estate Auctions", slug: "real-estate-auctions" },
@@ -21,6 +21,16 @@ const categories = [
   { name: "Toy Auctions", slug: "toy-auctions" },
   { name: "Train Auctions", slug: "train-auctions" },
   { name: "Vintage Clothing", slug: "vintage-clothing" },
+  { name: "brand watches", slug: "brand-watches" },
+  { name: "paintings", slug: "paintings" },
+  { name: "decorative art", slug: "decorative-art" },
+  { name: "islamic art", slug: "islamic-art" },
+  { name: "ancient art", slug: "ancient-art" },
+  { name: "designer hand bags", slug: "designer-hand-bags" },
+  { name: "diamonds", slug: "diamonds" },
+  { name: "gold coins", slug: "gold-coins" },
+  { name: "gold bars", slug: "gold-bars" },
+
 ];
 
 const CategoryList = () => {
