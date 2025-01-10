@@ -74,7 +74,7 @@ const FetchImages = ({ slug }) => {
         }
 
         if (!categoryId) {
-          throw new Error(`Category not found for: ${slug}`);
+          throw new Error(`${slug}`);
         }
 
         // Fetch media items using the found category ID
@@ -111,7 +111,7 @@ const FetchImages = ({ slug }) => {
         }
 
       } catch (err) {
-        console.error('Error details:', err);
+        // console.error('Error details:', err);
         setError(err.message || 'Failed to fetch images');
       } finally {
         setLoading(false);

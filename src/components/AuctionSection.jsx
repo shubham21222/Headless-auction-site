@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { motion, stagger } from 'framer-motion';
 import { MapPin, Award, Shield, Check, Star, FileText, Users, Clock } from 'lucide-react';
 import Image from 'next/image';
+import TopProducts from './TopProducts';
+import DynamicAboutSection from './DynamicAboutSection';
 
 const AuctionSection = ({ slug }) => {
     const [location, setLocation] = useState({
@@ -276,7 +278,9 @@ const AuctionSection = ({ slug }) => {
     ];
 
     return (
-        <div className="py-16 text-black mt-[90px]">
+        <>
+        <DynamicAboutSection country={location.city}/>
+        <div className="py-16 text-black ">
             <div className="container mx-auto px-4">
                 {/* Header Section */}
                 <motion.div
@@ -396,6 +400,8 @@ const AuctionSection = ({ slug }) => {
                     ))}
                 </motion.div>
 
+                <TopProducts />
+
                 {/* Popular Categories Section */}
                 <motion.div
                     initial={{ opacity: 0 }}
@@ -464,6 +470,7 @@ const AuctionSection = ({ slug }) => {
                 </motion.div>
             </div>
         </div>
+        </>
     );
 };
 
