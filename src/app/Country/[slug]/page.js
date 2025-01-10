@@ -146,8 +146,13 @@ const CountryStatesPage = () => {
         <AuctionSection2 country={displayState} /> 
         <AuctionSection3  country={displayState} />
 
+
+
         <div className="bg-gray-50 px-4 container mx-auto max-w-screen-2xl">
-          <section className="flex flex-col md:flex-row items-center justify-center gap-10 py-16 ">
+        <h2 className="text-3xl font-bold mb-4 capitalize">States Auctions</h2>
+        <div className="h-1 w-16 bg-yellow-500 mx-auto lg:mx-0 mb-6"></div>
+
+          <section className="flex flex-col md:flex-row items-center justify-center gap-10 pb-16 ">
             
 
             <motion.div
@@ -166,6 +171,7 @@ const CountryStatesPage = () => {
         <h1 className="text-3xl font-bold mb-4 capitalize">{country} States</h1>
         <div className="h-1 w-16 bg-yellow-500 mx-auto lg:mx-0 mb-6"></div>
 
+        
         {states.length > 0 ? (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {states.map((state, index) => (

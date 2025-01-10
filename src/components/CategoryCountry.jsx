@@ -84,7 +84,7 @@ const CategoryCountry = () => {
       <section className="p-6 mx-auto max-w-screen-2xl">
         {/* Heading Section */}
         <div className="text-start mx-auto">
-          <h2 className="font-bold text-2xl mb-4 text-white">Search Country</h2>
+          <h2 className="font-bold text-2xl mb-4 text-white">Country Auctions</h2>
           <div className="h-1 w-16 bg-yellow-500 mb-6"></div>
         </div>
 

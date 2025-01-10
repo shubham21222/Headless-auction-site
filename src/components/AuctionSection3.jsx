@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const fadeInUp = {
   initial: { y: 50, opacity: 0 },
@@ -212,16 +213,18 @@ const AuctionSection3 = ({ country }) => {
           className="grid sm:grid-cols-2 gap-4 md:gap-6"
         >
           {(showAll ? categories : categories.slice(0, 4)).map((category, i) => (
-            <motion.div
-              key={i}
-              variants={fadeInUp}
-              whileHover={{ scale: 1.02 }}
-              className="bg-gradient-to-r from-gray-900 to-black  p-6 rounded-lg"
-            >
-              <h3 className="text-xl font-semibold mb-2 text-white">{category.title}</h3>
-              <p className="text-gray-300">{category.description}</p>
-            </motion.div>
+            <Link href={`/category/${category.title.replace(/\s+/g, '-').toLowerCase()}`} key={i}>
+              <motion.div
+                variants={fadeInUp}
+                whileHover={{ scale: 1.02 }}
+                className="bg-gradient-to-r from-gray-900 to-black p-6 rounded-lg"
+              >
+                <h3 className="text-xl font-semibold mb-2 text-white">{category.title}</h3>
+                <p className="text-gray-300">{category.description}</p>
+              </motion.div>
+            </Link>
           ))}
+
         </motion.div>
         {!showAll && (
           <div className="text-center mt-6">
