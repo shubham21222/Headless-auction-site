@@ -4,6 +4,7 @@ import { MapPin, Award, Shield, Check, Star, FileText, Users, Clock } from 'luci
 import Image from 'next/image';
 import TopProducts from './TopProducts';
 import DynamicAboutSection from './DynamicAboutSection';
+import Link from 'next/link';
 
 const AuctionSection = ({ slug }) => {
     const [location, setLocation] = useState({
@@ -459,6 +460,7 @@ const AuctionSection = ({ slug }) => {
                         <p className="text-lg mb-8 text-gray-100">
                             Join thousands of successful bidders in {location.city} and discover amazing deals.
                         </p>
+                        <Link href="https://www.liveauctioneers.com/auctioneer/6177/ny-elizabeth/">
                         <motion.button
                             className="bg-white text-gray-700 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-colors"
                             whileHover={{ scale: 1.05 }}
@@ -466,6 +468,7 @@ const AuctionSection = ({ slug }) => {
                         >
                             Explore Active Auctions
                         </motion.button>
+                        </Link>
                     </div>
                 </motion.div>
             </div>

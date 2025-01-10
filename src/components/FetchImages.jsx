@@ -131,14 +131,7 @@ const FetchImages = ({ slug }) => {
     );
   }
 
-  if (error) {
-    return (
-      <div className="text-center py-8">
-        <p className="text-red-500 mb-2">{error}</p>
-        <p className="text-gray-600">Please try selecting a different category</p>
-      </div>
-    );
-  }
+
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 py-8">
