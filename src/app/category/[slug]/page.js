@@ -1,6 +1,5 @@
-"use client";
-
-import { useState, useEffect } from "react";
+'use client'
+import { useState, useEffect, useMemo, useRef } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import Header2 from "@/components/Header2";
@@ -17,12 +16,11 @@ const CategoryPage = () => {
   const { slug } = params;
 
   const categoryName = slug.replace("-", " ");
-  const allKeywords = keywordsData[categoryName] || [];
+  const allKeywords = useMemo(() => keywordsData[categoryName] || [], [categoryName]);
 
-  // State for managing keywords, search, and loading
   const [displayedKeywords, setDisplayedKeywords] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [loadedCount, setLoadedCount] = useState(10); // Number of keywords to load initially
+  const [loadedCount, setLoadedCount] = useState(10);
 
   const [location, setLocation] = useState({
     city: '',
@@ -31,8 +29,6 @@ const CategoryPage = () => {
     loading: true,
     error: null
   });
-
-
 
   useEffect(() => {
     const getLocation = async () => {
@@ -66,7 +62,6 @@ const CategoryPage = () => {
     getLocation();
   }, []);
 
-  // Load more keywords on scroll
   useEffect(() => {
     const handleScroll = () => {
       if (
@@ -79,17 +74,24 @@ const CategoryPage = () => {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [loadedCount]);
+  }, []);
 
   const loadMoreKeywords = () => {
     setLoadedCount((prevCount) => Math.min(prevCount + 10, allKeywords.length));
   };
 
+  const displayedKeywordsRef = useRef(displayedKeywords);
+
   useEffect(() => {
     const filteredKeywords = allKeywords.filter((keyword) =>
       keyword.toLowerCase().includes(searchTerm.toLowerCase())
     );
-    setDisplayedKeywords(filteredKeywords.slice(0, loadedCount));
+    const newDisplayedKeywords = filteredKeywords.slice(0, loadedCount);
+
+    if (JSON.stringify(displayedKeywordsRef.current) !== JSON.stringify(newDisplayedKeywords)) {
+      setDisplayedKeywords(newDisplayedKeywords);
+      displayedKeywordsRef.current = newDisplayedKeywords;
+    }
   }, [searchTerm, loadedCount, allKeywords]);
 
   return (
@@ -97,16 +99,11 @@ const CategoryPage = () => {
       <Header2 />
       <div className="p-6 container mx-auto max-w-screen-2xl mt-10">
         <DynamicKeywordSection keyword={slug} country={location.city} />
-        {/* <DynamicAboutSection country={country} /> */}
-
         <AuctionSection slug={slug} />
-
       </div>
       <DynamicAuctionInfoSection keyword={slug} country={location.city} />
-
       <FetchImages slug={slug} />
       <CategoryCountry />
-
       <Footer />
     </>
   );

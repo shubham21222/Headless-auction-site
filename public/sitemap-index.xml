@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
-    <loc>https://auction.nyelizabeth.com/sitemap_1.xml</loc>
+    <loc>https://auction.nyelizabeth.com/sitemap-country.xml</loc>
     <lastmod>2025-01-10</lastmod>
   </sitemap>
   <sitemap>
-    <loc>https://auction.nyelizabeth.com/sitemap_2.xml</loc>
+    <loc>https://auction.nyelizabeth.com/sitemap-category.xml</loc>
     <lastmod>2025-01-10</lastmod>
   </sitemap>
 </sitemapindex>

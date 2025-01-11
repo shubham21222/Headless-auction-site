@@ -14,7 +14,6 @@ const categories = [
   { name: "diamonds", slug: "diamonds" },
   { name: "gold coins", slug: "gold-coins" },
   { name: "gold bars", slug: "gold-bars" },
-
 ];
 
 const CategoryList = () => {

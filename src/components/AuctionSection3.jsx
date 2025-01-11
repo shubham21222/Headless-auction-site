@@ -46,103 +46,72 @@ const AuctionSection3 = ({ country }) => {
 
   const categories = [
     {
-      title: "Car Auctions",
-      description: `Find pre-owned, salvaged, and vintage vehicles at unbeatable prices in ${country}. Discover exciting deals on automobiles with unmatched value in ${country}.`
-    },
-    {
-      title: "Property Auctions",
-      description: `Explore real estate opportunities, including foreclosures, commercial properties, and land in ${country}. Unlock your next investment in ${country}.`
-    },
-    {
-      title: "Electronics Auctions",
-      description: `Bid on the latest gadgets, including smartphones, laptops, and gaming consoles in ${country}. Stay ahead in technology in ${country}.`
-    },
-    {
-      title: "Art & Antiques",
-      description: `Acquire rare artworks, furniture, and collectibles with historical significance in ${country}. Bring home a piece of history in ${country}.`
-    },
-    {
       title: "Antique Auctions",
+      slug: "antique-auctions",
       description: `Discover timeless treasures, from vintage decor to rare collectibles, at antique auctions. Start your collection in ${country}.`
     },
     {
-      title: "Automobile Auctions",
-      description: `From luxury cars to utility vehicles, automobile auctions offer the best deals in ${country}. Experience the thrill of bidding in ${country}.`
-    },
-    {
       title: "Coin & Currency",
+      slug: "coin-currency",
       description: `Find rare coins and historical currency to enhance your collection. Invest in valuable numismatics in ${country}.`
     },
     {
-      title: "Commercial Auctions",
-      description: `Explore opportunities to acquire office supplies, machinery, and commercial equipment. Grow your business in ${country}.`
-    },
-    {
-      title: "Doll Auctions",
-      description: `Bid on collectible dolls, vintage pieces, and rare finds for enthusiasts of all ages. Add charm to your collection in ${country}.`
-    },
-    {
-      title: "Ephemera Auctions",
-      description: `Discover a wide range of historical documents, photographs, and paper collectibles that tell unique stories in ${country}.`
-    },
-    {
-      title: "Farm Auctions",
-      description: `Find agricultural equipment, tools, and livestock at farm auctions in ${country}. Revolutionize your farm in ${country}.`
-    },
-    {
-      title: "Guns & Weaponry",
-      description: `Explore a collection of historical firearms, hunting gear, and military artifacts available at auctions. Secure your piece of history in ${country}.`
-    },
-    {
-      title: "Heavy Equipment",
-      description: `Bid on industrial machinery, construction tools, and heavy-duty equipment at unbeatable prices. Strengthen your operations in ${country}.`
-    },
-    {
-      title: "Hummel Auctions",
-      description: `Collect exquisite Hummel figurines that captivate collectors worldwide. Add artistic charm in ${country}.`
-    },
-    {
-      title: "Jewelry Auctions",
+      title: "Jewelry",
+      slug: "jewelry-auctions",
       description: `From dazzling diamonds to elegant timepieces, jewelry auctions offer timeless elegance. Enhance your style in ${country}.`
     },
     {
-      title: "Liquidation Auctions",
-      description: `Acquire surplus stock, office furniture, and more from liquidation sales. Unlock great deals in ${country}.`
-    },
-    {
-      title: "Militaria Auctions",
-      description: `Own military memorabilia, vintage uniforms, and war collectibles that tell heroic tales in ${country}.`
-    },
-    {
-      title: "Real Estate Auctions",
-      description: `Secure properties ranging from urban apartments to sprawling estates. Invest wisely in ${country}.`
-    },
-    {
-      title: "Restaurant Equipment",
-      description: `Equip your kitchen with high-quality tools, furniture, and appliances from restaurant auctions. Upgrade your space in ${country}.`
-    },
-    {
-      title: "Sports Memorabilia",
-      description: `Discover jerseys, signed gear, and rare memorabilia from your favorite sports. Celebrate your passion in ${country}.`
-    },
-    {
-      title: "Storage Unit Auctions",
-      description: `Unlock hidden treasures with storage unit auctions. Explore unexpected finds in ${country}.`
-    },
-    {
       title: "Toy Auctions",
+      slug: "toy-auctions",
       description: `From vintage toys to modern collectibles, toy auctions delight enthusiasts of all ages. Play into nostalgia in ${country}.`
     },
     {
-      title: "Train Auctions",
-      description: `Bid on model trains, railway memorabilia, and vintage locomotives. Build your dream railway collection in ${country}.`
+      title: "Brand Watches",
+      slug: "brand-watches",
+      description: `Bid on luxury brand watches that combine craftsmanship and elegance. Perfect your timekeeping style in ${country}.`
     },
     {
-      title: "Vintage Clothing",
-      description: `Rediscover fashion from bygone eras with vintage clothing auctions. Elevate your wardrobe in ${country}.`
+      title: "Paintings",
+      slug: "paintings",
+      description: `Acquire exquisite paintings that add sophistication to any space. Own timeless art in ${country}.`
+    },
+    {
+      title: "Decorative Art",
+      slug: "decorative-art",
+      description: `Enhance your living spaces with decorative art that blends style and personality. Elevate your decor in ${country}.`
+    },
+    {
+      title: "Islamic Art",
+      slug: "islamic-art",
+      description: `Discover intricate Islamic art pieces that celebrate heritage and culture. Experience spiritual beauty in ${country}.`
+    },
+    {
+      title: "Ancient Art",
+      slug: "ancient-art",
+      description: `Own a piece of history with ancient art that speaks of civilizations past. Bring history to life in ${country}.`
+    },
+    {
+      title: "Designer Hand Bags",
+      slug: "designer-hand-bags",
+      description: `Shop luxury designer handbags that define fashion and elegance. Carry your style statement in ${country}.`
+    },
+    {
+      title: "Diamonds",
+      slug: "diamonds",
+      description: `Bid on exquisite diamonds that capture brilliance and beauty. Elevate your jewelry collection in ${country}.`
+    },
+    {
+      title: "Gold Coins",
+      slug: "gold-coins",
+      description: `Invest in valuable gold coins that combine beauty and worth. Strengthen your collection in ${country}.`
+    },
+    {
+      title: "Gold Bars",
+      slug: "gold-bars",
+      description: `Secure your wealth with gold bars of premium quality. Build a solid investment in ${country}.`
     }
   ];
-
+  
 
   const steps = [
     {
