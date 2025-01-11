@@ -9,6 +9,8 @@ import keywordsData from "../../../../public/keywords.json"; // Adjust the path
 import AuctionSection from "@/components/AuctionSection";
 import FetchImages from "@/components/FetchImages";
 import CategoryCountry from "@/components/CategoryCountry";
+import DynamicKeywordSection from "@/components/DynamicKeywordSection";
+import DynamicAuctionInfoSection from "@/components/DynamicAuctionInfoSection";
 
 const CategoryPage = () => {
   const params = useParams();
@@ -21,6 +23,48 @@ const CategoryPage = () => {
   const [displayedKeywords, setDisplayedKeywords] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [loadedCount, setLoadedCount] = useState(10); // Number of keywords to load initially
+
+  const [location, setLocation] = useState({
+    city: '',
+    state: '',
+    country: '',
+    loading: true,
+    error: null
+  });
+
+
+
+  useEffect(() => {
+    const getLocation = async () => {
+      try {
+        const position = await new Promise((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(resolve, reject);
+        });
+
+        const { latitude, longitude } = position.coords;
+        const response = await fetch(
+          `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
+        );
+        const data = await response.json();
+
+        setLocation({
+          city: data.city || 'your city',
+          state: data.principalSubdivision || 'your state',
+          country: data.countryName || 'your country',
+          loading: false,
+          error: null
+        });
+      } catch (error) {
+        setLocation(prev => ({
+          ...prev,
+          loading: false,
+          error: 'Location access denied. Please enable location services.'
+        }));
+      }
+    };
+
+    getLocation();
+  }, []);
 
   // Load more keywords on scroll
   useEffect(() => {
@@ -52,31 +96,15 @@ const CategoryPage = () => {
     <>
       <Header2 />
       <div className="p-6 container mx-auto max-w-screen-2xl mt-10">
-      {/* <DynamicAboutSection country={country} /> */}
+        <DynamicKeywordSection keyword={slug} country={location.city} />
+        {/* <DynamicAboutSection country={country} /> */}
 
         <AuctionSection slug={slug} />
-        
 
-        {/* <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2">
-          {displayedKeywords.length > 0 ? (
-            displayedKeywords.map((keyword) => (
-              <Link
-                key={keyword}
-                href={`/category/${keyword.replace(/\s+/g, "-").toLowerCase()}`}
-                className="bg-gray-900 hover:bg-gray-800 text-white font-semibold rounded-full transition-colors duration-300 shadow-xl hover:underline max-w-52 w-full py-3 text-center"
-              >
-                {keyword}
-              </Link>
-            ))
-          ) : (
-            <p className="col-span-full text-gray-600">
-              No keywords found matching your search.
-            </p>
-          )}
-        </div> */}
-
-        <FetchImages slug={slug} />
       </div>
+      <DynamicAuctionInfoSection keyword={slug} country={location.city} />
+
+      <FetchImages slug={slug} />
       <CategoryCountry />
 
       <Footer />

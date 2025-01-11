@@ -280,7 +280,8 @@ const AuctionSection = ({ slug }) => {
 
     return (
         <>
-        <DynamicAboutSection country={location.city}/>
+        {/* <DynamicAboutSection country={location.city}/> */}
+        
         <div className="py-16 text-black ">
             <div className="container mx-auto px-4">
                 {/* Header Section */}

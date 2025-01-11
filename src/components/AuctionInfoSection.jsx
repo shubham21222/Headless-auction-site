@@ -40,7 +40,7 @@ const AuctionInfoSection = () => {
               }}
             >
               <iframe
-                className="absolute top-0 left-0 w-full h-full rounded-lg"
+                className=" top-0 left-0 w-full h-full rounded-lg"
                 src="https://www.youtube.com/embed/7Gu00wsXRKg?rel=0&autoplay=0"
                 title="YouTube video player"
                 frameBorder="0"
