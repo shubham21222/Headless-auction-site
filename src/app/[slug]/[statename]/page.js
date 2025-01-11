@@ -131,7 +131,7 @@ const StateCitiesPage = () => {
         <AuctionSection3  country={displayState} />
 
         <h2 className="text-3xl font-bold mb-4 capitalize">City Auctions</h2>
-        <div className="h-1 w-16 bg-yellow-500 mx-auto lg:mx-0 mb-6"></div>
+        <div className="h-1 w-16 bg-yellow-500  lg:mx-0 mb-6"></div>
 
 
         <CountryMapCities countryName={displayCountry} stateName={displayState}/>

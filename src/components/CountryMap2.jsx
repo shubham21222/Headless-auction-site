@@ -3,6 +3,8 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import { Icon } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import structuredCountries from "../../public/structured_countries.json";
+import countryConfigs from "@/data/countryConfigs";
+// Import your country configs
 
 const defaultIcon = new Icon({
     iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png",
@@ -12,130 +14,178 @@ const defaultIcon = new Icon({
     popupAnchor: [1, -34],
 });
 
+const getCountryConfig = async (countryName) => {
+    const countryKey = `${countryName.toLowerCase().replace(/\s+/g, '_')}_auction`;
+    
+    // Check if country exists in configs
+    if (countryConfigs[countryKey]) {
+        return {
+            center: countryConfigs[countryKey].center,
+            zoom: countryConfigs[countryKey].zoom
+        };
+    }
+    
+    // Fallback to geocoding if country not in configs
+    try {
+        const response = await fetch(
+            `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(countryName)}&format=json&limit=1`,
+            { headers: { "User-Agent": "CountryMapComponent/1.0" } }
+        );
+        
+        if (response.ok) {
+            const data = await response.json();
+            if (data.length > 0) {
+                return {
+                    center: {
+                        lat: parseFloat(data[0].lat),
+                        lng: parseFloat(data[0].lon)
+                    },
+                    zoom: 6
+                };
+            }
+        }
+    } catch (error) {
+        console.error("Error geocoding country:", error);
+    }
+    
+    // Default fallback
+    return {
+        center: { lat: 0, lng: 0 },
+        zoom: 2
+    };
+};
+
 const ChangeMapView = ({ center, zoom }) => {
     const map = useMap();
     useEffect(() => {
-        console.log("ChangeMapView - Updating map view:", { center, zoom });
         map.setView(center, zoom);
     }, [center, zoom, map]);
     return null;
 };
 
 const CountryMapCities = ({ countryName, stateName }) => {
-    console.log("CountryMapCities - Component initialized with:", { countryName, stateName });
-
     const [locations, setLocations] = useState([]);
     const [mapCenter, setMapCenter] = useState(null);
     const [mapZoom, setMapZoom] = useState(6);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [usingFallback, setUsingFallback] = useState(false);
 
     const formatCountryKey = (name) => `${name.toLowerCase()} auction`;
     const formatStateKey = (name) => `${name.toLowerCase()} auctions`;
 
     const getCitiesFromStructuredData = (countryKey, stateKey) => {
-        console.log("getCitiesFromStructuredData - Fetching cities for:", { countryKey, stateKey });
         const country = structuredCountries.find((c) => Object.keys(c)[0] === countryKey);
-
-        if (!country) {
-            console.warn("getCitiesFromStructuredData - Country not found:", countryKey);
-            return [];
-        }
-
+        if (!country) return [];
+        
         const states = country[countryKey];
-        if (!states || states.length === 0) {
-            console.warn("getCitiesFromStructuredData - No states found for country:", countryKey);
-            return [];
-        }
-
+        if (!states || states.length === 0) return [];
+        
         const state = states.find((s) => Object.keys(s)[0] === stateKey);
-        if (!state) {
-            console.warn("getCitiesFromStructuredData - State not found:", stateKey);
-            return [];
-        }
-
-        const cities = state[stateKey];
-        console.log("getCitiesFromStructuredData - Cities found:", cities);
-        return cities;
+        if (!state) return [];
+        
+        return state[stateKey] || [];
     };
 
     useEffect(() => {
-        const fetchLocations = async () => {
+        const initializeMap = async () => {
             setIsLoading(true);
+            setLocations([]);
+            setError(null);
+            setUsingFallback(false);
+
             try {
+                // First try to get cities
                 const countryKey = formatCountryKey(countryName);
                 const stateKey = formatStateKey(stateName);
-
-                console.log("fetchLocations - Formatted keys:", { countryKey, stateKey });
-
                 const cities = getCitiesFromStructuredData(countryKey, stateKey);
-                if (!cities.length) {
-                    throw new Error("No cities found in the JSON for the specified state.");
-                }
+                let hasSuccessfulCities = false;
 
-                for (const city of cities) {
-                    console.log("fetchLocations - Geocoding city:", city);
-                    try {
-                        const response = await fetch(
-                            `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(city)},${encodeURIComponent(
-                                stateName
-                            )},${encodeURIComponent(countryName)}&format=json&limit=1`,
-                            { headers: { "User-Agent": "CountryMapComponent/1.0" } }
-                        );
+                if (cities.length > 0) {
+                    for (const city of cities) {
+                        try {
+                            const response = await fetch(
+                                `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(city)},${encodeURIComponent(
+                                    stateName
+                                )},${encodeURIComponent(countryName)}&format=json&limit=1`,
+                                { headers: { "User-Agent": "CountryMapComponent/1.0" } }
+                            );
 
-                        if (response.ok) {
-                            const data = await response.json();
-                            if (data.length > 0) {
-                                const newLocation = {
-                                    name: city,
-                                    coordinates: { lat: parseFloat(data[0].lat), lng: parseFloat(data[0].lon) },
-                                };
+                            if (response.ok) {
+                                const data = await response.json();
+                                if (data.length > 0) {
+                                    hasSuccessfulCities = true;
+                                    const newLocation = {
+                                        name: city,
+                                        coordinates: { lat: parseFloat(data[0].lat), lng: parseFloat(data[0].lon) },
+                                    };
 
-                                setLocations((prevLocations) => {
-                                    if (prevLocations.length === 0) {
+                                    setLocations(prev => [...prev, newLocation]);
+                                    if (!mapCenter) {
                                         setMapCenter(newLocation.coordinates);
+                                        setMapZoom(8);
                                     }
-                                    return [...prevLocations, newLocation];
-                                });
-
-                                setMapZoom(8); // Adjust zoom when the first city is added
+                                }
                             }
+                        } catch (error) {
+                            console.error(`Error geocoding city ${city}:`, error);
                         }
-                    } catch (error) {
-                        console.error(`fetchLocations - Error fetching data for city: ${city}`, error);
                     }
                 }
 
-                setIsLoading(false);
+                // If no cities were successfully geocoded, fall back to country configuration
+                if (!hasSuccessfulCities) {
+                    const countryConfig = await getCountryConfig(countryName);
+                    setMapCenter(countryConfig.center);
+                    setMapZoom(countryConfig.zoom);
+                    setUsingFallback(true);
+                    // setError("Unable to load specific cities. Showing country overview.");
+                }
             } catch (err) {
-                console.error("fetchLocations - Error:", err.message);
-                setError(err.message);
+                console.error("Error initializing map:", err);
+                // Final fallback to country configuration
+                const countryConfig = await getCountryConfig(countryName);
+                setMapCenter(countryConfig.center);
+                setMapZoom(countryConfig.zoom);
+                setUsingFallback(true);
+                // setError("Unable to load specific locations. Showing country overview.");
+            } finally {
                 setIsLoading(false);
             }
         };
 
-        fetchLocations();
+        initializeMap();
     }, [countryName, stateName]);
 
-    if (isLoading && locations.length === 0) return <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-blue-500" />;
-    if (error) return <div className="text-red-500">{error}</div>;
+    if (isLoading && !mapCenter) {
+        return <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-blue-500" />;
+    }
+
     if (!mapCenter) return null;
 
     return (
         <div className="h-[400px] w-full pb-10">
+            {error && <div className="text-amber-600 mb-2">{error}</div>}
             <MapContainer center={[mapCenter.lat, mapCenter.lng]} zoom={mapZoom} className="h-full w-full rounded-lg shadow-lg">
                 <ChangeMapView center={[mapCenter.lat, mapCenter.lng]} zoom={mapZoom} />
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 />
-                {locations.map((location, index) => (
+                {!usingFallback && locations.map((location, index) => (
                     <Marker key={index} position={[location.coordinates.lat, location.coordinates.lng]} icon={defaultIcon}>
                         <Popup>
                             <div className="font-semibold">{location.name}</div>
                         </Popup>
                     </Marker>
                 ))}
+                {usingFallback && (
+                    <Marker position={[mapCenter.lat, mapCenter.lng]} icon={defaultIcon}>
+                        <Popup>
+                            <div className="font-semibold">{countryName}</div>
+                        </Popup>
+                    </Marker>
+                )}
             </MapContainer>
         </div>
     );
