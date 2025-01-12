@@ -5,6 +5,8 @@ import "leaflet/dist/leaflet.css";
 import structuredCountries from "../../public/structured_countries.json";
 import countryConfigs from "@/data/countryConfigs";
 // Import your country configs
+import "leaflet-gesture-handling";
+import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
 
 const defaultIcon = new Icon({
     iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png",
