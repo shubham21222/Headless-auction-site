@@ -21,6 +21,10 @@ const Map = ({ coordinates }) => {
       zoom={zoom}
       scrollWheelZoom={false}
       style={{ width: "100%", height: "400px" }}
+      dragging={true} // Enable dragging
+      touchZoom={true} // Enable zooming with gestures
+      gestureHandling={true} // Custom plugin for gesture handling
+      tap={false} // Avoid unintended taps while dragging
     >
       {/* OpenStreetMap tiles */}
       <TileLayer

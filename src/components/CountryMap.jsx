@@ -33,7 +33,7 @@ const CountryMap = ({ countryName }) => {
         const formattedKey = name
             .toLowerCase()
             .replace(/[\s-]/g, '_');
-        
+
         console.log("Formatted country key for countryConfigs:", formattedKey);
         return formattedKey;
     };
@@ -143,21 +143,21 @@ const CountryMap = ({ countryName }) => {
                 console.log("States found in JSON:", stateNames);
 
                 let stateLocations = [];
-                
+
                 // Try CountryStateCity API
                 try {
                     const statesResponse = await fetch(
                         `https://api.countrystatecity.in/v1/countries/${countryConfig.code}/states`,
                         { headers }
                     );
-                    
+
                     if (statesResponse.ok) {
                         const apiStates = await statesResponse.json();
                         console.log("API States:", apiStates);
 
                         if (apiStates.length > 0) {
                             const matchedStates = apiStates.filter((apiState) =>
-                                stateNames.some((stateName) => 
+                                stateNames.some((stateName) =>
                                     stateName.toLowerCase() === apiState.name.toLowerCase()
                                 )
                             );
@@ -208,7 +208,7 @@ const CountryMap = ({ countryName }) => {
                 if (stateLocations.filter(loc => loc !== null).length === 0) {
                     console.warn("Trying Nominatim API as fallback...");
                     const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
-                    
+
                     stateLocations = [];
                     for (const stateName of stateNames) {
                         try {
@@ -290,7 +290,14 @@ const CountryMap = ({ countryName }) => {
                 center={[mapCenter.lat, mapCenter.lng]}
                 zoom={mapZoom}
                 className="h-full w-full rounded-lg shadow-lg"
+                dragging={true} // Enable dragging
+                touchZoom={true} // Enable zooming with gestures
+                gestureHandling={true} // Custom plugin for gesture handling
+                tap={false} // Avoid unintended taps while dragging
+                wheelPxPerZoomLevel={100}
+                zoomSnap={0.25}
             >
+
                 <ChangeMapView
                     center={[mapCenter.lat, mapCenter.lng]}
                     zoom={mapZoom}

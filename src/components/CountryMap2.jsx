@@ -16,7 +16,7 @@ const defaultIcon = new Icon({
 
 const getCountryConfig = async (countryName) => {
     const countryKey = `${countryName.toLowerCase().replace(/\s+/g, '_')}_auction`;
-    
+
     // Check if country exists in configs
     if (countryConfigs[countryKey]) {
         return {
@@ -24,14 +24,14 @@ const getCountryConfig = async (countryName) => {
             zoom: countryConfigs[countryKey].zoom
         };
     }
-    
+
     // Fallback to geocoding if country not in configs
     try {
         const response = await fetch(
             `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(countryName)}&format=json&limit=1`,
             { headers: { "User-Agent": "CountryMapComponent/1.0" } }
         );
-        
+
         if (response.ok) {
             const data = await response.json();
             if (data.length > 0) {
@@ -47,7 +47,7 @@ const getCountryConfig = async (countryName) => {
     } catch (error) {
         console.error("Error geocoding country:", error);
     }
-    
+
     // Default fallback
     return {
         center: { lat: 0, lng: 0 },
@@ -77,13 +77,13 @@ const CountryMapCities = ({ countryName, stateName }) => {
     const getCitiesFromStructuredData = (countryKey, stateKey) => {
         const country = structuredCountries.find((c) => Object.keys(c)[0] === countryKey);
         if (!country) return [];
-        
+
         const states = country[countryKey];
         if (!states || states.length === 0) return [];
-        
+
         const state = states.find((s) => Object.keys(s)[0] === stateKey);
         if (!state) return [];
-        
+
         return state[stateKey] || [];
     };
 
@@ -166,7 +166,17 @@ const CountryMapCities = ({ countryName, stateName }) => {
     return (
         <div className="h-[400px] w-full pb-10">
             {error && <div className="text-amber-600 mb-2">{error}</div>}
-            <MapContainer center={[mapCenter.lat, mapCenter.lng]} zoom={mapZoom} className="h-full w-full rounded-lg shadow-lg">
+            <MapContainer
+                center={[mapCenter.lat, mapCenter.lng]}
+                zoom={mapZoom}
+                className="h-full w-full rounded-lg shadow-lg"
+                dragging={true} // Enable dragging
+                touchZoom={true} // Enable zooming with gestures
+                gestureHandling={true} // Custom plugin for gesture handling
+                tap={false} // Avoid unintended taps while dragging
+                wheelPxPerZoomLevel={100}
+                zoomSnap={0.25}
+            >
                 <ChangeMapView center={[mapCenter.lat, mapCenter.lng]} zoom={mapZoom} />
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
