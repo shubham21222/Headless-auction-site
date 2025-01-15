@@ -25,8 +25,8 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">More...</h3>
             <ul className="space-y-2">
               <Link href="https://nyelizabeth.com/"><li className="hover:underline">Press</li></Link>
-              <li><a href="#" className="hover:underline">Terms</a></li>
-              <li><a href="#" className="hover:underline">Privacy Policy</a></li>
+              <li><Link href="/terms" className="hover:underline">Terms</Link></li>
+              {/* <li><a href="#" className="hover:underline">Privacy Policy</a></li> */}
               <li><a href="#" className="hover:underline">Do Not Sell My Personal Information</a></li>
             </ul>
           </div>
