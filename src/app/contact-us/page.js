@@ -12,7 +12,7 @@ const ContactPage = () => {
       <div className="max-w-7xl mx-auto mb-12 text-center">
         <h1 className="text-4xl font-bold text-gray-900 mb-4">Get in Touch</h1>
         <div className="h-1 w-20 bg-blue-600 mx-auto rounded-full mb-6"></div>
-        <p className="text-lg text-gray-600">We're here to assist you</p>
+        <p className="text-lg text-gray-600">We{''}re here to assist you</p>
       </div>
 
       {/* Main Content Grid */}
