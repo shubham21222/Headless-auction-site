@@ -39,7 +39,7 @@ const HeroSection = ({ location }) => {
                    Explore antiques collections , live events and unique treasures
                 </p>
                 <Link
-                    href="/auctions"
+                    href="https://www.liveauctioneers.com/auctioneer/6177/ny-elizabeth/"
                     className="mt-6 px-6 py-3 bg-white text-black rounded-lg shadow-md hover:bg-gray-100 transition"
                 >
                     Browse Auctions

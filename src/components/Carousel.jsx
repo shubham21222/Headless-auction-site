@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import Link from "next/link";
 
 const CarouselComponent = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -65,9 +66,12 @@ const CarouselComponent = () => {
         <p className="text-base md:text-xl lg:text-2xl mb-6 max-w-xl">
           {images[currentIndex].subtitle}
         </p>
+
+        <Link href="https://www.liveauctioneers.com/auctioneer/6177/ny-elizabeth/">
         <button className="bg-white text-black px-6 py-3 rounded-full hover:bg-gray-200 transition-colors">
           Explore Auctions
         </button>
+        </Link>
       </div>
 
       {/* Navigation Arrows */}

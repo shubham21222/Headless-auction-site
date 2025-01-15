@@ -12,19 +12,19 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Support</h3>
             <ul className="space-y-2">
-              <li><a href="#" className="hover:underline">Contact Us</a></li>
+              <li><Link href="/contact-us" className="hover:underline">Contact Us</Link></li>
               <Link href="/FAQs">
                 <li href="#" className="hover:underline">FAQ</li>
               </Link>
-              <li><a href="#" className="hover:underline">Site Map</a></li>
-            </ul>
+              <li><Link href="https://auction.nyelizabeth.com/sitemap-index.xml" className="hover:underline">Site Map</Link></li>
+           </ul>
           </div>
 
 
           <div>
             <h3 className="text-lg font-semibold mb-4">More...</h3>
             <ul className="space-y-2">
-              <li><a href="#" className="hover:underline">Press</a></li>
+              <Link href="https://nyelizabeth.com/"><li className="hover:underline">Press</li></Link>
               <li><a href="#" className="hover:underline">Terms</a></li>
               <li><a href="#" className="hover:underline">Privacy Policy</a></li>
               <li><a href="#" className="hover:underline">Do Not Sell My Personal Information</a></li>
@@ -35,15 +35,16 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
             <div className="flex justify-center space-x-4">
-              <a href="#" className="hover:text-gray-300" aria-label="Instagram">
+              <Link href="https://www.instagram.com/nyelizabethauction/" className="hover:text-gray-300">
                 <FaInstagram className="w-6 h-6" />
-              </a>
-              <a href="#" className="hover:text-gray-300" aria-label="LinkedIn">
+              </Link>
+
+              <Link href="https://www.linkedin.com/company/nyelizabeth" className="hover:text-gray-300" aria-label="LinkedIn">
                 <FaLinkedin className="w-6 h-6" />
-              </a>
-              <a href="#" className="hover:text-gray-300" aria-label="YouTube">
+              </Link>
+              <Link href="https://www.youtube.com/c/nyelizabeth" className="hover:text-gray-300" aria-label="YouTube">
                 <FaYoutube className="w-6 h-6" />
-              </a>
+              </Link>
             </div>
           </div>
         </div>
