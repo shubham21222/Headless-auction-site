@@ -195,11 +195,7 @@ const AuctionSection = ({ slug }) => {
             slug: "jewelry-auctions",
             description: `From dazzling diamonds to elegant timepieces, jewelry auctions offer timeless elegance. Enhance your style in ${location.city}.`
         },
-        {
-            title: "Toy Auctions",
-            slug: "toy-auctions",
-            description: `From vintage toys to modern collectibles, toy auctions delight enthusiasts of all ages. Play into nostalgia in ${location.city}.`
-        },
+        
         {
             title: "Brand Watches",
             slug: "brand-watches",

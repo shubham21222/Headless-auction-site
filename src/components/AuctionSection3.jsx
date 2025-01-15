@@ -60,11 +60,7 @@ const AuctionSection3 = ({ country }) => {
       slug: "jewelry-auctions",
       description: `From dazzling diamonds to elegant timepieces, jewelry auctions offer timeless elegance. Enhance your style in ${country}.`
     },
-    {
-      title: "Toy Auctions",
-      slug: "toy-auctions",
-      description: `From vintage toys to modern collectibles, toy auctions delight enthusiasts of all ages. Play into nostalgia in ${country}.`
-    },
+ 
     {
       title: "Brand Watches",
       slug: "brand-watches",

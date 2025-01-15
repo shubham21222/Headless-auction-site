@@ -52,7 +52,7 @@ const Footer = () => {
         {/* Bottom Row - Stacked on mobile */}
         <div className="mt-8 border-t border-gray-700 pt-6 flex flex-col items-center text-center space-y-2">
           <p className="text-sm text-gray-400">
-            Copyright © 2025 AZ Auction - All Rights Reserved.
+            Copyright © 2025 NY Elizabeth - All Rights Reserved.
           </p>
           <p className="text-sm text-gray-400">
             <a href="#" className="hover:underline">Certificate Check</a> | <a href="#" className="hover:underline">NY Elizabeth Membership</a>
