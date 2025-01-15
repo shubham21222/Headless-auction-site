@@ -17,7 +17,7 @@ const FetchImages = ({ slug }) => {
     'jewelry-auctions': ['Jewelry', 'jewelry-auctions', 'Jewelry Auctions'],
     'antique-auctions': ['Antiques', 'antiques', 'Antique Auctions'],
     'paintings': ['Paintings', 'paintings'],
-    'watches': ['Watches', 'watches']
+    'watches': ['Watches', 'watches','brand-watches']
   };
 
   useEffect(() => {

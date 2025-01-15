@@ -4,7 +4,7 @@ const categories = [
   { name: "Antique Auctions", slug: "antique-auctions" },
   { name: "Coin & Currency", slug: "coin-currency" }, 
   { name: "Jewelry", slug: "jewelry-auctions" },
-  { name: "brand watches", slug: "brand-watches" },
+  { name: "watches", slug: "watches" },
   { name: "paintings", slug: "paintings" },
   { name: "decorative art", slug: "decorative-art" },
   { name: "islamic art", slug: "islamic-art" },
