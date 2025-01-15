@@ -6,60 +6,52 @@ import { Timer, Award, Shield, TrendingUp } from 'lucide-react';
 import axios from 'axios';
 
 const AuctionSection2 = ({ country }) => {
-  const [heroImage, setHeroImage] = useState(null); // State to hold the fetched image
-  const [loading, setLoading] = useState(true); // Loading state for the image
+  const [heroImage, setHeroImage] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const username = 'auctionnyelizabeth';
   const password = '^s)mBdEeOY$ESrr%)A';
   const wpURL = 'https://auction.nyelizabeth.com';
 
-  // Function to fetch the JWT token
-  const fetchToken = async () => {
-    const response = await axios.post(`${wpURL}/wp-json/jwt-auth/v1/token`, {
-      username,
-      password,
-    });
-    return response.data.token;
-  };
-
-  // Function to fetch images with the "Hero Section" category
-  const fetchHeroImage = async (token) => {
-    try {
-      const response = await axios.get(`${wpURL}/wp-json/wp/v2/media`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        params: {
-          categories: 'Hero Section', // Adjust this to match the category slug or ID
-          per_page: 1, // Fetch only one image
-        },
-      });
-
-      if (response.data.length > 0) {
-        setHeroImage(response.data[0]); // Set the first image as the hero image
-      } else {
-        throw new Error('No images found for the Hero Section category');
-      }
-    } catch (err) {
-      setError(err.message || 'Error fetching hero image');
-    } finally {
-      setLoading(false); // Set loading to false once the fetch is complete
-    }
-  };
-
   useEffect(() => {
-    const init = async () => {
+    const fetchImage = async () => {
       try {
-        const token = await fetchToken();
-        await fetchHeroImage(token);
+        // Step 1: Authenticate to get the JWT token
+        const tokenResponse = await axios.post(`${wpURL}/wp-json/jwt-auth/v1/token`, {
+          username,
+          password,
+        });
+
+        const token = tokenResponse.data.token;
+
+        // Step 2: Fetch hero image using media category ID
+        const categoryID = 32896; // Replace with your category ID
+        const response = await axios.get(`${wpURL}/wp-json/wp/v2/media`, {
+          headers: { Authorization: `Bearer ${token}` }, // Pass token here
+          params: {
+            media_category: categoryID, // Use the correct parameter
+            per_page: 1, // Fetch only one image
+          },
+        });
+
+        if (response.data.length > 0) {
+          setHeroImage(response.data[0]); // Store the entire image object
+        } else {
+          throw new Error('No images found for the specified category');
+        }
       } catch (err) {
-        setError(err.message);
+        console.error('Error fetching image:', err);
+        setError(err.message || 'An error occurred while fetching the hero image');
+      } finally {
+        setLoading(false);
       }
     };
 
-    init();
+    fetchImage();
   }, []);
+
+  const defaultHeroImage = 'https://beta.nyelizabeth.com/wp-content/uploads/2024/11/Rectangle-23-min.webp';
 
   const formattedCountry = country.charAt(0).toUpperCase() + country.slice(1).toLowerCase();
 
@@ -105,12 +97,18 @@ const AuctionSection2 = ({ country }) => {
               <div className="w-full h-64 bg-gray-200 animate-pulse"></div>
             ) : heroImage ? (
               <Image
-                src={heroImage.source_url}
-                alt={heroImage.alt_text || 'Featured auction item'}
-                layout="responsive"
+                src={heroImage.source_url || defaultHeroImage} // Ensure source_url exists
+                alt={heroImage.alt_text || "Featured auction item"}
                 width={600}
                 height={400}
                 className="w-full h-auto object-cover"
+                style={{
+                  width: "100%", // Make the image responsive
+                  height: "auto", // Maintain the aspect ratio
+                }}
+                sizes="(max-width: 768px) 100vw, 
+                            (max-width: 1200px) 50vw, 
+                            33vw"
               />
             ) : (
               <div className="w-full h-64 bg-gray-200 flex items-center justify-center">

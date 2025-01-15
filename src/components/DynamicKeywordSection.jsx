@@ -1,10 +1,80 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import axios from 'axios';
 
 const DynamicKeywordSection = ({ keyword, country }) => {
+
+
+    const [sectionOneImage, setSectionOneImage] = useState('');
+    const [sectionTwoImage, setSectionTwoImage] = useState('');
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+
+
+    useEffect(() => {
+        const fetchImages = async () => {
+            try {
+                const wpURL = 'https://auction.nyelizabeth.com';
+                const username = 'auctionnyelizabeth';
+                const password = '^s)mBdEeOY$ESrr%)A';
+
+                // Authenticate to get JWT token
+                const tokenResponse = await axios.post(`${wpURL}/wp-json/jwt-auth/v1/token`, {
+                    username,
+                    password,
+                });
+                const token = tokenResponse.data.token;
+
+                // Function to fetch image by category ID
+                const fetchImageByCategory = async (categoryID) => {
+                    try {
+                        const response = await axios.get(`${wpURL}/wp-json/wp/v2/media`, {
+                            headers: { Authorization: `Bearer ${token}` },
+                            params: {
+                                media_category: categoryID, // Use the media category ID
+                                per_page: 1, // Fetch only one image
+                            },
+                        });
+
+                        if (response.data.length > 0) {
+                            return response.data[0].source_url; // Return the image URL
+                        } else {
+                            throw new Error(`No images found for category ID: ${categoryID}`);
+                        }
+                    } catch (err) {
+                        console.error(`Error fetching image for category ID ${categoryID}:`, err);
+                        throw err;
+                    }
+                };
+
+                // Fetch images for specific categories
+                const [section1Image, section2Image] = await Promise.all([
+                    fetchImageByCategory(32897), // Numeric ID for Section 1
+                    fetchImageByCategory(32898), // Numeric ID for Section 2
+                ]);
+
+                setSectionOneImage(section1Image);
+                setSectionTwoImage(section2Image);
+            } catch (err) {
+                console.error('Error fetching images:', err);
+                setError(err.message || 'An error occurred');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchImages();
+    }, []);
+
+    const defaultSection1Image = 'https://beta.nyelizabeth.com/wp-content/uploads/2024/11/Rectangle-23-min.webp';
+    const defaultSection2Image = 'https://beta.nyelizabeth.com/wp-content/uploads/2024/11/Rectangle-23-1-min.webp';
+
+
+
     const fadeInUp = {
         initial: { opacity: 0, y: 20 },
         whileInView: { opacity: 1, y: 0 },
@@ -66,7 +136,7 @@ const DynamicKeywordSection = ({ keyword, country }) => {
                                     <div className="absolute inset-0 border-8 border-white shadow-2xl rounded-tr-[80px] rounded-bl-[80px] z-10" />
                                     <div className="relative w-full h-full overflow-hidden rounded-tr-[80px] rounded-bl-[80px] shadow-2xl">
                                         <Image
-                                            src={content.section1.image}
+                                            src={sectionOneImage || defaultSection1Image}
                                             alt="Section 1 Image"
                                             fill
                                             sizes="(max-width: 768px) 100vw, 50vw"
@@ -123,7 +193,7 @@ const DynamicKeywordSection = ({ keyword, country }) => {
                                 <div className="absolute inset-0 w-[90%] h-[90%] ml-auto group">
                                     <div className="relative w-full h-full overflow-hidden rounded-tl-[80px] rounded-br-[80px] shadow-2xl">
                                         <Image
-                                            src={content.section2.image}
+                                            src={sectionTwoImage || defaultSection2Image}
                                             alt="Section 2 Image"
                                             fill
                                             sizes="(max-width: 768px) 100vw, 50vw"

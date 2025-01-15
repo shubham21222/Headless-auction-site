@@ -14,7 +14,7 @@ const FetchImages = ({ slug }) => {
 
   // Map frontend slugs to possible WordPress category variations
   const categoryMapping = {
-    'jewelry-auctions': ['Jewelry', 'jewelry', 'Jewelry Auctions'],
+    'jewelry-auctions': ['Jewelry', 'jewelry-auctions', 'Jewelry Auctions'],
     'antique-auctions': ['Antiques', 'antiques', 'Antique Auctions'],
     'paintings': ['Paintings', 'paintings'],
     'watches': ['Watches', 'watches']
