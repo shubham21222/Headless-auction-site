@@ -75,7 +75,7 @@ const Header2 = () => {
           </div>
 
           <nav
-            className={`hidden md:flex space-x-6 text-sm sm:text-base font-medium ${isScrolled ? "text-black" : "text-black"
+            className={`hidden md:flex space-x-6 text-sm sm:text-base items-center font-medium ${isScrolled ? "text-black" : "text-black"
               }`}
           >
             <Link href="/about" className="hover:text-purple-600">

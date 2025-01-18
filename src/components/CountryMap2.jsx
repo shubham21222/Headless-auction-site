@@ -63,71 +63,64 @@ const CountryMapCities = ({ countryName, stateName }) => {
         const loadCitiesData = () => {
             setIsLoading(true);
             try {
-                const cleanedCountryName = countryName.replace(/[\s-]?auction$/, "");
-                const formattedCountryName = cleanedCountryName.charAt(0).toUpperCase() + cleanedCountryName.slice(1).toLowerCase();
+                // Normalize country name
+                const cleanedCountryName = countryName.replace(/[\s-]?auction$/, "").trim();
+                const formattedCountryName = cleanedCountryName
+                    .split(" ")
+                    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                    .join(" ");
+    
+                // Normalize state name
                 const formattedStateName = formatStateName(stateName);
-
+    
                 console.log('Looking for country:', formattedCountryName);
                 console.log('Looking for state:', formattedStateName);
-
+    
                 const country = countryData[formattedCountryName];
                 if (!country || !country.states) {
                     console.error('Country data not found or invalid:', formattedCountryName);
-                    setError(`Country ${formattedCountryName} not found or has no states`);
+                    setError(`Country "${formattedCountryName}" not found or has no states.`);
                     setIsLoading(false);
                     return;
                 }
-
+    
                 const stateKey = Object.keys(country.states).find(
-                    key => key.toLowerCase() === formattedStateName.toLowerCase()
+                    (key) => key.toLowerCase() === formattedStateName.toLowerCase()
                 );
-
+    
                 if (!stateKey) {
                     console.error('State not found:', formattedStateName);
                     console.error('Available states:', Object.keys(country.states));
-                    setError(`State ${formattedStateName} not found. Available states: ${Object.keys(country.states).join(', ')}`);
+                    setError(`State "${formattedStateName}" not found. Available states: ${Object.keys(country.states).join(', ')}`);
                     setIsLoading(false);
                     return;
                 }
-
+    
                 const state = country.states[stateKey];
                 console.log('Found state:', stateKey);
                 console.log('State data:', state);
-
+    
                 if (!state || !state.cities) {
                     console.error('State has no cities data');
-                    setError('No cities data available for this state');
+                    setError(`No cities data available for state "${formattedStateName}".`);
                     setIsLoading(false);
                     return;
                 }
-
-                // Get total number of cities for coordinate spreading
+    
                 const totalCities = Object.keys(state.cities).length;
-
-                // Convert cities object to array with all properties and unique coordinates
+    
+                // Format cities
                 const formattedCities = Object.entries(state.cities).map(([cityName, cityData], index) => {
-                    // Use city's specific coordinates if available, otherwise generate spread coordinates
-                    const coordinates = cityData.latitude !== state.latitude || cityData.longitude !== state.longitude
+                    const coordinates = cityData.latitude && cityData.longitude
                         ? { lat: cityData.latitude, lng: cityData.longitude }
                         : generateSpreadCoordinates(state.latitude, state.longitude, index, totalCities);
-
-                    console.log('Processing city:', cityName, 'with coordinates:', coordinates);
-                    return {
-                        name: cityName,
-                        coordinates
-                    };
+    
+                    return { name: cityName, coordinates };
                 });
-
-                console.log('Formatted cities:', formattedCities);
-
+    
                 setCities(formattedCities);
-                setMapCenter({
-                    lat: state.latitude,
-                    lng: state.longitude
-                });
-                // Adjust zoom level based on number of cities
+                setMapCenter({ lat: state.latitude, lng: state.longitude });
                 setMapZoom(totalCities > 5 ? 7 : 8);
-
             } catch (err) {
                 console.error("Error loading cities:", err);
                 setError("Failed to load cities data: " + err.message);
@@ -135,9 +128,10 @@ const CountryMapCities = ({ countryName, stateName }) => {
                 setIsLoading(false);
             }
         };
-
+    
         loadCitiesData();
     }, [countryName, stateName]);
+    
 
     const handleMarkerClick = (cityName) => {
         const formattedCityName = cityName.toLowerCase().replace(/\s+/g, "-");

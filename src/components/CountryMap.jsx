@@ -35,21 +35,30 @@ const CountryMap = ({ countryName }) => {
     const params = useParams();
 
     const toTitleCase = (str) => {
-        return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+        return str
+            .toLowerCase()
+            .split(" ")
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" ");
     };
-
+    
     useEffect(() => {
-        const cleanedCountryName = countryName.replace(/[\s-]?auction$/, "");
+        // Remove suffix like "auction" and trim any extra spaces
+        const cleanedCountryName = countryName
+            .replace(/[\s-]?auction$/, "") // Remove "auction" suffix
+            .trim(); // Remove extra spaces
+    
+        // Format the cleaned country name to match the JSON format
         const formattedCountryName = toTitleCase(cleanedCountryName);
-
+    
         if (formattedCountryName && countryData[formattedCountryName]) {
             const country = countryData[formattedCountryName];
-
+    
             setMapCenter({
                 lat: country.latitude,
                 lng: country.longitude,
             });
-
+    
             const formattedStates = Object.keys(country.states).map((stateName) => {
                 const state = country.states[stateName];
                 return {
@@ -61,10 +70,13 @@ const CountryMap = ({ countryName }) => {
                     cities: Object.keys(state.cities),
                 };
             });
-
-            setStates(formattedStates)
+    
+            setStates(formattedStates);
+        } else {
+            console.warn(`Country "${formattedCountryName}" not found in data.`);
         }
     }, [countryName]);
+    
 
     if (!mapCenter) {
         return <div className="text-gray-500">Loading...</div>;
