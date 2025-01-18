@@ -94,9 +94,8 @@ const CountryMap = ({ countryName }) => {
                 >
                     <ChangeMapView center={[mapCenter.lat, mapCenter.lng]} zoom={mapZoom} />
                     <TileLayer
-                        url={`https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=${process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}`}
-                        attribution='© <a href="https://www.mapbox.com/about/maps/">Mapbox</a>'
-                        maxZoom={20}
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     />
                     {states.map((state, index) => (
                         <Marker
