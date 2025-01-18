@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import { Icon } from "leaflet";
+import Link from "next/link";
+import { useParams } from "next/navigation";
 import "leaflet/dist/leaflet.css";
-import structuredCountries from "../../public/structured_countries.json";
-import countryConfigs from "@/data/countryConfigs";
-// Import your country configs
+import countryData from "../../public/Countries_codinats.json";
 import "leaflet-gesture-handling";
 import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
 
@@ -16,44 +16,27 @@ const defaultIcon = new Icon({
     popupAnchor: [1, -34],
 });
 
-const getCountryConfig = async (countryName) => {
-    const countryKey = `${countryName.toLowerCase().replace(/\s+/g, '_')}_auction`;
-
-    // Check if country exists in configs
-    if (countryConfigs[countryKey]) {
-        return {
-            center: countryConfigs[countryKey].center,
-            zoom: countryConfigs[countryKey].zoom
-        };
-    }
-
-    // Fallback to geocoding if country not in configs
+const formatStateName = (stateName) => {
     try {
-        const response = await fetch(
-            `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(countryName)}&format=json&limit=1`,
-            { headers: { "User-Agent": "CountryMapComponent/1.0" } }
-        );
-
-        if (response.ok) {
-            const data = await response.json();
-            if (data.length > 0) {
-                return {
-                    center: {
-                        lat: parseFloat(data[0].lat),
-                        lng: parseFloat(data[0].lon)
-                    },
-                    zoom: 6
-                };
-            }
-        }
+        const decodedState = decodeURIComponent(stateName);
+        const withoutAuctions = decodedState.replace(/-auctions$/, '');
+        const withSpaces = withoutAuctions.replace(/-/g, ' ');
+        return withSpaces;
     } catch (error) {
-        console.error("Error geocoding country:", error);
+        console.error('Error formatting state name:', error);
+        return stateName;
     }
+};
 
-    // Default fallback
+// Function to generate spread out coordinates
+const generateSpreadCoordinates = (baseLatitude, baseLongitude, index, totalCities) => {
+    const spread = 0.1; // Spread cities by 0.1 degrees
+    const row = Math.floor(index / 3); // 3 cities per row
+    const col = index % 3;
+    
     return {
-        center: { lat: 0, lng: 0 },
-        zoom: 2
+        lat: baseLatitude + (row * spread),
+        lng: baseLongitude + (col * spread)
     };
 };
 
@@ -61,144 +44,165 @@ const ChangeMapView = ({ center, zoom }) => {
     const map = useMap();
     useEffect(() => {
         map.setView(center, zoom);
+        setTimeout(() => {
+            map.invalidateSize();
+        }, 100);
     }, [center, zoom, map]);
     return null;
 };
 
 const CountryMapCities = ({ countryName, stateName }) => {
-    const [locations, setLocations] = useState([]);
+    const [cities, setCities] = useState([]);
     const [mapCenter, setMapCenter] = useState(null);
     const [mapZoom, setMapZoom] = useState(6);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [usingFallback, setUsingFallback] = useState(false);
-
-    const formatCountryKey = (name) => `${name.toLowerCase()} auction`;
-    const formatStateKey = (name) => `${name.toLowerCase()} auctions`;
-
-    const getCitiesFromStructuredData = (countryKey, stateKey) => {
-        const country = structuredCountries.find((c) => Object.keys(c)[0] === countryKey);
-        if (!country) return [];
-
-        const states = country[countryKey];
-        if (!states || states.length === 0) return [];
-
-        const state = states.find((s) => Object.keys(s)[0] === stateKey);
-        if (!state) return [];
-
-        return state[stateKey] || [];
-    };
+    const params = useParams();
 
     useEffect(() => {
-        const initializeMap = async () => {
+        const loadCitiesData = () => {
             setIsLoading(true);
-            setLocations([]);
-            setError(null);
-            setUsingFallback(false);
-
             try {
-                // First try to get cities
-                const countryKey = formatCountryKey(countryName);
-                const stateKey = formatStateKey(stateName);
-                const cities = getCitiesFromStructuredData(countryKey, stateKey);
-                let hasSuccessfulCities = false;
+                const cleanedCountryName = countryName.replace(/[\s-]?auction$/, "");
+                const formattedCountryName = cleanedCountryName.charAt(0).toUpperCase() + cleanedCountryName.slice(1).toLowerCase();
+                const formattedStateName = formatStateName(stateName);
 
-                if (cities.length > 0) {
-                    for (const city of cities) {
-                        try {
-                            const response = await fetch(
-                                `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(city)},${encodeURIComponent(
-                                    stateName
-                                )},${encodeURIComponent(countryName)}&format=json&limit=1`,
-                                { headers: { "User-Agent": "CountryMapComponent/1.0" } }
-                            );
+                console.log('Looking for country:', formattedCountryName);
+                console.log('Looking for state:', formattedStateName);
 
-                            if (response.ok) {
-                                const data = await response.json();
-                                if (data.length > 0) {
-                                    hasSuccessfulCities = true;
-                                    const newLocation = {
-                                        name: city,
-                                        coordinates: { lat: parseFloat(data[0].lat), lng: parseFloat(data[0].lon) },
-                                    };
-
-                                    setLocations(prev => [...prev, newLocation]);
-                                    if (!mapCenter) {
-                                        setMapCenter(newLocation.coordinates);
-                                        setMapZoom(8);
-                                    }
-                                }
-                            }
-                        } catch (error) {
-                            console.error(`Error geocoding city ${city}:`, error);
-                        }
-                    }
+                const country = countryData[formattedCountryName];
+                if (!country || !country.states) {
+                    console.error('Country data not found or invalid:', formattedCountryName);
+                    setError(`Country ${formattedCountryName} not found or has no states`);
+                    setIsLoading(false);
+                    return;
                 }
 
-                // If no cities were successfully geocoded, fall back to country configuration
-                if (!hasSuccessfulCities) {
-                    const countryConfig = await getCountryConfig(countryName);
-                    setMapCenter(countryConfig.center);
-                    setMapZoom(countryConfig.zoom);
-                    setUsingFallback(true);
-                    // setError("Unable to load specific cities. Showing country overview.");
+                const stateKey = Object.keys(country.states).find(
+                    key => key.toLowerCase() === formattedStateName.toLowerCase()
+                );
+
+                if (!stateKey) {
+                    console.error('State not found:', formattedStateName);
+                    console.error('Available states:', Object.keys(country.states));
+                    setError(`State ${formattedStateName} not found. Available states: ${Object.keys(country.states).join(', ')}`);
+                    setIsLoading(false);
+                    return;
                 }
+
+                const state = country.states[stateKey];
+                console.log('Found state:', stateKey);
+                console.log('State data:', state);
+
+                if (!state || !state.cities) {
+                    console.error('State has no cities data');
+                    setError('No cities data available for this state');
+                    setIsLoading(false);
+                    return;
+                }
+
+                // Get total number of cities for coordinate spreading
+                const totalCities = Object.keys(state.cities).length;
+
+                // Convert cities object to array with all properties and unique coordinates
+                const formattedCities = Object.entries(state.cities).map(([cityName, cityData], index) => {
+                    // Use city's specific coordinates if available, otherwise generate spread coordinates
+                    const coordinates = cityData.latitude !== state.latitude || cityData.longitude !== state.longitude
+                        ? { lat: cityData.latitude, lng: cityData.longitude }
+                        : generateSpreadCoordinates(state.latitude, state.longitude, index, totalCities);
+
+                    console.log('Processing city:', cityName, 'with coordinates:', coordinates);
+                    return {
+                        name: cityName,
+                        coordinates
+                    };
+                });
+
+                console.log('Formatted cities:', formattedCities);
+
+                setCities(formattedCities);
+                setMapCenter({
+                    lat: state.latitude,
+                    lng: state.longitude
+                });
+                // Adjust zoom level based on number of cities
+                setMapZoom(totalCities > 5 ? 7 : 8);
+
             } catch (err) {
-                console.error("Error initializing map:", err);
-                // Final fallback to country configuration
-                const countryConfig = await getCountryConfig(countryName);
-                setMapCenter(countryConfig.center);
-                setMapZoom(countryConfig.zoom);
-                setUsingFallback(true);
-                // setError("Unable to load specific locations. Showing country overview.");
+                console.error("Error loading cities:", err);
+                setError("Failed to load cities data: " + err.message);
             } finally {
                 setIsLoading(false);
             }
         };
 
-        initializeMap();
+        loadCitiesData();
     }, [countryName, stateName]);
 
-    if (isLoading && !mapCenter) {
+    const handleMarkerClick = (cityName) => {
+        const formattedCityName = cityName.toLowerCase().replace(/\s+/g, "-");
+        return `/${params.slug}/${params.statename}/${encodeURIComponent(formattedCityName)}`;
+    };
+
+    if (isLoading) {
         return <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-blue-500" />;
     }
 
-    if (!mapCenter) return null;
+    if (error) {
+        return <div className="text-red-500">{error}</div>;
+    }
+
+    if (!mapCenter) {
+        return <div className="text-gray-500">No cities found</div>;
+    }
 
     return (
-        <div className="h-[400px] w-full pb-10">
-            {error && <div className="text-amber-600 mb-2">{error}</div>}
-            <MapContainer
-                center={[mapCenter.lat, mapCenter.lng]}
-                zoom={mapZoom}
-                className="h-full w-full rounded-lg shadow-lg"
-                dragging={true} // Enable dragging
-                touchZoom={true} // Enable zooming with gestures
-                gestureHandling={true} // Custom plugin for gesture handling
-                tap={false} // Avoid unintended taps while dragging
-                wheelPxPerZoomLevel={100}
-                zoomSnap={0.25}
-            >
-                <ChangeMapView center={[mapCenter.lat, mapCenter.lng]} zoom={mapZoom} />
-                <TileLayer
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                />
-                {!usingFallback && locations.map((location, index) => (
-                    <Marker key={index} position={[location.coordinates.lat, location.coordinates.lng]} icon={defaultIcon}>
-                        <Popup>
-                            <div className="font-semibold">{location.name}</div>
-                        </Popup>
-                    </Marker>
-                ))}
-                {usingFallback && (
-                    <Marker position={[mapCenter.lat, mapCenter.lng]} icon={defaultIcon}>
-                        <Popup>
-                            <div className="font-semibold">{countryName}</div>
-                        </Popup>
-                    </Marker>
-                )}
-            </MapContainer>
+        <div className="relative w-full">
+            <div className="h-[400px] w-full relative">
+                <MapContainer
+                    center={[mapCenter.lat, mapCenter.lng]}
+                    zoom={mapZoom}
+                    className="h-full w-full rounded-lg shadow-lg"
+                    gestureHandling={true}
+                    scrollWheelZoom={false}
+                    dragging={true}
+                    tap={false}
+                    style={{ 
+                        height: "100%",
+                        width: "100%",
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        zIndex: 1
+                    }}
+                >
+                    <ChangeMapView center={[mapCenter.lat, mapCenter.lng]} zoom={mapZoom} />
+                    <TileLayer
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    />
+                    {cities && cities.map((city, index) => (
+                        <Marker
+                            key={`${city.name}-${index}`}
+                            position={[city.coordinates.lat, city.coordinates.lng]}
+                            icon={defaultIcon}
+                        >
+                            <Popup>
+                                <Link
+                                    href={handleMarkerClick(city.name)}
+                                    className="block"
+                                >
+                                    <div className="text-white bg-gray-900 hover:bg-gray-800 font-semibold p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 border border-gray-100">
+                                        <h3 className="text-white capitalize">{city.name}</h3>
+                                    </div>
+                                </Link>
+                            </Popup>
+                        </Marker>
+                    ))}
+                </MapContainer>
+            </div>
         </div>
     );
 };
