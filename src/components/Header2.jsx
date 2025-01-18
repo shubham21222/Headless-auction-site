@@ -81,17 +81,17 @@ const Header2 = () => {
             <Link href="/about" className="hover:text-purple-600">
               About
             </Link>
-            <Link href="https://nyelizabeth.com/terms" className="hover:text-purple-600">
+            <Link href="https://nyelizabeth.com/terms" target='_blank' className="hover:text-purple-600">
               Terms & Conditions
             </Link>
             <Link
               href="https://www.liveauctioneers.com/auctioneer/6177/ny-elizabeth/"
-              className="hover:text-purple-600"
+              className="hover:text-purple-600"  target='_blank'
             >
               Bid on Live Auctioneers
             </Link>
 
-            <Link href="https://beta.nyelizabeth.com/buy-now/">
+            <Link href="https://beta.nyelizabeth.com/buy-now/" target='_blank'>
               <button
                 className="hidden md:flex items-center space-x-2 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-medium text-white transition-all duration-300 hover:from-purple-700 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 w-full md:w-auto justify-center"
                 aria-label="Find auctions near me"
@@ -109,16 +109,16 @@ const Header2 = () => {
                 <Link href="/about" className="hover:text-purple-600 text-center">
                   About
                 </Link>
-                <Link href="https://nyelizabeth.com/terms" className="hover:text-purple-600 text-center">
+                <Link href="https://nyelizabeth.com/terms" target='_blank' className="hover:text-purple-600 text-center">
                   Terms & Conditions
                 </Link>
                 <Link
                   href="https://www.liveauctioneers.com/auctioneer/6177/ny-elizabeth/"
-                  className="hover:text-purple-600 text-center"
+                  className="hover:text-purple-600 text-center" target='_blank'
                 >
                   Bid on Live Auctioneers
                 </Link>
-                <Link href="https://beta.nyelizabeth.com/buy-now/" className="w-full">
+                <Link href="https://beta.nyelizabeth.com/buy-now/" target='_blank' className="w-full">
                   <button
                     className="flex items-center space-x-2 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-medium text-white transition-all duration-300 hover:from-purple-700 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 w-full justify-center"
                     aria-label="Find auctions near me"

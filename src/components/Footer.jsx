@@ -16,7 +16,7 @@ const Footer = () => {
               <Link href="https://nyelizabeth.com/faq" target='_blank'>
                 <li href="#" className="hover:underline">FAQ</li>
               </Link>
-              <li><Link href="https://auction.nyelizabeth.com/sitemap-index.xml" className="hover:underline">Site Map</Link></li>
+              <li><Link href="https://auction.nyelizabeth.com/sitemap-index.xml" target='_blank' className="hover:underline">Site Map</Link></li>
             </ul>
           </div>
 
@@ -24,10 +24,10 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">More...</h3>
             <ul className="space-y-2">
-              <Link href="https://nyelizabeth.com/press"><li className="hover:underline">Press</li></Link>
-              <li><Link href="https://nyelizabeth.com/terms" className="hover:underline">Terms</Link></li>
-              <li><Link href="https://beta.nyelizabeth.com/privacy-policy/" className="hover:underline">Privacy Policy</Link></li>
-              <li><Link href="https://beta.nyelizabeth.com/my-information/" className="hover:underline">Do Not Sell My Personal Information</Link></li>
+              <Link href="https://nyelizabeth.com/press" target='_blank'><li className="hover:underline">Press</li></Link>
+              <li><Link href="https://nyelizabeth.com/terms" target='_blank' className="hover:underline">Terms</Link></li>
+              <li><Link href="https://beta.nyelizabeth.com/privacy-policy/" target='_blank'  className="hover:underline">Privacy Policy</Link></li>
+              <li><Link href="https://beta.nyelizabeth.com/my-information/" target='_blank' className="hover:underline">Do Not Sell My Personal Information</Link></li>
             </ul>
           </div>
 
