@@ -67,8 +67,7 @@ export default function Home() {
       <TrendingBrands />
       <CategoryCountry />
       <PartnersSection />
-      
-      <NewsletterForm />
+      {/* <NewsletterForm /> */}
       <Footer />
       </div>
     </>
