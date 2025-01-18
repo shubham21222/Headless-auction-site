@@ -62,7 +62,7 @@ const CountryMap = ({ countryName }) => {
                 };
             });
 
-            setStates(formattedStates);
+            setStates(formattedStates)
         }
     }, [countryName]);
 

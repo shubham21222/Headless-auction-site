@@ -195,7 +195,7 @@ const CountryMapCities = ({ countryName, stateName }) => {
                                     className="block"
                                 >
                                     <div className="text-white bg-gray-900 hover:bg-gray-800 font-semibold p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 border border-gray-100">
-                                        <h3 className="text-white capitalize">{city.name}</h3>
+                                    <h3 className="text-white capitalize">{city.name}</h3>
                                     </div>
                                 </Link>
                             </Popup>
