@@ -35,7 +35,7 @@ const AuctionSection = ({ slug }) => {
                 const data = await response.json();
 
                 setLocation({
-                    city: data.city || 'your city',
+                    city: data.city || 'Nearby',
                     state: data.principalSubdivision || 'your state',
                     country: data.countryName || 'your country',
                     loading: false,
@@ -75,61 +75,62 @@ const AuctionSection = ({ slug }) => {
     };
 
     const locationText = location.loading
-        ? 'Loading location...'
-        : location.error
-            ? 'your area'
-            : `${location.city}, ${location.state}, ${location.country}`;
+    ? 'Loading location...'
+    : location.error
+        ? 'Nearby'
+        : `${location.city || 'Nearby'}, ${location.state || ''}, ${location.country || ''}`;
+
 
     const whyChooseUs = [
         {
             icon: Star,
             title: 'Exceptional Variety',
-            description: `From rare finds to everyday essentials, ${formatKeyword(slug)} auctions in ${location.city} cater to every taste and budget.`
+            description: `From rare finds to everyday essentials, ${formatKeyword(slug)} auctions in ${location.city || 'Nearby'} cater to every taste and budget.`
         },
         {
             icon: Shield,
             title: 'Trusted Sellers',
-            description: `Every auction in ${location.city} features verified sellers, ensuring quality and authenticity.`
+            description: `Every auction in ${location.city || 'Nearby'} features verified sellers, ensuring quality and authenticity.`
         },
         {
             icon: Award,
             title: 'Unmatched Value',
-            description: `Find premium ${formatKeyword(slug)} at prices far below market value in ${location.city}.`
+            description: `Find premium ${formatKeyword(slug)} at prices far below market value in ${location.city || 'Nearby'}.`
         },
         {
             icon: Clock,
             title: 'Convenient Online Bidding',
-            description: `Bid in real-time from anywhere, with auctions tailored for users in ${location.city}.`
+            description: `Bid in real-time from anywhere, with auctions tailored for users in ${location.city || 'Nearby'}.`
         }
     ];
 
     const expectations = [
         {
             title: 'Unique Collections',
-            description: `${formatKeyword(slug)} auctions in ${location.city} feature one-of-a-kind items, including limited editions and hard-to-find pieces.`
+            description: `${formatKeyword(slug)} auctions in ${location.city || 'Nearby'} feature one-of-a-kind items, including limited editions and hard-to-find pieces.`
         },
         {
             title: 'Authenticity Guaranteed',
-            description: `Every ${formatKeyword(slug)} sold in ${location.city} comes with detailed descriptions and certificates of authenticity.`
+            description: `Every ${formatKeyword(slug)} sold in ${location.city || 'Nearby'} comes with detailed descriptions and certificates of authenticity.`
         },
         {
             title: 'Diverse Bidding Options',
-            description: `Participate in live auctions, timed auctions, or "Buy Now" listings in ${location.city}.`
+            description: `Participate in live auctions, timed auctions, or "Buy Now" listings in ${location.city || 'Nearby'}.`
         },
         {
             title: 'Accessible for Everyone',
-            description: `Whether you're a seasoned bidder or a newcomer, auctions in ${location.city} make bidding simple and rewarding.`
+            description: `Whether you're a seasoned bidder or a newcomer, auctions in ${location.city || 'Nearby'} make bidding simple and rewarding.`
         }
     ];
 
     const howToJoin = [
         {
             title: 'Register for Free',
-            description: `Create an account to access the best ${formatKeyword(slug)} auctions in ${location.city}.`
+            description: `Create an account to access the best ${formatKeyword(slug)} auctions in ${location.city || 'Nearby'}.`
         },
         {
             title: 'Browse Active Listings',
-            description: `Use filters to find ${formatKeyword(slug)} that match your preferences in ${location.city}.`
+            description: `Use filters to find ${formatKeyword(slug)} that match your preferences in ${location.city || 'Nearby'}.`
         },
         {
             title: 'Place Your Bid',
@@ -137,7 +138,7 @@ const AuctionSection = ({ slug }) => {
         },
         {
             title: 'Claim Your Winning Bid',
-            description: `Complete the transaction and enjoy your new ${formatKeyword(slug)} from ${location.city}.`
+            description: `Complete the transaction and enjoy your new ${formatKeyword(slug)} from ${location.city || 'Nearby'}.`
         }
     ];
 
@@ -163,17 +164,17 @@ const AuctionSection = ({ slug }) => {
     const steps = [
         {
             title: "Register on Our Platform",
-            description: `Sign up for free and explore the wide range of auctions in ${location.city}.`,
+            description: `Sign up for free and explore the wide range of auctions in ${location.city || 'Nearby'}.`,
             image: "/assets/image1.jpeg",
         },
         {
             title: "Browse Auctions",
-            description: `Use advanced filters to find auctions by category, location, or price range in ${location.city}.`,
+            description: `Use advanced filters to find auctions by category, location, or price range in ${location.city || 'Nearby'}.`,
             image: "/assets/image2.jpeg",
         },
         {
             title: "Place Your Bid",
-            description: `Submit your bids in real-time or set auto-bids to stay competitive in ${location.city}.`,
+            description: `Submit your bids in real-time or set auto-bids to stay competitive in ${location.city || 'Nearby'}.`,
             image: "/assets/image3.jpeg",
         },
     ];
@@ -183,63 +184,63 @@ const AuctionSection = ({ slug }) => {
         {
             title: "Antique Auctions",
             slug: "antique-auctions",
-            description: `Discover timeless treasures, from vintage decor to rare collectibles, at antique auctions. Start your collection in ${location.city}.`
+            description: `Discover timeless treasures, from vintage decor to rare collectibles, at antique auctions. Start your collection in ${location.city || 'Nearby'}.`
         },
         {
             title: "Coin & Currency",
             slug: "coin-currency",
-            description: `Find rare coins and historical currency to enhance your collection. Invest in valuable numismatics in ${location.city}.`
+            description: `Find rare coins and historical currency to enhance your collection. Invest in valuable numismatics in ${location.city || 'Nearby'}.`
         },
         {
             title: "Jewelry",
             slug: "jewelry-auctions",
-            description: `From dazzling diamonds to elegant timepieces, jewelry auctions offer timeless elegance. Enhance your style in ${location.city}.`
+            description: `From dazzling diamonds to elegant timepieces, jewelry auctions offer timeless elegance. Enhance your style in ${location.city || 'Nearby'}.`
         },
         
         {
             title: "Brand Watches",
             slug: "brand-watches",
-            description: `Bid on luxury brand watches that combine craftsmanship and elegance. Perfect your timekeeping style in ${location.city}.`
+            description: `Bid on luxury brand watches that combine craftsmanship and elegance. Perfect your timekeeping style in ${location.city || 'Nearby'}.`
         },
         {
             title: "Paintings",
             slug: "paintings",
-            description: `Acquire exquisite paintings that add sophistication to any space. Own timeless art in ${location.city}.`
+            description: `Acquire exquisite paintings that add sophistication to any space. Own timeless art in ${location.city || 'Nearby'}.`
         },
         {
             title: "Decorative Art",
             slug: "decorative-art",
-            description: `Enhance your living spaces with decorative art that blends style and personality. Elevate your decor in ${location.city}.`
+            description: `Enhance your living spaces with decorative art that blends style and personality. Elevate your decor in ${location.city || 'Nearby'}.`
         },
         {
             title: "Islamic Art",
             slug: "islamic-art",
-            description: `Discover intricate Islamic art pieces that celebrate heritage and culture. Experience spiritual beauty in ${location.city}.`
+            description: `Discover intricate Islamic art pieces that celebrate heritage and culture. Experience spiritual beauty in ${location.city || 'Nearby'}.`
         },
         {
             title: "Ancient Art",
             slug: "ancient-art",
-            description: `Own a piece of history with ancient art that speaks of civilizations past. Bring history to life in ${location.city}.`
+            description: `Own a piece of history with ancient art that speaks of civilizations past. Bring history to life in ${location.city || 'Nearby'}.`
         },
         {
             title: "Designer Hand Bags",
             slug: "designer-hand-bags",
-            description: `Shop luxury designer handbags that define fashion and elegance. Carry your style statement in ${location.city}.`
+            description: `Shop luxury designer handbags that define fashion and elegance. Carry your style statement in ${location.city || 'Nearby'}.`
         },
         {
             title: "Diamonds",
             slug: "diamonds",
-            description: `Bid on exquisite diamonds that capture brilliance and beauty. Elevate your jewelry collection in ${location.city}.`
+            description: `Bid on exquisite diamonds that capture brilliance and beauty. Elevate your jewelry collection in ${location.city || 'Nearby'}.`
         },
         {
             title: "Gold Coins",
             slug: "gold-coins",
-            description: `Invest in valuable gold coins that combine beauty and worth. Strengthen your collection in ${location.city}.`
+            description: `Invest in valuable gold coins that combine beauty and worth. Strengthen your collection in ${location.city || 'Nearby'}.`
         },
         {
             title: "Gold Bars",
             slug: "gold-bars",
-            description: `Secure your wealth with gold bars of premium quality. Build a solid investment in ${location.city}.`
+            description: `Secure your wealth with gold bars of premium quality. Build a solid investment in ${location.city || 'Nearby'}.`
         }
     ];
 
@@ -271,20 +272,20 @@ const AuctionSection = ({ slug }) => {
                         </motion.div>
 
                         <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 text-transparent bg-clip-text">
-                            Best {formatKeyword(slug)}  in {location.city} – Exclusive Deals Await!
+                            Best {formatKeyword(slug)}  in {location.city || 'Nearby'} – Exclusive Deals Await!
                         </h1>
 
                         <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                            Looking for the best {formatKeyword(slug)} in {location.city}? Discover premium collections
+                            Looking for the best {formatKeyword(slug)} in {location.city || 'Nearby'}? Discover premium collections
                             of {formatKeyword(slug)}, from unique pieces to incredible bargains. Whether you{""}re a collector or
-                            a first-time bidder, {location.city} offers top-notch {formatKeyword(slug)}  with unbeatable deals.
+                            a first-time bidder, {location.city || 'Nearby'} offers top-notch {formatKeyword(slug)}  with unbeatable deals.
                         </p>
                     </motion.div>
 
                     {/* Why Choose Us Section */}
                     <motion.section className="mb-16">
                         <h2 className="text-3xl font-bold mb-8 text-center">
-                            Why Choose {formatKeyword(slug)}  in {location.city}?
+                            Why Choose {formatKeyword(slug)}  in {location.city || 'Nearby'}?
                         </h2>
                         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                             {whyChooseUs.map((item, index) => (
@@ -308,7 +309,7 @@ const AuctionSection = ({ slug }) => {
                     {/* What to Expect Section */}
                     <motion.section className="mb-16 bg-gray-50 p-8 rounded-2xl">
                         <h2 className="text-3xl font-bold mb-8 text-center">
-                            What to Expect at {formatKeyword(slug)}  in {location.city}
+                            What to Expect at {formatKeyword(slug)}  in {location.city || 'Nearby'}
                         </h2>
                         <div className="grid md:grid-cols-2 gap-8">
                             {expectations.map((item, index) => (
@@ -334,7 +335,7 @@ const AuctionSection = ({ slug }) => {
                     {/* How to Join Section */}
                     <motion.section className="mb-16">
                         <h2 className="text-3xl font-bold mb-8 text-center">
-                            How to Join {formatKeyword(slug)} in {location.city}
+                            How to Join {formatKeyword(slug)} in {location.city || 'Nearby'}
                         </h2>
 
                     </motion.section>
@@ -381,7 +382,7 @@ const AuctionSection = ({ slug }) => {
                             variants={fadeInUp}
                             className="text-2xl md:text-3xl font-bold mb-6"
                         >
-                            Popular Auction Categories in {location.city}
+                            Popular Auction Categories in {location.city || 'Nearby'}
                         </motion.h2>
 
                         <motion.div
@@ -427,7 +428,7 @@ const AuctionSection = ({ slug }) => {
                                 Start Your Bidding Journey Today
                             </h3>
                             <p className="text-lg mb-8 text-gray-100">
-                                Join thousands of successful bidders in {location.city} and discover amazing deals.
+                                Join thousands of successful bidders in {location.city || 'Nearby'} and discover amazing deals.
                             </p>
                             <Link href="https://www.liveauctioneers.com/auctioneer/6177/ny-elizabeth/">
                                 <motion.button
