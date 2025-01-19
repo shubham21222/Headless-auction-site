@@ -16,7 +16,7 @@ const Footer = () => {
               <Link href="https://nyelizabeth.com/faq" target='_blank'>
                 <li href="#" className="hover:underline">FAQ</li>
               </Link>
-              <li><Link href="https://auction.nyelizabeth.com/sitemap-index.xml" target='_blank' className="hover:underline">Site Map</Link></li>
+              <li><Link href="/sitemap"  className="hover:underline">Site Map</Link></li>
             </ul>
           </div>
 
