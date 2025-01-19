@@ -135,7 +135,7 @@ const StateCitiesPage = () => {
 
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2 capitalize">
-            Cities in {displayState}
+          Auctions in {displayState}
           </h1>
           <p className="text-gray-600 capitalize">
             {displayCountry}

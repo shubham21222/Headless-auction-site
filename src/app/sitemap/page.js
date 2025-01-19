@@ -142,7 +142,7 @@ const Page = () => {
       <Header2 />
       <div className="p-6 container mx-auto max-w-screen-2xl mt-[100px] min-h-screen">
         <h1 className="text-3xl font-bold text-center mb-8 text-blue-700">
-          Categories and Locations
+        Sitemap NY Elizabeth
         </h1>
 
         {/* Category Dropdown */}

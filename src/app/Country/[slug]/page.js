@@ -152,7 +152,7 @@ const CountryStatesPage = () => {
           {/* <h2 className="text-3xl font-bold mb-4 capitalize">States Auctions</h2>
         <div className="h-1 w-16 bg-yellow-500 mx-auto lg:mx-0 mb-6"></div> */}
 
-          <h1 className="text-3xl font-bold mb-4 capitalize">{country} States</h1>
+          <h1 className="text-3xl font-bold mb-4 capitalize">{country}</h1>
           <div className="h-1 w-16 bg-yellow-500 mx-auto lg:mx-0 mb-6"></div>
 
           <section className="flex flex-col md:flex-row items-center justify-center gap-10 pb-16 ">
