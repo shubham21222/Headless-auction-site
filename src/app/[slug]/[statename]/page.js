@@ -135,7 +135,7 @@ const StateCitiesPage = () => {
 
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2 capitalize">
-          Auctions in {displayState}
+            Auctions in {displayState}
           </h1>
           <p className="text-gray-600 capitalize">
             {displayCountry}
@@ -148,13 +148,13 @@ const StateCitiesPage = () => {
         {/* Page Header */}
         {/* Cities Grid */}
         {cities.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-8 lg:grid-cols-4 gap-4">
+          <div className="flex flex-wrap gap-4 mt-8">
             {cities.map((city, index) => (
               <Link
                 key={index}
                 href={`/${params.slug}/${params.statename}/${encodeURIComponent(city.toLowerCase().replace(/\s+/g, "-"))}`}
               >
-                <div className="text-white bg-gray-900 hover:bg-gray-800 font-semibold p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 border border-gray-100">
+                <div className="text-sm font-bold px-4 py-2 rounded-full  px-8 py-3 bg-gray-900 hover:bg-gray-800 text-white font-semibold rounded-full transition-colors duration-300 shadow-lg hover:shadow-xl">
                   <h3 className="text-white capitalize">{city}</h3>
                 </div>
               </Link>

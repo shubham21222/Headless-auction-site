@@ -171,17 +171,14 @@ const CountryStatesPage = () => {
           </section>
         </div>
 
-
-
-
         {states.length > 0 ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="flex flex-wrap gap-4">
             {states.map((state, index) => (
               <Link
                 key={index}
                 href={`/${params.slug}/${state.toLowerCase().replace(/\s+/g, "-")}`}
               >
-                <div className="bg-gray-900 hover:bg-gray-800 font-semibold text-white p-3 rounded-lg shadow-md  transition-colors cursor-pointer">
+                <div className="text-sm font-bold px-4 py-2 rounded-full  px-8 py-3 bg-gray-900 hover:bg-gray-800 text-white font-semibold rounded-full transition-colors duration-300 shadow-lg hover:shadow-xl">
                   {state}
                 </div>
               </Link>

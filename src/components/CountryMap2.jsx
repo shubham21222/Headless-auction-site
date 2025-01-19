@@ -54,7 +54,7 @@ const ChangeMapView = ({ center, zoom }) => {
 const CountryMapCities = ({ countryName, stateName }) => {
     const [cities, setCities] = useState([]);
     const [mapCenter, setMapCenter] = useState(null);
-    const [mapZoom, setMapZoom] = useState(6);
+    const [mapZoom, setMapZoom] = useState(10);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
     const params = useParams();
