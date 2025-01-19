@@ -23,7 +23,7 @@ const StateCitiesPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  
+
 
   useEffect(() => {
     const fetchCities = async () => {
@@ -68,9 +68,9 @@ const StateCitiesPage = () => {
   // Format display strings - keep special characters for display
   const displayCountry = params.slug.replace(/-/g, " ").replace(" auction", "");
   const displayState = decodeURIComponent(params.statename)
-  .replace(/-/g, " ")
-  .replace(" auctions", "");
-  
+    .replace(/-/g, " ")
+    .replace(" auctions", "");
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50">
@@ -123,20 +123,16 @@ const StateCitiesPage = () => {
           </span>
         </nav>
 
-            {/* <AuctionSectionWithCountry country={displayState} /> */}
-        
-        <AuctionSection2  country={displayState}/>
+        {/* <AuctionSectionWithCountry country={displayState} /> */}
+
+        <AuctionSection2 country={displayState} />
 
         <DynamicAboutSection country={displayState} />
-        <AuctionSection3  country={displayState} />
+        <AuctionSection3 country={displayState} />
 
-        <h2 className="text-3xl font-bold mb-4 capitalize">City Auctions</h2>
-        <div className="h-1 w-16 bg-yellow-500  lg:mx-0 mb-6"></div>
+        {/* <h2 className="text-3xl font-bold mb-4 capitalize">City Auctions</h2>
+        <div className="h-1 w-16 bg-yellow-500  lg:mx-0 mb-6"></div> */}
 
-
-        <CountryMapCities countryName={displayCountry} stateName={displayState}/>
-        
-        {/* Page Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2 capitalize">
             Cities in {displayState}
@@ -147,9 +143,12 @@ const StateCitiesPage = () => {
           <div className="h-1 w-16 bg-yellow-500 mt-4"></div>
         </div>
 
+        <CountryMapCities countryName={displayCountry} stateName={displayState} />
+
+        {/* Page Header */}
         {/* Cities Grid */}
         {cities.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-8 lg:grid-cols-4 gap-4">
             {cities.map((city, index) => (
               <Link
                 key={index}

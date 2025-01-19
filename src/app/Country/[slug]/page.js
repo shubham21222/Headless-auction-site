@@ -43,7 +43,7 @@ const CountryStatesPage = () => {
   const params = useParams();
   const country = params.slug.toLowerCase().replace("-", " ");
   const router = useRouter();
-  const rawCountry = country.replace("-auction","")
+  const rawCountry = country.replace("-auction", "")
 
   const [states, setStates] = useState([]);
   const [products, setProducts] = useState([]);
@@ -52,7 +52,7 @@ const CountryStatesPage = () => {
   const findCoordinates = (searchCountry) => {
     // Normalize the search term for better matching
     const cleanSearchTerm = searchCountry
-    .replace(/-auctions$/, '')  // Remove trailing -auctions  
+      .replace(/-auctions$/, '')  // Remove trailing -auctions  
       .trim()
       .toLowerCase();
 
@@ -86,7 +86,7 @@ const CountryStatesPage = () => {
         setStates(statesData);
 
         // Fetch products if United States
-       
+
       } catch (err) {
         console.error("Error fetching states or products:", err.message);
         setError(err.message);
@@ -120,8 +120,8 @@ const CountryStatesPage = () => {
   }
 
   const displayState = decodeURIComponent(country)
-  .replace(/-/g, " ")
-  .replace(" auction", "");
+    .replace(/-/g, " ")
+    .replace(" auction", "");
 
   return (
     <>
@@ -143,17 +143,20 @@ const CountryStatesPage = () => {
         </nav>
 
         <DynamicAboutSection country={country} />
-        <AuctionSection2 country={displayState} /> 
-        <AuctionSection3  country={displayState} />
+        <AuctionSection2 country={displayState} />
+        <AuctionSection3 country={displayState} />
 
 
 
         <div className="bg-gray-50 px-4 container mx-auto max-w-screen-2xl">
-        <h2 className="text-3xl font-bold mb-4 capitalize">States Auctions</h2>
-        <div className="h-1 w-16 bg-yellow-500 mx-auto lg:mx-0 mb-6"></div>
+          {/* <h2 className="text-3xl font-bold mb-4 capitalize">States Auctions</h2>
+        <div className="h-1 w-16 bg-yellow-500 mx-auto lg:mx-0 mb-6"></div> */}
+
+          <h1 className="text-3xl font-bold mb-4 capitalize">{country} States</h1>
+          <div className="h-1 w-16 bg-yellow-500 mx-auto lg:mx-0 mb-6"></div>
 
           <section className="flex flex-col md:flex-row items-center justify-center gap-10 pb-16 ">
-            
+
 
             <motion.div
               className="w-full  mt-8 md:mt-0"
@@ -162,16 +165,15 @@ const CountryStatesPage = () => {
               transition={{ duration: 0.8 }}
             >
               <div className="h-[400px] w-full relative">
-              <CountryMap countryName={country} />
+                <CountryMap countryName={country} />
               </div>
             </motion.div>
           </section>
         </div>
 
-        <h1 className="text-3xl font-bold mb-4 capitalize">{country} States</h1>
-        <div className="h-1 w-16 bg-yellow-500 mx-auto lg:mx-0 mb-6"></div>
 
-        
+
+
         {states.length > 0 ? (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {states.map((state, index) => (
