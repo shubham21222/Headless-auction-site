@@ -141,7 +141,7 @@ const Header = () => {
 
 
 
-          <Link href="/find-auctions-near-me">
+          <Link href="/find-auctions-near-me"  target='_blank'>
             <button
               className="hidden md:flex items-center space-x-2 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-medium text-white transition-all duration-300 hover:from-purple-700 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 w-full md:w-auto justify-center"
               aria-label="Find auctions near me"
