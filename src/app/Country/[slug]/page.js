@@ -41,9 +41,8 @@ const WooCommerceAPI = axios.create({
 
 const CountryStatesPage = () => {
   const params = useParams();
-  const country = params.slug.toLowerCase().replace("-", " ");
+  const country = params.slug.toLowerCase().replace("-", " ").replace(/-auction(s)?$/, "");
   const router = useRouter();
-  const rawCountry = country.replace("-auction", "")
 
   const [states, setStates] = useState([]);
   const [products, setProducts] = useState([]);
@@ -149,9 +148,7 @@ const CountryStatesPage = () => {
 
 
         <div className="bg-gray-50 px-4 container mx-auto max-w-screen-2xl">
-          {/* <h2 className="text-3xl font-bold mb-4 capitalize">States Auctions</h2>
-        <div className="h-1 w-16 bg-yellow-500 mx-auto lg:mx-0 mb-6"></div> */}
-
+          
           <h1 className="text-3xl font-bold mb-4 capitalize">{country}</h1>
           <div className="h-1 w-16 bg-yellow-500 mx-auto lg:mx-0 mb-6"></div>
 
