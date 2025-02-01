@@ -79,10 +79,12 @@ const DynamicAboutSection = ({ country }) => {
         transition: { duration: 0.8 },
     };
 
-    const formattedCountry = country.replace(/\s+auction\s*$/i, '').trim()
-        .split(' ')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-        .join(' ');
+    const formattedCountry = country
+    .replace(/-auction\s*$/i, '') // Remove "-auction" suffix (case-insensitive)
+    .trim() // Remove any extra spaces
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
 
     // Dynamic content based on the country
     const countryContent = {
