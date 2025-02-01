@@ -80,7 +80,7 @@ const DynamicAboutSection = ({ country }) => {
     };
 
     const formattedCountry = country
-    .replace(/-auction\s*$/i, '') // Remove "-auction" suffix (case-insensitive)
+    .replace(/\s*-?\s*auction\s*$/i, '') // Remove "Auction", "-auction", or " Auction" suffix
     .trim() // Remove any extra spaces
     .split(' ')
     .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
