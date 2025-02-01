@@ -23,13 +23,13 @@ import AuctionSection3 from "@/components/AuctionSection3";
 import CategoryCountry from "@/components/CategoryCountry";
 import CountryMap from "@/components/CountryMap";
 
-
 const defaultIcon = new L.Icon({
   iconUrl: require("leaflet/dist/images/marker-icon.png"),
   shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
   iconSize: [25, 41], // Size of the icon
   iconAnchor: [12, 41], // Anchor point of the icon
 });
+
 // WooCommerce API Configuration
 const WooCommerceAPI = axios.create({
   baseURL: "https://auction.nyelizabeth.com/wp-json/wc/v3",
@@ -41,17 +41,19 @@ const WooCommerceAPI = axios.create({
 
 const CountryStatesPage = () => {
   const params = useParams();
-  const country = params.slug.toLowerCase().replace("-", " ").replace(/-auction(s)?$/, "");
+  const country = params.slug.toLowerCase().replace("-", " ");
   const router = useRouter();
+  const rawCountry = country.replace(/-auction/i, ""); // Remove "-auction" suffix
 
   const [states, setStates] = useState([]);
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+
   const findCoordinates = (searchCountry) => {
     // Normalize the search term for better matching
     const cleanSearchTerm = searchCountry
-      .replace(/-auctions$/, '')  // Remove trailing -auctions  
+      .replace(/-auctions$/i, '')  // Remove trailing -auctions  
       .trim()
       .toLowerCase();
 
@@ -69,9 +71,7 @@ const CountryStatesPage = () => {
     return coordinatesEntry ? coordinatesEntry[1] : { lat: 0, lng: 0 };
   };
 
-
   const countryCoordinates = findCoordinates(country);
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -79,7 +79,7 @@ const CountryStatesPage = () => {
         setIsLoading(true);
 
         // Fetch states
-        const statesResponse = await fetch(`/api/countries?country=${encodeURIComponent(country)}`);
+        const statesResponse = await fetch(`/api/countries?country=${encodeURIComponent(rawCountry)}`);
         if (!statesResponse.ok) throw new Error("Failed to fetch states");
         const statesData = await statesResponse.json();
         setStates(statesData);
@@ -95,8 +95,7 @@ const CountryStatesPage = () => {
     };
 
     fetchData();
-  }, [country]);
-
+  }, [rawCountry]);
 
   const handleViewProduct = (slug) => {
     router.push(`..//Products/${slug}`);
@@ -118,7 +117,7 @@ const CountryStatesPage = () => {
     );
   }
 
-  const displayState = decodeURIComponent(country)
+  const displayState = decodeURIComponent(rawCountry)
     .replace(/-/g, " ")
     .replace(" auction", "");
 
@@ -137,24 +136,19 @@ const CountryStatesPage = () => {
           </Link>
           <span className="text-gray-400">/</span>
           <span className="capitalize text-gray-700 font-semibold">
-            {country.replace(/-/g, " ")}
+            {rawCountry.replace(/-/g, " ")}
           </span>
         </nav>
 
-        <DynamicAboutSection country={country} />
+        <DynamicAboutSection country={rawCountry} />
         <AuctionSection2 country={displayState} />
         <AuctionSection3 country={displayState} />
 
-
-
         <div className="bg-gray-50 px-4 container mx-auto max-w-screen-2xl">
-          
-          <h1 className="text-3xl font-bold mb-4 capitalize">{country}</h1>
+          <h1 className="text-3xl font-bold mb-4 capitalize">{rawCountry}</h1>
           <div className="h-1 w-16 bg-yellow-500 mx-auto lg:mx-0 mb-6"></div>
 
           <section className="flex flex-col md:flex-row items-center justify-center gap-10 pb-16 ">
-
-
             <motion.div
               className="w-full  mt-8 md:mt-0"
               initial={{ opacity: 0, x: 50 }}
@@ -162,7 +156,7 @@ const CountryStatesPage = () => {
               transition={{ duration: 0.8 }}
             >
               <div className="h-[400px] w-full relative">
-                <CountryMap countryName={country} />
+                <CountryMap countryName={rawCountry} />
               </div>
             </motion.div>
           </section>
@@ -182,7 +176,7 @@ const CountryStatesPage = () => {
             ))}
           </div>
         ) : (
-          <p className="text-gray-600 text-center">No states found for {country}.</p>
+          <p className="text-gray-600 text-center">No states found for {rawCountry}.</p>
         )}
       </section>
       <CategoryCountry />
