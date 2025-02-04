@@ -1,10 +1,4 @@
-# *
 User-agent: *
+Allow: /category/
 Allow: /
-
-# Host
-Host: https://auction.nyelizabeth.com
-
-# Sitemaps
-Sitemap: https://auction.nyelizabeth.com/sitemap.xml
-Sitemap: https://auction.nyelizabeth.com/api/sitemap.xml
+Sitemap: https://auction.nyelizabeth.com/sitemap-index.xml
