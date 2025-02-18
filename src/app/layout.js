@@ -13,7 +13,7 @@ const geistMono = localFont({
 });
 
 export const metadata = {
-  title: "Find Auctions Near You",
+  title: "Find Auctions Near Me",
   description: "Explore local auctions to find incredible deals on antiques, collectibles, and more. Stay informed about the latest auctions and never miss a chance to grab a great deal near you!",
 };
 
