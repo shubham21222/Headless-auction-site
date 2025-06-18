@@ -54,9 +54,9 @@ const Footer = () => {
           <p className="text-sm text-gray-400">
             Copyright © 2025 NY Elizabeth - All Rights Reserved.
           </p>
-          <p className="text-sm text-gray-400">
+          {/* <p className="text-sm text-gray-400">
             <Link href="https://cert.nyelizabeth.com/" target='_blank' className="hover:underline">Certificate Check</Link> | <Link href="https://nyelizabeth.com/ny-elizabeth-membership" target='_blank' className="hover:underline">NY Elizabeth Membership</Link>
-          </p>
+          </p> */}
         </div>
       </div>
     </footer>
